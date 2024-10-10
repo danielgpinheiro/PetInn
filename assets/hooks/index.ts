@@ -1,7 +1,9 @@
+import LivePhone from "live_phone"
 import Sound from './sound';
 
 const hooks = {
-  Sound,
+  LivePhone,
+  Sound
 };
 
 export default hooks;

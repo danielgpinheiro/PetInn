@@ -1,136 +1,66 @@
-:root {
-    /*** ----------- COLORS BASE ------------ ***/
-    /* ---- COLOR_PRIMARY ---- */
-    --color-primary-first-main: #d62300;
-    --color-primary-first-light: #ff4000;
-    --color-primary-first-dark: #a81c00;
-    --color-primary-first-darker: #7a1400;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "../../deps/live_phone/assets/live_phone";
 
-    --color-primary-second-main: #ff8732;
-    --color-primary-second-light: #ffa665;
-    --color-primary-second-dark: #d46a13;
-    --color-primary-second-darker: #b55909;
+.poppins {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+}
 
-    --color-primary-third-main: #502314;
-    --color-primary-third-light: #7d371f;
-    --color-primary-third-dark: #38190e;
-    --color-primary-third-darker: #210f08;
+.live_phone {
+  border-radius: var(--rounded-btn);
+  height: 3rem;
+  padding: 0 1rem;
+  width: 75%;
 
-    /* ---- COLOR_SECONDARY ---- */
-    --color-secondary-first-main: #f5ebdc;
-    --color-secondary-first-light: #fcfaf6;
-    --color-secondary-first-dark: #d9d0b9;
-    --color-secondary-first-darker: #bdb59d;
+  &.live_phone-valid {
+    background: none;
+  }
 
-    --color-secondary-second-main: #198737;
-    --color-secondary-second-light: #1d993e;
-    --color-secondary-second-dark: #14692a;
-    --color-secondary-second-darker: #0f4f20;
+  &:focus-within {
+    box-shadow: none;
+    border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 2px;
+    outline-color: var(--fallback-bc,oklch(var(--bc)/0.2));
+  }
 
-    --color-secondary-third-main: #ffaa00;
-    --color-secondary-third-light: #ffd400;
-    --color-secondary-third-dark: #cf8a00;
-    --color-secondary-third-darker: #b87a00;
+  .live_phone-country {
+    padding: 0;
+  }
 
-    /* ---- COLORS INFO ----- */
-    --color-info-main: #1890ff;
-    --color-info-light: #74caff;
-    --color-info-dark: #0c53b7;
-    --color-info-darker: #04297a;
+  .live_phone-input {
+    font-family: "Poppins", sans-serif;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+  }
+}
 
-    /* ---- COLORS SUCCESS ----- */
-    --color-success-main: #54d62c;
-    --color-success-light: #aaf27f;
-    --color-success-dark: #229a16;
-    --color-success-darker: #08660d;
+input[type="date"] {
+    &::-webkit-search-cancel-button,
+    &::-webkit-clear-button {
+      -webkit-appearance: none;
+      background-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill="%23000" fill-opacity=".54" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/%3E%3Cpath d="M0 0h24v24H0z" fill="none"/%3E%3C/svg%3E');
+      color: rgba(0, 0, 0, 0.54);
+      cursor: pointer;
+      height: 1.5rem;
+      margin-right: 0;
+      width: 1.5rem;
+    }
 
-    /* ---- COLORS WARNING ----- */
-    --color-warning-main: #ffc107;
-    --color-warning-light: #ffe16a;
-    --color-warning-dark: #d19e06;
-    --color-warning-darker: #b38705;
+    &::-webkit-calendar-picker-indicator {
+      color: rgba(0, 0, 0, 0);
+      opacity: 1;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M18.53 9.53a.75.75 0 0 0 0-1.06H5.47a.75.75 0 0 0 0 1.06l6 6a.75.75 0 0 0 1.06 0z'/%3E%3C/svg%3E");
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      border-radius: 50%;
+      margin-left: .5rem;
+    }
 
-    /* ---- COLORS DANGER ----- */
-    --color-danger-main: #ff4842;
-    --color-danger-light: #ffa48d;
-    --color-danger-dark: #c93934;
-    --color-danger-darker: #a12e2a;
-
-    /* ---- COLORS NEUTRAL ----- */
-    --color-neutral-black: #000000;
-    --color-neutral-800: #212b36;
-    --color-neutral-700: #454f5b;
-    --color-neutral-600: #637381;
-    --color-neutral-500: #919eab;
-    --color-neutral-400: #c4cdd5;
-    --color-neutral-300: #dfe3e8;
-    --color-neutral-200: #f4f6f8;
-    --color-neutral-100: #f9fafb;
-    --color-neutral-white: #ffffff;
-
-    /* ---- COLORS BACKGROUND ----- */
-    --color-background-paper: #fefefe;
-    --color-background-default: #f8f9fa;
-
-    /*** ----------- TYPOGRAPHY BASE ------------ ***/
-    /* ---- FONT-FAMILY ----- */
-    --font-system-secondary: 'Chakra Petch', 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    --font-system-primary: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    --font-system-icons: 'Roboto', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-
-    /* ---- FONT-SIZE ----- */
-    --font-size-nano: 10px;
-    --font-size-small: 12px;
-    --font-size-standard: 14px;
-    --font-size-medium: 16px;
-    --font-size-large: 20px;
-    --font-size-big: 24px;
-    --font-size-giant: 32px;
-
-    /* ---- FONT-WEIGHT ----- */
-    --font-weight-nano: 100;
-    --font-weight-small: 300;
-    --font-weight-standard: 400;
-    --font-weight-medium: 500;
-    --font-weight-large: 700;
-    --font-weight-big: 900;
-
-    /* ---- LINE-HEIGHT ----- */
-    --line-height-default: 100%;
-    --line-height-small: 120%;
-    --line-height-medim: 136%;
-    --line-height-tall: 144%;
-
-    /* ---- LETTER-SPACING ----- */
-    --letter-spacing-short: 2%;
-    --letter-spacing-long: 4%;
-
-    /* ---- LETTER CASE ----- */
-    --letter-case-up: uppercase;
-
-    /*** ----------- BORDER STYLES ------------ ***/
-    /* ---- BORDER-WIDTH ---- */
-    --border-width-none: none;
-    --border-width-small: 1px;
-    --border-width-none: 1.5px;
-    --border-width-thick: 2px;
-    --border-width-heavy: 4px;
-
-    /* ---- BORDER-RADIUS ---- */
-    --border-radius-none: none;
-    --border-radius-nano: 2px;
-    --border-radius-small: 4px;
-    --border-radius-medium: 8px;
-    --border-radius-large: 16px;
-    --border-radius-pill: 50%;
-
-    /*** ----------- SHADOW STYLES ------------ ***/
-    /* ---- SHADOW ---- */
-    --shadow-level-1: 0px 8px 16px -8px rgba(0, 0, 0, 0.15);
-    --shadow-level-2: 0px 20px 44px -18px rgba(0, 0, 0, 0.16);
-    --shadow-level-3: 0px 36px 48px -20px rgba(0, 0, 0, 0.16);
-    --shadow-level-4: 0px 0px 48px -5px rgb(0 0 0 / 14%);
+    &::-webkit-calendar-picker-indicator:hover {
+      -webkit-box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+              box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+    }
 }
