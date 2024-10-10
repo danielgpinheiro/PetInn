@@ -1,9 +1,9 @@
 import LivePhone from "live_phone"
-import Sound from './sound';
+import ScrollToElement from './scrollToElement';
 
 const hooks = {
   LivePhone,
-  Sound
+  ScrollToElement
 };
 
 export default hooks;

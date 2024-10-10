@@ -19,6 +19,9 @@ module.exports = {
       },
       transitionProperty: {
         'width': 'width'
+      },
+      willChange: {
+        'width': 'width',
       }
     },
   },

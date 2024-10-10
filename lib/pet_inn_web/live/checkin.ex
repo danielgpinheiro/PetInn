@@ -12,7 +12,7 @@ defmodule PetInnWeb.CheckinLive do
     ~H"""
     <section id="checkin" class="w-full h-full border-[1px] border-red-500">
       <.live_component module={HeaderComponent} id={:header} />
-      <div class="w-full relative min-h-[calc(100vh-156px)] p-3">
+      <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
         <.live_component module={WizardStructureComponent} id={:wizard} steps={@steps} />
       </div>
        <.live_component module={FooterComponent} id={:footer} />

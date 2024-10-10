@@ -9,14 +9,20 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
 
   def render(assigns) do
     ~H"""
-    <div id={:wizard} class="w-full flex justify-center items-center flex-col p-6 relative">
-      <button
-        phx-click="previous_step"
-        phx-target={@myself}
-        class="absolute top-5 left-10 flex items-center text-orange-600"
-      >
-        <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> Voltar
-      </button>
+    <div
+      id={:wizard}
+      phx-hook="ScrollToElement"
+      class="w-full flex justify-center items-center flex-col p-6 relative"
+    >
+      <%= if @current_step > 0 do %>
+        <button
+          phx-click="previous_step"
+          phx-target={@myself}
+          class="absolute top-5 left-10 flex items-center text-orange-600"
+        >
+          <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> Voltar
+        </button>
+      <% end %>
       
       <.live_component
         module={StepperComponent}
@@ -34,7 +40,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
           phx-click="next_step"
           phx-target={@myself}
         >
-          <%= @final_step %>
+          Continuar
         </button>
       <% end %>
     </div>
@@ -78,8 +84,15 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
         %{assigns: %{current_step: current_step, steps: steps} = _assigns} = socket
       ) do
     {:noreply,
-     socket
-     |> assign(current_step: current_step - 1, final_step: Enum.count(steps) === current_step - 2)}
+     push_event(
+       socket
+       |> assign(
+         current_step: current_step - 1,
+         final_step: Enum.count(steps) === current_step - 2
+       ),
+       "scrollTo-element",
+       %{element: "body"}
+     )}
   end
 
   def handle_event(
@@ -89,6 +102,11 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
       ) do
     send_update(Enum.at(steps, current_step).component, %{id: :step, action: :submit})
 
-    {:noreply, socket}
+    {:noreply,
+     push_event(
+       socket,
+       "scrollTo-element",
+       %{element: "body"}
+     )}
   end
 end
