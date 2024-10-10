@@ -18,22 +18,22 @@ defmodule PetInnWeb.Shared.Wizard.StepperComponent do
           </span>
         </div>
       </div>
-      
+
       <ul class="w-full flex justify-between mt-2">
-        <%= for step <- @steps do %>
+        <%= for {step, index} <- Enum.with_index(@steps) do %>
           <li
             class="flex justify-center"
             style={"width:" <> Float.to_string(100 / Enum.count(@steps)) <> "%"}
           >
-            <button class="w-full" disabled={step.index >= @current_step}>
+            <button class="w-full" disabled={index >= @current_step}>
               <.icon
                 name={step.icon}
                 class={
                   "
                     w-6 transition-colors
-                    #{if step.index === @current_step do "bg-orange-600" end}
-                    #{if step.index < @current_step do "bg-orange-400" end}
-                    #{if step.index > @current_step do "bg-gray-400" end}
+                    #{if index === @current_step do "bg-orange-600" end}
+                    #{if index < @current_step do "bg-orange-400" end}
+                    #{if index > @current_step do "bg-gray-400" end}
                   "
                 }
               />

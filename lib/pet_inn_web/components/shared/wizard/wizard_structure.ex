@@ -3,7 +3,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
 
   alias PetInnWeb.Shared.Wizard.StepperComponent
 
-  @required_keys [:index, :title, :icon, :component]
+  @required_keys [:title, :icon, :component]
   @enforce_keys @required_keys
   defstruct @required_keys
 
@@ -14,26 +14,25 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
       phx-hook="ScrollToElement"
       class="w-full flex justify-center items-center flex-col p-6 relative"
     >
-      <%= if @current_step > 0 do %>
-        <button
-          phx-click="previous_step"
-          phx-target={@myself}
-          class="absolute top-5 left-10 flex items-center text-orange-600"
-        >
-          <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> Voltar
-        </button>
-      <% end %>
-      
+      <button
+        phx-click="previous_step"
+        phx-target={@myself}
+        class={"absolute top-5 left-10 flex items-center text-orange-600 transition-opacity" <> (if @current_step === 0, do: " opacity-0 pointer-events-none", else: "")}
+      >
+        <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> Voltar
+      </button>
+
       <.live_component
         module={StepperComponent}
         id={:stepper}
         steps={@steps}
         current_step={@current_step}
       />
-      <div class="w-full mt-10 mb-20">
-        <.live_component module={Enum.at(@steps, @current_step).component} id={:step} />
+
+      <div class="w-full mt-10 mb-20 wizard-animate-content">
+        <.live_component module={Enum.at(@steps, @current_step).component} id={:step}  />
       </div>
-      
+
       <%= if !@final_step do %>
         <button
           class="btn btn-wide bg-orange-600 text-white"

@@ -1,5 +1,5 @@
 import LivePhone from "live_phone"
-import ScrollToElement from './scrollToElement';
+import ScrollToElement from './scrollToElement'
 
 const hooks = {
   LivePhone,

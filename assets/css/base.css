@@ -37,30 +37,89 @@
 }
 
 input[type="date"] {
-    &::-webkit-search-cancel-button,
-    &::-webkit-clear-button {
-      -webkit-appearance: none;
-      background-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill="%23000" fill-opacity=".54" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/%3E%3Cpath d="M0 0h24v24H0z" fill="none"/%3E%3C/svg%3E');
-      color: rgba(0, 0, 0, 0.54);
-      cursor: pointer;
-      height: 1.5rem;
-      margin-right: 0;
-      width: 1.5rem;
-    }
+  &::-webkit-search-cancel-button,
+  &::-webkit-clear-button {
+    -webkit-appearance: none;
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg fill="%23000" fill-opacity=".54" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"/%3E%3Cpath d="M0 0h24v24H0z" fill="none"/%3E%3C/svg%3E');
+    color: rgba(0, 0, 0, 0.54);
+    cursor: pointer;
+    height: 1.5rem;
+    margin-right: 0;
+    width: 1.5rem;
+  }
 
-    &::-webkit-calendar-picker-indicator {
-      color: rgba(0, 0, 0, 0);
-      opacity: 1;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M18.53 9.53a.75.75 0 0 0 0-1.06H5.47a.75.75 0 0 0 0 1.06l6 6a.75.75 0 0 0 1.06 0z'/%3E%3C/svg%3E");
-      width: 15px;
-      height: 15px;
-      cursor: pointer;
-      border-radius: 50%;
-      margin-left: .5rem;
-    }
+  &::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M18.53 9.53a.75.75 0 0 0 0-1.06H5.47a.75.75 0 0 0 0 1.06l6 6a.75.75 0 0 0 1.06 0z'/%3E%3C/svg%3E");
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-left: .5rem;
+  }
 
-    &::-webkit-calendar-picker-indicator:hover {
-      -webkit-box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
-              box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
-    }
+  &::-webkit-calendar-picker-indicator:hover {
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.04);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeOutLeft {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.wizard-animate-content {
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+
+  &.fadeInLeft {
+    animation-name: fadeInLeft;
+  }
+  &.fadeInRight {
+    animation-name: fadeInRight;
+  }
+  &.fadeOutLeft {
+    animation-name: fadeOutLeft;
+  }
+  &.fadeOutRight {
+    animation-name: fadeOutRight;
+  }
 }
