@@ -14,9 +14,10 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-input,
-select,
-textarea {
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select {
     &:-webkit-autofill {
         -webkit-box-shadow: 0 0 0 1000px white inset !important;
     }
@@ -29,6 +30,21 @@ textarea {
     border: none !important;
     outline: none !important;
     box-shadow: none !important;
+}
+
+textarea {
+    &:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    }
+
+    &:invalid,
+    &:required {
+        box-shadow: none !important;
+    }
+
+    outline: none !important;
+    box-shadow: none !important;
+    resize: none !important;
 }
 
 * {
@@ -74,14 +90,18 @@ body {
 }
 
 body,
-input,
+input[type="text"],
+input[type="date"],
+input[type="time"],
 button {
     font-size: 14px;
     font-family: "Poppins";
 }
 
 body,
-input,
+input[type="text"],
+input[type="date"],
+input[type="time"],
 textarea,
 button,
 ul,
@@ -147,7 +167,9 @@ select {
     cursor: pointer;
 }
 
-input,
+input[type="text"],
+input[type="date"],
+input[type="time"],
 textarea,
 select {
     -webkit-appearance: none !important;
@@ -174,7 +196,9 @@ textarea {
 }
 
 button,
-input {
+input[type="text"],
+input[type="date"],
+input[type="time"] {
     line-height: normal;
 }
 
@@ -194,13 +218,6 @@ body {
     font-weight: normal;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
-    padding: 0;
-    *width: 13px;
-    *height: 13px;
-}
-
 input[type="email"] {
     text-transform: lowercase;
 }
@@ -212,12 +229,6 @@ input[type="search"] {
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-    border: 0;
-    padding: 0;
 }
 
 textarea {

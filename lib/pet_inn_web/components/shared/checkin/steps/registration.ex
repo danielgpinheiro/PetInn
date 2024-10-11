@@ -19,12 +19,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
       <div class="flex justify-between w-3/4 mb-9">
         <label class="input input-bordered flex items-center gap-2 w-[48%]">
           <.icon name="hero-calendar" class="h-5 w-5 opacity-70 shrink-0" />
-          <input type="date" class="grow" placeholder="Data de Nascimento" />
+          <input type="date" class="grow text-gray-500 text-base" placeholder="Data de Nascimento" />
         </label>
         
         <label class="input input-bordered flex items-center gap-2 w-[48%] pr-0">
           <.icon name="hero-user-group" class="h-5 w-5 opacity-70 shrink-0" />
-          <select class="select select-bordered w-full max-w-xs h-[calc(3rem-2px)] min-h-[calc(3rem-2px)]">
+          <select class="select select-bordered w-full max-w-xs h-[calc(3rem-2px)] min-h-[calc(3rem-2px)] text-gray-500 text-base">
             <option disabled selected>Gênero</option>
             
             <option>Masculino</option>

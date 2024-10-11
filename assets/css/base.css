@@ -36,7 +36,7 @@
   }
 }
 
-input[type="date"] {
+input[type="date"], input[type="time"] {
   &::-webkit-search-cancel-button,
   &::-webkit-clear-button {
     -webkit-appearance: none;
