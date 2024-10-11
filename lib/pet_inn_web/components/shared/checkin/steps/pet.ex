@@ -1,6 +1,8 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   use PetInnWeb, :live_component
 
+  alias PetInnWeb.Shared.Wizard.WizardStructureComponent
+
   def render(assigns) do
     ~H"""
     <div class="w-[650px] mx-auto flex justify-center flex-col">
@@ -117,6 +119,18 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   end
 
   def mount(socket) do
+    {:ok, socket}
+  end
+
+  def update(%{action: :submit}, socket) do
+    IO.inspect("opa submeti")
+
+    send_update(WizardStructureComponent, %{id: :wizard, action: :can_continue})
+
+    {:ok, socket}
+  end
+
+  def update(_, socket) do
     {:ok, socket}
   end
 end

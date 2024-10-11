@@ -54,7 +54,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
      socket
      |> assign(steps: steps)
      |> assign(previous_step: 0)
-     |> assign(current_step: 2)
+     |> assign(current_step: 5)
      |> assign(final_step: false)
      |> assign(loading: false)}
   end

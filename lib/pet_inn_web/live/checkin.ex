@@ -8,6 +8,9 @@ defmodule PetInnWeb.CheckinLive do
   alias PetInnWeb.Shared.Checkin.Steps.VerifyComponent
   alias PetInnWeb.Shared.Checkin.Steps.RegistrationComponent
   alias PetInnWeb.Shared.Checkin.Steps.PetComponent
+  alias PetInnWeb.Shared.Checkin.Steps.AddressComponent
+  alias PetInnWeb.Shared.Checkin.Steps.ResumeComponent
+  alias PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent
 
   def render(assigns) do
     ~H"""
@@ -40,6 +43,21 @@ defmodule PetInnWeb.CheckinLive do
            title: "Dados do Pet",
            icon: "hero-heart-solid",
            component: PetComponent
+         },
+         %WizardStructureComponent{
+           title: "Endereço",
+           icon: "hero-map-pin-solid",
+           component: AddressComponent
+         },
+         %WizardStructureComponent{
+           title: "Resumo",
+           icon: "hero-list-bullet-solid",
+           component: ResumeComponent
+         },
+         %WizardStructureComponent{
+           title: "Confirmação",
+           icon: "hero-check-circle-solid",
+           component: ConfirmationComponent
          }
        ]
      )}
