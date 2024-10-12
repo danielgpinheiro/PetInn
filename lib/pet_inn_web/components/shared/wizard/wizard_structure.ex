@@ -9,11 +9,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
 
   def render(assigns) do
     ~H"""
-    <div
-      id={:wizard}
-      phx-hook="ScrollToElement"
-      class="w-full flex justify-center items-center flex-col sm:p-6 relative"
-    >
+    <div id={:wizard} class="w-full flex justify-center items-center flex-col sm:p-6 relative">
       <button
         phx-click="previous_step"
         phx-target={@myself}
@@ -28,7 +24,11 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
         steps={@steps}
         current_step={@current_step}
       />
-      <div class="w-full mt-10 mb-20 wizard-animate-content">
+      <div
+        class="w-full mt-10 mb-20 wizard-animate-content"
+        phx-hook="ScrollToElement"
+        id={:wizard_step_content}
+      >
         <.live_component module={Enum.at(@steps, @current_step).component} id={:step} />
       </div>
       
@@ -53,7 +53,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(steps: steps)
-     |> assign(current_step: 5)
+     |> assign(current_step: 0)
      |> assign(final_step: false)
      |> assign(loading: false)}
   end

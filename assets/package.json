@@ -16,6 +16,7 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "live_phone": "file:../deps/live_phone",
+    "tippy.js": "^6.3.7",
     "topbar": "^3.0.0"
   }
 }

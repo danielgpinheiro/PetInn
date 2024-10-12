@@ -62,6 +62,9 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
           <h2 class="card-title">Endereço do Santo Chico Hotel Pet</h2>
           
           <p>R. Guajajaras, 791 - Saraiva, Uberlândia - MG, 38408-406</p>
+           <span><strong>Check-In: </strong>12:00</span>
+          <span><strong>Check-Out: </strong>12:00</span>
+          <span><strong>Valor da Diária: </strong>R$ 70,00</span>
         </div>
       </div>
        <button class="btn btn-wide mx-auto">Editar Informações</button>

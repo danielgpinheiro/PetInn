@@ -38,6 +38,8 @@ defmodule PetInnWeb.Shared.Wizard.StepperComponent do
               phx-click="go_to_step"
               phx-value-step={index}
               phx-target={@myself}
+              data-tippy-content={step.title}
+              data-tippy-placement="bottom"
             >
               <.icon
                 name={step.icon}

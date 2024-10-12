@@ -11,7 +11,7 @@ defmodule PetInnWeb.Shared.Header.HeaderComponent do
         class="sm:absolute sm:top-1/4 sm:left-6 h-full max-h-20 sm:mt-[-10px]"
         alt="logo"
       />
-      <div class="w-8 h-full relative justify-center items-center pl-4 p-0 hidden sm:flex">
+      <div class="w-8 h-full relative justify-center items-center hidden sm:flex">
         <span class="text-lg font-semibold tracking-tight text-orange-400 whitespace-nowrap absolute top-0 right-8 leading-[60px]">
           Pet Check-in Online
         </span>

@@ -9,6 +9,8 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
       <button
         class="absolute top-0 h-full right-2 sm:right-6 flex justify-between items-center w-16"
         phx-click={toggle_modal()}
+        data-tippy-content="Mudar lingua"
+        data-tippy-placement="bottom"
       >
         <.icon name="hero-globe-alt" class="text-gray-600 sm:w-6 sm:h-6 w-4 h-4" />
         <span class="text-gray-400">PT</span>
