@@ -12,6 +12,10 @@
   padding: 0 1rem;
   width: 75%;
 
+  @media all and (max-width: 639px) {
+    width: 100%;
+  }
+
   &.live_phone-valid {
     background: none;
   }

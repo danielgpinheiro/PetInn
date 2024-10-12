@@ -1,15 +1,17 @@
-defmodule PetInnWeb.Shared.HeaderComponent do
+defmodule PetInnWeb.Shared.Header.HeaderComponent do
   use PetInnWeb, :live_component
+
+  alias PetInnWeb.Shared.Header.ChangeLanguage
 
   def render(assigns) do
     ~H"""
-    <header class="w-full h-16 flex justify-center items-center relative">
+    <header class="w-full h-16 flex justify-center items-center relative px-2 py-2 sm:p-0 sm:border-0 border-b-[1px] border-gray-300">
       <img
         src="/images/logo_inn.png"
-        class="absolute top-1/4 left-6 h-full max-h-20 mt-[-10px]"
+        class="sm:absolute sm:top-1/4 sm:left-6 h-full max-h-20 sm:mt-[-10px]"
         alt="logo"
       />
-      <div class="w-8 h-full relative flex justify-center items-center">
+      <div class="w-8 h-full relative justify-center items-center pl-4 p-0 hidden sm:flex">
         <span class="text-lg font-semibold tracking-tight text-orange-400 whitespace-nowrap absolute top-0 right-8 leading-[60px]">
           Pet Check-in Online
         </span>
@@ -18,11 +20,7 @@ defmodule PetInnWeb.Shared.HeaderComponent do
           Santo Chico
         </span>
       </div>
-      
-      <button class="absolute top-0 h-full right-6 flex justify-between items-center w-16">
-        <.icon name="hero-globe-alt" class="text-gray-600" /> <span class="text-gray-400">PT</span>
-        <.icon name="hero-chevron-down" class="text-gray-600 w-4 h-4" />
-      </button>
+       <.live_component module={ChangeLanguage} id={:change_language} />
     </header>
     """
   end

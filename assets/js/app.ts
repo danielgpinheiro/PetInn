@@ -20,7 +20,9 @@ import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
 import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
+
 import topbar from "topbar"
+import 'animate.css'
 
 import hooks from "../hooks";
 

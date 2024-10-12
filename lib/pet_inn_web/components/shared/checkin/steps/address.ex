@@ -5,9 +5,9 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
 
   def render(assigns) do
     ~H"""
-    <div class="w-[500px] flex flex-col mx-auto">
+    <div class="w-full sm:w-[500px] flex flex-col mx-auto">
       <div class="w-full flex flex-col items-center">
-        <label class="input input-bordered flex items-center gap-2 mb-4 w-3/4">
+        <label class="input input-bordered flex items-center gap-2 mb-4 w-full sm:w-3/4">
           CEP
           <input type="text" class="grow" placeholder="Insira o CEP para facilitar o preenchimento" />
         </label>
@@ -47,12 +47,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
         </select>
       </label>
       
-      <div class="flex w-full mb-2 justify-between">
-        <label class="input input-bordered flex items-center gap-2 w-[calc(50%-20px)]">
+      <div class="flex w-full mb-2 justify-between flex-wrap sm:flex-nowrap">
+        <label class="input input-bordered flex items-center gap-2 w-full mb-2 sm:mb-0 sm:w-[calc(50%-20px)]">
           Cidade <input type="text" class="grow" />
         </label>
         
-        <label class="input input-bordered flex items-center gap-2 w-[calc(50%-20px)]">
+        <label class="input input-bordered flex items-center gap-2 w-full sm:w-[calc(50%-20px)]">
           Bairro <input type="text" class="grow" />
         </label>
       </div>
@@ -61,12 +61,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
         Logradouro <input type="text" class="grow" />
       </label>
       
-      <div class="flex w-full mb-2 justify-between">
-        <label class="input input-bordered flex items-center gap-2 w-[calc(50%-20px)]">
+      <div class="flex w-full mb-2 justify-between flex-wrap sm:flex-nowrap">
+        <label class="input input-bordered flex items-center gap-2 w-full mb-2 sm:mb-0 sm:w-[calc(50%-20px)]">
           Número <input type="text" class="grow" />
         </label>
         
-        <label class="input input-bordered flex items-center gap-2 w-[calc(50%-20px)]">
+        <label class="input input-bordered flex items-center gap-2 w-full sm:w-[calc(50%-20px)]">
           Complemento <input type="text" class="grow" />
         </label>
       </div>

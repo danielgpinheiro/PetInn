@@ -12,12 +12,12 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     <div
       id={:wizard}
       phx-hook="ScrollToElement"
-      class="w-full flex justify-center items-center flex-col p-6 relative"
+      class="w-full flex justify-center items-center flex-col sm:p-6 relative"
     >
       <button
         phx-click="previous_step"
         phx-target={@myself}
-        class={"absolute top-5 left-10 flex items-center text-orange-600 transition-opacity" <> (if @current_step === 0, do: " opacity-0 pointer-events-none", else: "")}
+        class={"absolute top-[-55px] left-0 sm:top-10 sm:left-10 flex items-center text-orange-600 transition-opacity" <> (if @current_step === 0, do: " opacity-0 pointer-events-none", else: "")}
       >
         <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> Voltar
       </button>
@@ -53,7 +53,6 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(steps: steps)
-     |> assign(previous_step: 0)
      |> assign(current_step: 5)
      |> assign(final_step: false)
      |> assign(loading: false)}
@@ -66,10 +65,16 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(
-       previous_step: current_step - 1,
        current_step: current_step + 1,
        final_step: Enum.count(steps) === current_step + 2
      )}
+  end
+
+  def update(
+        %{action: :go_to_step, step: step},
+        socket
+      ) do
+    {:ok, socket |> assign(current_step: String.to_integer(step))}
   end
 
   def update(_, socket) do

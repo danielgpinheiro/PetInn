@@ -1,7 +1,7 @@
 defmodule PetInnWeb.CheckinLive do
   use PetInnWeb, :live_view
 
-  alias PetInnWeb.Shared.HeaderComponent
+  alias PetInnWeb.Shared.Header.HeaderComponent
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
   alias PetInnWeb.Shared.FooterComponent
 

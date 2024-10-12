@@ -5,13 +5,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
 
   def render(assigns) do
     ~H"""
-    <div class="w-[600px] flex flex-col justify-center mx-auto">
+    <div class="w-full sm:w-[600px] flex flex-col justify-center mx-auto">
       <h1 class="text-center text-lg text-gray-800 mb-11">
         Confira se todos os dados estão corretos, caso não, é possivel edita-los no botão Editar Informações
       </h1>
       
-      <div class="w-full flex justify-between mb-12">
-        <div class="card bg-base-100 shadow-xl w-[calc(50%-20px)]">
+      <div class="w-full flex justify-between mb-12 flex-wrap sm:flex-nowrap">
+        <div class="card bg-base-100 shadow-xl w-full mb-4 sm:mb-0 sm:w-[calc(50%-20px)]">
           <div class="card-body flex flex-col">
             <h3 class="font-bold">Dados Pessoais</h3>
              <span><strong>Email:</strong> lorem@lorem.com.br</span>
@@ -32,7 +32,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
           </div>
         </div>
         
-        <div class="card bg-base-100 shadow-xl w-[calc(50%-20px)]">
+        <div class="card bg-base-100 shadow-xl w-full sm:w-[calc(50%-20px)]">
           <div class="card-body flex flex-col">
             <h3 class="font-bold">Dados do Pet</h3>
              <span><strong>Nome:</strong> lorem@lorem.com.br</span>
