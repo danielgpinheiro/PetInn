@@ -14,6 +14,7 @@
     "daisyui": "^4.12.12"
   },
   "dependencies": {
+    "@easepick/bundle": "^1.2.1",
     "animate.css": "^4.1.1",
     "live_phone": "file:../deps/live_phone",
     "tippy.js": "^6.3.7",

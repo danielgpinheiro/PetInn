@@ -37,32 +37,32 @@ defmodule PetInnWeb.CheckinLive do
      |> assign(
        steps: [
          %WizardStructureComponent{
-           title: "Identificacão",
+           title: gettext("Identificação"),
            icon: "hero-at-symbol-solid",
            component: VerifyComponent
          },
          %WizardStructureComponent{
-           title: "Dados Cadastrais",
+           title: gettext("Dados Cadastrais"),
            icon: "hero-identification-solid",
            component: RegistrationComponent
          },
          %WizardStructureComponent{
-           title: "Dados do Pet",
+           title: gettext("Dados do Pet"),
            icon: "hero-heart-solid",
            component: PetComponent
          },
          %WizardStructureComponent{
-           title: "Endereço",
+           title: gettext("Endereço"),
            icon: "hero-map-pin-solid",
            component: AddressComponent
          },
          %WizardStructureComponent{
-           title: "Resumo",
+           title: gettext("Resumo"),
            icon: "hero-list-bullet-solid",
            component: ResumeComponent
          },
          %WizardStructureComponent{
-           title: "Confirmação",
+           title: gettext("Confirmação"),
            icon: "hero-check-circle-solid",
            component: ConfirmationComponent
          }

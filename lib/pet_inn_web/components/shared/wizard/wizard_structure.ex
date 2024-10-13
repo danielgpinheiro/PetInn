@@ -3,8 +3,6 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
 
   alias PetInnWeb.Shared.Wizard.StepperComponent
 
-  alias Phoenix.LiveView.JS
-
   @required_keys [:title, :icon, :component]
   @enforce_keys @required_keys
   defstruct @required_keys

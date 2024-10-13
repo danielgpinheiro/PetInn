@@ -9,7 +9,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
     ~H"""
     <div id="change-language" phx-hook="Locale">
       <button
-        class="absolute top-0 h-full right-2 sm:right-6 flex justify-between items-center w-16"
+        class="absolute top-0 h-full right-2 sm:right-6 flex justify-between items-center w-12"
         phx-click={toggle_modal()}
         data-tippy-content={gettext("Mudar Lingua")}
         data-tippy-placement="bottom"
@@ -18,7 +18,6 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
         <span class="text-gray-400 uppercase">
           <%= String.replace(Gettext.get_locale(), "_BR", "") %>
         </span>
-         <.icon name="hero-chevron-down" class="text-gray-600 w-4 h-4" />
       </button>
       
       <div

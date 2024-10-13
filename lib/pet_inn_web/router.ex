@@ -21,6 +21,16 @@ defmodule PetInnWeb.Router do
       get "/", RedirectController, :index
 
       live "/checkin", CheckinLive, :checkin
+      live "/checkout", CheckoutLive, :checkout
+      live "/confirm", ConfirmLive, :confirm
+    end
+  end
+
+  live_session :admin, layout: {PetInnWeb.AdminLayout, :render} do
+    scope "/admin", PetInnWeb do
+      pipe_through :browser
+
+      live "/booking", Admin.BookingLive, :booking
     end
   end
 
