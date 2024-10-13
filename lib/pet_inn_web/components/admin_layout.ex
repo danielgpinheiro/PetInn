@@ -1,5 +1,4 @@
 defmodule PetInnWeb.AdminLayout do
-  alias IEx.Info
   use PetInnWeb, :live_view
 
   alias Phoenix.LiveView.JS

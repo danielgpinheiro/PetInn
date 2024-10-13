@@ -3,8 +3,18 @@ defmodule PetInnWeb.Admin.BookingLive do
 
   def render(assigns) do
     ~H"""
-    <section class="w-full h-full overflow-y-auto">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quos quidem soluta dicta quia necessitatibus temporibus laboriosam fugit, molestiae recusandae consequuntur obcaecati, beatae velit ducimus?
+    <section class="w-full h-full overflow-y-auto" phx-hook="Gantt" id="booking">
+      <header
+        class="w-full h-12 border-b-[1px] border-gray-300 flex items-center justify-start px-2"
+        id="gantt-datepicker"
+        phx-hook="GanttDatePicker"
+      >
+        <input
+          id="datepicker"
+          class="input input-bordered cursor-pointer h-8"
+          placeholder="Selecionar Data"
+        />
+      </header>
     </section>
     """
   end

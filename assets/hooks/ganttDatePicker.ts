@@ -2,9 +2,8 @@ import { easepick } from "@easepick/core"
 import { RangePlugin } from '@easepick/range-plugin'
 import { AmpPlugin } from '@easepick/amp-plugin'
 import { LockPlugin } from '@easepick/lock-plugin'
-import { TimePlugin } from '@easepick/time-plugin'
 
-const confirmDatePicker = {
+const ganttDatePicker = {
   mounted() {
     new easepick.create({
       element: document.getElementById('datepicker') as HTMLDivElement,
@@ -13,7 +12,7 @@ const confirmDatePicker = {
       ],
       lang: "pt-br",
       zIndex: 10,
-      format: "DD/MM/YYYY HH:mm",
+      format: "DD/MM/YYYY",
       readonly: false,
       autoApply: false,
       locale: {
@@ -35,22 +34,15 @@ const confirmDatePicker = {
         delimiter: ' até '
       },
       LockPlugin: {
-        selectForward: true,
-        inseparable: true,
-        minDate: new Date(),
-        minDays: 2
-      },
-      TimePlugin: {
-        stepMinutes: 30
+        inseparable: false,
       },
       plugins: [
         AmpPlugin,
         RangePlugin,
-        LockPlugin,
-        TimePlugin
+        LockPlugin
       ]
     })
   }
 }
 
-export default confirmDatePicker
+export default ganttDatePicker

@@ -6,7 +6,7 @@ defmodule PetInnWeb.Shared.Confirm.Steps.SelectDateComponent do
   def render(assigns) do
     ~H"""
     <div
-      class="w-[600px] mx-auto flex flex-col justify-center"
+      class="w-full sm:w-[600px] mx-auto flex flex-col justify-center"
       id="select_date"
       phx-hook="ConfirmDatePicker"
     >
@@ -14,21 +14,11 @@ defmodule PetInnWeb.Shared.Confirm.Steps.SelectDateComponent do
         <%= gettext("Por favor, selecione a data e o horário de Check-In e Check-Out do seu Pet") %>
       </h1>
       
-      <div class="flex justify-between">
-        <label class="form-control w-[48%]">
-          <div class="label">
-            <span class="label-text">Check-In</span>
-          </div>
-           <input type="datetime-local" placeholder="" class="input input-bordered w-full max-w-xs" />
-        </label>
-        
-        <label class="form-control w-[48%]">
-          <div class="label">
-            <span class="label-text">Check-Out</span>
-          </div>
-           <input type="datetime-local" placeholder="" class="input input-bordered w-full max-w-xs" />
-        </label>
-      </div>
+      <input
+        id="datepicker"
+        class="input input-bordered cursor-pointer mx-auto w-full sm:w-[60%]"
+        placeholder="Clique aqui para selecionar"
+      />
     </div>
     """
   end
