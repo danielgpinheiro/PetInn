@@ -4,7 +4,6 @@
 const plugin = require("tailwindcss/plugin")
 const fs = require("fs")
 const path = require("path")
-const { default: daisyui } = require("daisyui")
 
 module.exports = {
   content: [

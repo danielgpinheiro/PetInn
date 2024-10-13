@@ -36,7 +36,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
             phx-click={toggle_modal()}
             class="px-3 py-2 rounded-full bg-slate-300 text-slate-500"
           >
-            <%= gettext("test") %>
+            <%= gettext("Fechar") %>
           </button>
         </div>
         

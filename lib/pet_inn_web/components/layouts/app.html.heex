@@ -1,4 +1,6 @@
-<main class="w-full h-screen border-[1px] border-blue-500" id="main" phx-hook="Tooltip">
-  <.flash_group flash={@flash} />
-  <%= @inner_content %>
+<main class="w-full h-screen" id="main" phx-hook="Tooltip">
+  <div id="scroll-to-element" phx-hook="ScrollToElement">
+    <.flash_group flash={@flash} />
+    <%= @inner_content %>
+  </div>
 </main>

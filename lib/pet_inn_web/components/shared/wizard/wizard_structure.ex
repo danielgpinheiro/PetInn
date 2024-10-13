@@ -3,6 +3,8 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
 
   alias PetInnWeb.Shared.Wizard.StepperComponent
 
+  alias Phoenix.LiveView.JS
+
   @required_keys [:title, :icon, :component]
   @enforce_keys @required_keys
   defstruct @required_keys
@@ -24,11 +26,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
         steps={@steps}
         current_step={@current_step}
       />
-      <div
-        class="w-full mt-10 mb-20 wizard-animate-content"
-        phx-hook="ScrollToElement"
-        id={:wizard_step_content}
-      >
+      <div class="w-full mt-10 mb-20 wizard-animate-content" id={:wizard_step_content}>
         <.live_component module={Enum.at(@steps, @current_step).component} id={:step} />
       </div>
       
