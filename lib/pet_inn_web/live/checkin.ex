@@ -24,7 +24,14 @@ defmodule PetInnWeb.CheckinLive do
     """
   end
 
-  def mount(_params, _session, socket) do
+  def mount(params, _session, socket) do
+    locale = Map.fetch(params, "locale")
+
+    case locale do
+      {:ok, value} -> Gettext.put_locale(value)
+      :error -> Gettext.put_locale("pt_BR")
+    end
+
     {:ok,
      socket
      |> assign(

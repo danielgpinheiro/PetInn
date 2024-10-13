@@ -17,7 +17,7 @@ defmodule PetInnWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import PetInnWeb.Gettext
+  use Gettext, backend: PetInnWeb.Gettext
 
   @doc """
   Renders a modal.

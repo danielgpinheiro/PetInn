@@ -1,7 +1,7 @@
 const scrollToElement = {
   mounted() {
-    window.addEventListener("phx:scrollTo-element", (event) => {
-      const { detail } = event
+    window.addEventListener("phx:scroll_to_element", (event) => {
+      const { detail } = event as CustomEvent
       const { element } = detail
       const elementDOM = document.querySelector<HTMLElement>(element)
       const wizardContentElement = document.querySelector('.wizard-animate-content')

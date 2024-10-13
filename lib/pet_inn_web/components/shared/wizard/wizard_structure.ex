@@ -93,7 +93,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
          current_step: current_step - 1,
          final_step: Enum.count(steps) === current_step - 2
        ),
-       "scrollTo-element",
+       "scroll_to_element",
        %{element: "body"}
      )}
   end
@@ -108,7 +108,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:noreply,
      push_event(
        socket,
-       "scrollTo-element",
+       "scroll_to_element",
        %{element: "body"}
      )}
   end

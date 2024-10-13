@@ -43,7 +43,7 @@ defmodule PetInnWeb do
         layouts: [html: PetInnWeb.Layouts]
 
       import Plug.Conn
-      import PetInnWeb.Gettext
+      use Gettext, backend: PetInnWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -85,7 +85,7 @@ defmodule PetInnWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import PetInnWeb.CoreComponents
-      import PetInnWeb.Gettext
+      use Gettext, backend: PetInnWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -103,8 +103,6 @@ defmodule PetInnWeb do
         statics: PetInnWeb.static_paths()
     end
   end
-
-
 
   @doc """
   When used, dispatch to the appropriate controller/live_view/etc.

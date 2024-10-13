@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :gettext, default_locale: "pt_BR"
+
 config :pet_inn,
   ecto_repos: [PetInn.Repo],
   generators: [timestamp_type: :utc_datetime]

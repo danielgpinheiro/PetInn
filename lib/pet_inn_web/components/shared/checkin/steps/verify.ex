@@ -7,8 +7,11 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
     ~H"""
     <div class="w-full sm:w-[550px] mx-auto flex flex-col justify-center items-center">
       <h1 class="text-center text-lg text-gray-800 mb-11">
-        Em pouco tempo, o cadastro de você e do seu Pet será feito.<br />
-        Após isso, você poderá reutilizar seu registro em outros lugares com o ecosistema Pet Inns.
+        <%= gettext(
+          "Em pouco tempo, o cadastro de você e do seu Pet será feito. %{break_line} Após isso, você poderá reutilizar seu registro em outros lugares com o ecosistema Pet Inns.",
+          break_line: "</br>"
+        )
+        |> raw() %>
       </h1>
       
       <label class="input input-bordered flex items-center gap-2 mb-9 w-full sm:w-3/4">
@@ -23,7 +26,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
         field={:phone}
         tabindex={0}
         preferred={["BR", "US", "ES"]}
-        placeholder="Número de Telefone"
+        placeholder={gettext("Número de Telefone")}
       />
     </div>
     """
