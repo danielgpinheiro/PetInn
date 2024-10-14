@@ -31,6 +31,8 @@ defmodule PetInnWeb.Router do
       pipe_through :browser
 
       live "/booking", Admin.BookingLive, :booking
+      live "/rating", Admin.RatingLive, :rating
+      live "/generate", Admin.GenerateLive, :generate
     end
   end
 

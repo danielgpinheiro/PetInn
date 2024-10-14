@@ -24,21 +24,17 @@ defmodule PetInnWeb.AdminLayout do
               </.link>
               
               <.link
-                navigate="/admin/checkin"
+                navigate="/admin/rating"
                 class="leading-6 text-zinc-900 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
               >
-                <.icon name="hero-arrow-right-end-on-rectangle" class="mr-2" /> <%= gettext(
-                  "Check-In"
-                ) %>
+                <.icon name="hero-star" class="mr-2" /> <%= gettext("Avaliações") %>
               </.link>
               
               <.link
-                navigate="/admin/checkout"
+                navigate="/admin/generate"
                 class="leading-6 text-zinc-900 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
               >
-                <.icon name="hero-arrow-left-start-on-rectangle" class="mr-2" /> <%= gettext(
-                  "Check-Out"
-                ) %>
+                <.icon name="hero-qr-code" class="mr-2" /> <%= gettext("Gerar Link de Check-In") %>
               </.link>
               
               <div class="absolute bottom-0 left-0 w-full p-2">
