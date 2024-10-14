@@ -5,6 +5,7 @@
 @import '../node_modules/tippy.js/dist/tippy.css';
 @import '../node_modules/tippy.js/dist/backdrop.css';
 @import '../node_modules/tippy.js/animations/shift-away.css';
+@import '../node_modules/@event-calendar/core/index.css';
 
 /* This file is for your main application CSS */
 input[type="number"]::-webkit-inner-spin-button,

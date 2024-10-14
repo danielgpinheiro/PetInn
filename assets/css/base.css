@@ -156,3 +156,15 @@ input[type="date"], input[type="time"] {
     }
   }
 }
+
+#calendar {
+  .ec-toolbar {
+    padding: 0 12px;
+    margin-bottom: 0;
+    height: 60px;
+  }
+
+  .ec-button-group, .ec-button, .ec-start {
+    margin-bottom: 0;
+  }
+}

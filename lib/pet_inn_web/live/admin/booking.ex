@@ -3,22 +3,13 @@ defmodule PetInnWeb.Admin.BookingLive do
 
   def render(assigns) do
     ~H"""
-    <section class="w-full h-full overflow-hidden" phx-hook="Gantt" id="booking">
-      <header
-        class="w-full h-12 border-b-[1px] border-gray-300 flex items-center justify-between px-2"
-        id="gantt-datepicker"
-        phx-hook="GanttDatePicker"
-      >
-        <input
-          id="datepicker"
-          class="input input-bordered cursor-pointer h-8"
-          placeholder="Selecionar Data"
-        />
+    <section class="w-full h-full overflow-hidden flex flex-col" id="booking">
+      <header class="w-full h-12 border-b-[1px] border-gray-300 flex items-center justify-between px-2">
+        <label class="input input-bordered flex items-center gap-2 h-8 mr-4">
+          Pesquisar <input type="text" class="grow" placeholder="" />
+        </label>
+        
         <div class="flex items-center">
-          <label class="input input-bordered flex items-center gap-2 h-8 mr-4">
-            Pesquisar <input type="text" class="grow" placeholder="" />
-          </label>
-          
           <div class="dropdown dropdown-bottom dropdown-end">
             <div tabindex="0" role="button" class="btn btn-outline m-1 btn-sm">Espécie</div>
             
@@ -50,7 +41,7 @@ defmodule PetInnWeb.Admin.BookingLive do
       </header>
       
       <div class="w-full h-full flex overflow-y-auto">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, quaerat dolorem, nisi consequatur reprehenderit sapiente porro aut unde eius laudantium, architecto aspernatur possimus. Pariatur, eaque dignissimos! Nobis consequuntur in a?
+        <div id="calendar" class="w-full h-full" phx-hook="Calendar" />
       </div>
     </section>
     """
