@@ -1,6 +1,8 @@
 defmodule PetInnWeb.Admin.BookingLive do
   use PetInnWeb, :live_view
 
+  alias PetInnWeb.Shared.Admin.Booking.DetailedBooking
+
   def render(assigns) do
     ~H"""
     <section class="w-full h-full overflow-hidden flex flex-col" id="booking">
@@ -25,7 +27,7 @@ defmodule PetInnWeb.Admin.BookingLive do
           
           <div class="dropdown dropdown-bottom dropdown-end">
             <div tabindex="0" role="button" class="btn btn-outline m-1 btn-sm">
-              Hospedagem
+              <%= @detailed_opened %>
             </div>
             
             <ul
@@ -43,6 +45,13 @@ defmodule PetInnWeb.Admin.BookingLive do
       <div class="w-full h-full flex overflow-y-auto">
         <div id="calendar" class="w-full h-full" phx-hook="Calendar" />
       </div>
+      
+      <.live_component
+        module={DetailedBooking}
+        id={:detailed_booking}
+        opened={@detailed_opened}
+        params={@detailed_params}
+      />
     </section>
     """
   end
@@ -55,6 +64,10 @@ defmodule PetInnWeb.Admin.BookingLive do
       :error -> Gettext.put_locale("pt_BR")
     end
 
-    {:ok, socket}
+    {:ok, socket |> assign(detailed_opened: false, detailed_params: nil)}
+  end
+
+  def handle_event("open_detailed_booking", params, socket) do
+    {:noreply, socket |> assign(detailed_params: params) |> assign(detailed_opened: true)}
   end
 end
