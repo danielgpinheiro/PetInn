@@ -12,12 +12,19 @@ defmodule PetInnWeb.CheckinLive do
   alias PetInnWeb.Shared.Checkin.Steps.ResumeComponent
   alias PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent
 
+  alias PetInnWeb.CheckinController
+
   def render(assigns) do
     ~H"""
     <section id="checkin" class="w-full h-full">
-      <.live_component module={HeaderComponent} id={:header} />
+      <.live_component module={HeaderComponent} id={:header} inn_id={@inn_id} />
       <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
-        <.live_component module={WizardStructureComponent} id={:wizard} steps={@steps} />
+        <.live_component
+          module={WizardStructureComponent}
+          id={:wizard}
+          steps={@steps}
+          inn_id={@inn_id}
+        />
       </div>
        <.live_component module={FooterComponent} id={:footer} />
     </section>
@@ -26,14 +33,18 @@ defmodule PetInnWeb.CheckinLive do
 
   def mount(params, _session, socket) do
     locale = Map.fetch(params, "locale")
+    inn_id = Map.fetch!(params, "inn_id")
 
     case locale do
       {:ok, value} -> Gettext.put_locale(value)
       :error -> Gettext.put_locale("pt_BR")
     end
 
+    CheckinController.get_inn(inn_id)
+
     {:ok,
      socket
+     |> assign(inn_id: inn_id)
      |> assign(
        steps: [
          %WizardStructureComponent{

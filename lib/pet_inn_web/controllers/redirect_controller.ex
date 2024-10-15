@@ -3,7 +3,7 @@ defmodule PetInnWeb.RedirectController do
 
   def index(conn, _params) do
     conn
-    |> redirect(to: "/checkin")
+    |> redirect(to: "/login")
     |> halt()
   end
 end

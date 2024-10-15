@@ -25,7 +25,11 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
         current_step={@current_step}
       />
       <div class="w-full mt-10 mb-20 wizard-animate-content" id={:wizard_step_content}>
-        <.live_component module={Enum.at(@steps, @current_step).component} id={:step} />
+        <.live_component
+          module={Enum.at(@steps, @current_step).component}
+          id={:step}
+          inn_id={@inn_id}
+        />
       </div>
       
       <%= if !@final_step do %>
@@ -45,13 +49,14 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok, socket}
   end
 
-  def update(%{steps: steps} = _assigns, socket) do
+  def update(%{steps: steps, inn_id: inn_id} = _assigns, socket) do
     {:ok,
      socket
      |> assign(steps: steps)
      |> assign(current_step: 0)
      |> assign(final_step: false)
-     |> assign(loading: false)}
+     |> assign(loading: false)
+     |> assign(inn_id: inn_id)}
   end
 
   def update(
