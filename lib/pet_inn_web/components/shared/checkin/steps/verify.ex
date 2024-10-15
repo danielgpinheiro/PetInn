@@ -14,12 +14,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
         )
         |> raw() %>
       </h1>
-      
+
       <label class="input input-bordered flex items-center gap-2 mb-9 w-full sm:w-3/4">
         <.icon name="hero-envelope" class="h-5 w-5 opacity-70" />
         <input type="text" class="grow" placeholder="Email" />
       </label>
-      
+
       <.live_component
         module={LivePhone}
         id="phone"
@@ -47,7 +47,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
 
   def update(%{inn_id: inn_id} = _assigns, socket) do
     inn = CheckinController.get_table_cache(:inn, inn_id)
-
+    IO.inspect(inn)
     {:ok, socket}
   end
 

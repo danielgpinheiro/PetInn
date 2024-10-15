@@ -5,28 +5,20 @@ defmodule PetInnWeb.CheckinController do
 
   def get_inn(inn_id) do
     case Inn.Methods.get_by_id(inn_id) do
-      {:ok, value} -> create_inn_cache() |> :ets.insert({inn_id, value})
+      {:ok, value} -> create_table_cache(:inn) |> :ets.insert({inn_id, value})
       {:error, _} -> nil
     end
   end
 
-  def create_inn_cache() do
-    if Enum.member?(:ets.all(), :inn) == false do
-      :ets.new(:inn, [:public, :named_table])
-    else
-      :ets.whereis(:inn)
-    end
-  end
-
-  def create_user_cache() do
-    if Enum.member?(:ets.all(), :user) == false do
-      :ets.new(:user, [:public, :named_table])
-    else
-      :ets.whereis(:user)
-    end
-  end
-
   def get_table_cache(name, id) do
-    Enum.at(:ets.lookup(name, id), 0) |> elem(1)
+    :ets.lookup(name, id) |> Enum.at(0) |> elem(1)
+  end
+
+  def create_table_cache(name) do
+     if Enum.member?(:ets.all(), name) == false do
+      :ets.new(name, [:public, :named_table])
+    else
+      :ets.whereis(name)
+    end
   end
 end
