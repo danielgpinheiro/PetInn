@@ -18,17 +18,15 @@ defmodule PetInnWeb.Admin.RatingLive do
       
       <ul class="w-full h-full flex overflow-y-auto flex-wrap p-4">
         <li class="w-1/5 mr-[5%] mb-4">
-          <div class="card bg-base-100 w-80 shadow-md">
-            <div class="card-body">
-              <h2 class="card-title text-sm">Sonic Golden - Daniel Pinheiro</h2>
-              
-              <p>NPS: 10</p>
-              
-              <div class="card-actions justify-start">
-                Observações: loirem ipsum
-              </div>
-            </div>
-          </div>
+          <.card class="card bg-base-100 w-80 shadow-md" variant="outline">
+            <.card_content
+              class="card-body"
+              heading="Sonic Golden - Daniel Pinheiro"
+              category="NPS: 10"
+            >
+              Observações: loirem ipsum
+            </.card_content>
+          </.card>
         </li>
       </ul>
     </section>

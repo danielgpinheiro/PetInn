@@ -1,5 +1,5 @@
-import Calendar from '@event-calendar/core';
-import TimeGrid from '@event-calendar/time-grid';
+import Calendar from '@event-calendar/core'
+import TimeGrid from '@event-calendar/time-grid'
 import DayGrid from '@event-calendar/day-grid'
 import List from '@event-calendar/list'
 
@@ -18,7 +18,7 @@ const calendar = {
 }
 
 const initCalendar = () => {
-  new Calendar({
+  ec = new Calendar({
     target: document.getElementById('calendar'),
     props: {
       plugins: [TimeGrid, DayGrid, List],

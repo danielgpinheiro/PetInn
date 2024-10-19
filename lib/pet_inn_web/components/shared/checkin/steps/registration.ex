@@ -41,44 +41,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
           type="select"
           field={@form[:gender]}
           label={gettext("Gênero")}
-          options={[gettext("Gênero"), gettext("Masculino"), gettext("Feminino")]}
+          options={["", gettext("Masculino"), gettext("Feminino"), gettext("Outro")]}
         /> <.field field={@form[:job]} label={gettext("Profissão")} type="text" class="w-96" />
         <:actions>
           <.button color="warning" label="Continuar" variant="shadow" class="mt-24 w-64 mx-auto" />
         </:actions>
       </.simple_form>
-      
-      <%!-- <label class="input input-bordered flex items-center gap-2 mb-9 w-full sm:w-3/4">
-        <.icon name="hero-user" class="h-5 w-5 opacity-70" />
-        <input type="text" class="grow" placeholder={gettext("Nome Completo")} />
-      </label>
-
-      <div class="flex justify-between w-full sm:w-3/4 mb-9 flex-wrap sm:flex-nowrap">
-        <label class="input input-bordered flex items-center gap-2 w-full sm:w-[48%] mb-9 sm:mb-0">
-          <.icon name="hero-calendar" class="h-5 w-5 opacity-70 shrink-0" />
-          <input
-            type="date"
-            class="grow text-gray-500 text-base"
-            placeholder={gettext("Data de Nascimento")}
-          />
-        </label>
-
-        <label class="input input-bordered flex items-center gap-2 w-full sm:w-[48%] pr-0">
-          <.icon name="hero-user-group" class="h-5 w-5 opacity-70 shrink-0" />
-          <select class="select select-bordered w-full max-w-xs h-[calc(3rem-2px)] min-h-[calc(3rem-2px)] text-gray-500 text-base">
-            <option disabled selected><%= gettext("Gênero") %></option>
-
-            <option><%= gettext("Masculino") %></option>
-
-            <option><%= gettext("Feminino") %></option>
-          </select>
-        </label>
-      </div>
-
-      <label class="input input-bordered flex items-center gap-2 mb-9 w-full sm:w-3/4">
-        <.icon name="hero-briefcase" class="h-5 w-5 opacity-70" />
-        <input type="text" class="grow" placeholder={gettext("Profissão")} />
-      </label> --%>
     </div>
     """
   end

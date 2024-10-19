@@ -26,6 +26,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
         phx-change="validate"
         phx-submit="submit"
         phx-target={@myself}
+        as={:phone}
         class="flex flex-col w-full justify-center items-center"
       >
         <.field type="email" field={@form[:email]} class="w-96" />

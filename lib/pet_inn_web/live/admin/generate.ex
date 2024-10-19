@@ -6,8 +6,10 @@ defmodule PetInnWeb.Admin.GenerateLive do
   def render(assigns) do
     ~H"""
     <section class="w-full h-full overflow-hidden py-4 flex flex-col items-center" id="generate">
-      <h1 class="text-center text-lg text-gray-800 mb-11">
-        Mande esse QRCode ou o link abaixo para o seus clientes fazerem o Check-In Online do Pet
+      <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
+        <%= gettext(
+          "Mande esse QRCode ou o link abaixo para o seus clientes fazerem o Check-In Online do Pet"
+        ) %>
       </h1>
        <canvas id="qrcode" phx-hook="QRCode"></canvas>
       <label
@@ -17,13 +19,17 @@ defmodule PetInnWeb.Admin.GenerateLive do
       >
         <input
           type="text"
-          class="grow"
+          class="grow rounded dark:text-gray-200 dark:bg-gray-900"
           value="http://localhost:4000/admin/generate"
           id="text-to-clipboard"
         />
-        <button phx-click={JS.dispatch("pet_inn:clipboard")}>
+        <.button
+          phx-click={JS.dispatch("pet_inn:clipboard")}
+          data-tippy-content={gettext("Copiar Link")}
+          data-tippy-placement="bottom"
+        >
           <.icon name="hero-clipboard-document" class="h-6 w-6 opacity-90" />
-        </button>
+        </.button>
       </label>
     </section>
     """

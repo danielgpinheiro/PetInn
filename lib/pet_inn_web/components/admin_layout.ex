@@ -6,39 +6,39 @@ defmodule PetInnWeb.AdminLayout do
 
   def render(assigns) do
     ~H"""
-    <main class="w-full h-screen admin-main" id="main" phx-hook="Tooltip">
+    <main class="w-full h-screen bg-slate-50 dark:bg-gray-800" id="main" phx-hook="Tooltip">
       <div id="scroll-to-element" class="w-full h-full" phx-hook="ScrollToElement">
         <.flash_group flash={@flash} />
         <section class="w-full h-full flex">
           <aside
             id="navigation-drawer"
-            class="w-64 h-full border-r-[1px] border-gray-300 shrink-0 transition-all duration-300 p-2 relative"
+            class="w-64 h-full border-r-[1px] border-gray-300 dark:border-gray-900 shrink-0 transition-all duration-300 p-2 relative"
           >
             <img src="/images/logo_inn.png" class="w-20 mx-auto mb-20" />
             <nav class="w-full flex flex-col">
               <.link
                 navigate="/admin/booking"
-                class="leading-6 text-zinc-900 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4 no-wrap"
+                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4 no-wrap"
               >
                 <.icon name="hero-bars-3-bottom-left" class="mr-2" /> <%= gettext("Reservas") %>
               </.link>
               
               <.link
                 navigate="/admin/rating"
-                class="leading-6 text-zinc-900 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
+                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
               >
                 <.icon name="hero-star" class="mr-2" /> <%= gettext("Avaliações") %>
               </.link>
               
               <.link
                 navigate="/admin/generate"
-                class="leading-6 text-zinc-900 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
+                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
               >
                 <.icon name="hero-qr-code" class="mr-2" /> <%= gettext("Gerar Link de Check-In") %>
               </.link>
               
               <div class="absolute bottom-0 left-0 w-full p-2">
-                <button class="leading-6 text-zinc-900 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors flex items-center">
+                <button class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors flex items-center">
                   <.icon name="hero-power" class="mr-2" /> <%= gettext("Sair") %>
                 </button>
                  <.live_component module={ChangeLanguage} id={:change_language} />
@@ -57,7 +57,7 @@ defmodule PetInnWeb.AdminLayout do
                     )
                     |> JS.toggle_class("opened", to: "#nav-toggle-button")
                   }
-                  class="text-gray-500 p-[4px] hover:bg-gray-200 rounded transition-colors mr-2"
+                  class="text-gray-500 dark:text-gray-200 dark:hover:bg-gray-600 p-[4px] hover:bg-gray-200 rounded transition-colors mr-2"
                 >
                   <svg
                     class="open-icon"
@@ -90,13 +90,15 @@ defmodule PetInnWeb.AdminLayout do
                   </svg>
                 </button>
                 
-                <h1 class="font-medium text-[18px] text-gray-800">Santo Chico Hotel e Pet Shop</h1>
+                <h1 class="font-medium text-[18px] text-gray-800 dark:text-gray-200">
+                  Santo Chico Hotel e Pet Shop
+                </h1>
               </div>
                <img src="/images/logo.jpg" class="w-11 h-11" />
             </header>
             
             <div class="w-full h-[calc(100%-64px)] p-2">
-              <div class="w-full h-full overflow-hidden border-[1px] border-gray-300 bg-white rounded-lg">
+              <div class="w-full h-full overflow-hidden border-[1px] border-gray-300 dark:border-gray-900 bg-white dark:bg-gray-700 rounded-lg">
                 <%= @inner_content %>
               </div>
             </div>

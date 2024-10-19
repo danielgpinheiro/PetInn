@@ -6,39 +6,21 @@ defmodule PetInnWeb.Admin.BookingLive do
   def render(assigns) do
     ~H"""
     <section class="w-full h-full overflow-hidden flex flex-col" id="booking">
-      <header class="w-full h-12 border-b-[1px] border-gray-300 flex items-center justify-between px-2">
-        <label class="input input-bordered flex items-center gap-2 h-8 mr-4">
-          Pesquisar <input type="text" class="grow" placeholder="" />
+      <header class="w-full h-12 border-b-[1px] border-gray-300 dark:border-gray-900 flex items-center justify-between px-2">
+        <label class="input input-bordered flex items-center gap-2 h-8 mr-4 dark:text-gray-200">
+          Pesquisar <input type="text" class="grow rounded dark:bg-gray-900" placeholder="" />
         </label>
         
         <div class="flex items-center">
-          <div class="dropdown dropdown-bottom dropdown-end">
-            <div tabindex="0" role="button" class="btn btn-outline m-1 btn-sm">Espécie</div>
-            
-            <ul
-              tabindex="0"
-              class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-            >
-              <li><a>Cachorro</a></li>
-              
-              <li><a>Gato</a></li>
-            </ul>
-          </div>
+          <.dropdown label="Espécie" class="mr-4">
+            <.dropdown_menu_item link_type="button" label="Cachorro" />
+            <.dropdown_menu_item link_type="button" label="Gato" />
+          </.dropdown>
           
-          <div class="dropdown dropdown-bottom dropdown-end">
-            <div tabindex="0" role="button" class="btn btn-outline m-1 btn-sm">
-              <%= @detailed_opened %>
-            </div>
-            
-            <ul
-              tabindex="0"
-              class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-            >
-              <li><a>Check-In</a></li>
-              
-              <li><a>Check-Out</a></li>
-            </ul>
-          </div>
+          <.dropdown label="Tipo">
+            <.dropdown_menu_item link_type="button" label="Check-in" />
+            <.dropdown_menu_item link_type="button" label="Check-out" />
+          </.dropdown>
         </div>
       </header>
       

@@ -44,15 +44,14 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(steps: steps)
-     |> assign(current_step: 1)
-     #  |> assign(current_step: 0)
+     |> assign(current_step: 0)
      |> assign(inn_id: inn_id)
      |> assign(user_email: "")}
   end
 
   def update(
         %{action: :can_continue, user_email: user_email},
-        %{assigns: %{current_step: current_step, steps: steps} = _assigns} =
+        %{assigns: %{current_step: current_step} = _assigns} =
           socket
       ) do
     {:ok,
@@ -81,7 +80,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
   def handle_event(
         "previous_step",
         _params,
-        %{assigns: %{current_step: current_step, steps: steps} = _assigns} = socket
+        %{assigns: %{current_step: current_step} = _assigns} = socket
       ) do
     {:noreply,
      push_event(

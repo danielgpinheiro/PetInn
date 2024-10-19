@@ -94,7 +94,9 @@ defmodule PetInnWeb do
         Button,
         Form,
         Field,
-        Loading
+        Loading,
+        Dropdown,
+        Card
       }
 
       # Routes generation with the ~p sigil
