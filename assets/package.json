@@ -10,8 +10,7 @@
   "description": "",
   "devDependencies": {
     "@types/phoenix": "^1.6.5",
-    "@types/phoenix_live_view": "^0.18.5",
-    "daisyui": "^4.12.12"
+    "@types/phoenix_live_view": "^0.18.5"
   },
   "dependencies": {
     "@easepick/amp-plugin": "^1.2.1",

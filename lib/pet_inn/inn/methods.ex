@@ -1,6 +1,6 @@
 defmodule PetInn.Inn.Methods do
   alias PetInn.Repo
-  alias PetInn.Inn.Inn
+  alias PetInn.Inn
 
   def get_by_id(inn_id) do
     case Repo.get_by(Inn, id: inn_id) do

@@ -202,7 +202,7 @@ defmodule PetInnWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8 bg-white">
+      <div class="mt-10 space-y-8">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
@@ -217,8 +217,8 @@ defmodule PetInnWeb.CoreComponents do
 
   ## Examples
 
-      <.button>Send!</.button>
-      <.button phx-click="go" class="ml-2">Send!</.button>
+      <.button_core>Send!</.button_core>
+      <.button_core phx-click="go" class="ml-2">Send!</.button_core>
   """
   attr :type, :string, default: nil
   attr :class, :string, default: nil
@@ -226,7 +226,7 @@ defmodule PetInnWeb.CoreComponents do
 
   slot :inner_block, required: true
 
-  def button(assigns) do
+  def button_core(assigns) do
     ~H"""
     <button
       type={@type}

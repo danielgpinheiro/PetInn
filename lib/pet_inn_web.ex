@@ -90,6 +90,13 @@ defmodule PetInnWeb do
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
+      import PetalComponents.{
+        Button,
+        Form,
+        Field,
+        Loading
+      }
+
       # Routes generation with the ~p sigil
       unquote(verified_routes())
     end

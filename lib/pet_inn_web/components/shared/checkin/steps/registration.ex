@@ -1,12 +1,19 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
+  alias PetInnWeb.CheckinController
   use PetInnWeb, :live_component
 
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
 
   def render(assigns) do
     ~H"""
-    <div class="w-full sm:w-[700px] mx-auto flex flex-col justify-center items-center">
-      <h1 class="text-center text-lg text-gray-800 mb-11">
+    <div class="w-full sm:w-[700px] mx-auto flex flex-col justify-center items-center relative">
+      <%= if @loading do %>
+        <div class="w-full h-full absolute z-50 flex justify-center items-center bg-white bg-opacity-10 rounded-lg">
+          <.spinner show={true} size="lg" class="pointer-events-none text-orange-400" />
+        </div>
+      <% end %>
+      
+      <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
         <%= gettext(
           "%{strong} Olá, bem vindo!%{close_strong}%{break_line}Continue o cadastro de você e do seu Pet para reservar uma estadia.",
           strong: "<strong>",
@@ -16,11 +23,36 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
         |> raw() %>
       </h1>
       
-      <label class="input input-bordered flex items-center gap-2 mb-9 w-full sm:w-3/4">
+      <.simple_form
+        for={@form}
+        phx-change="validate"
+        phx-submit="submit"
+        phx-target={@myself}
+        class="flex flex-col w-full justify-center items-center"
+      >
+        <.field field={@form[:name]} label={gettext("Nome Completo")} type="text" class="w-96" />
+        <.field
+          field={@form[:birthday]}
+          label={gettext("Data de Nascimento")}
+          type="date"
+          class="w-96"
+        />
+        <.field
+          type="select"
+          field={@form[:gender]}
+          label={gettext("Gênero")}
+          options={[gettext("Gênero"), gettext("Masculino"), gettext("Feminino")]}
+        /> <.field field={@form[:job]} label={gettext("Profissão")} type="text" class="w-96" />
+        <:actions>
+          <.button color="warning" label="Continuar" variant="shadow" class="mt-24 w-64 mx-auto" />
+        </:actions>
+      </.simple_form>
+      
+      <%!-- <label class="input input-bordered flex items-center gap-2 mb-9 w-full sm:w-3/4">
         <.icon name="hero-user" class="h-5 w-5 opacity-70" />
         <input type="text" class="grow" placeholder={gettext("Nome Completo")} />
       </label>
-      
+
       <div class="flex justify-between w-full sm:w-3/4 mb-9 flex-wrap sm:flex-nowrap">
         <label class="input input-bordered flex items-center gap-2 w-full sm:w-[48%] mb-9 sm:mb-0">
           <.icon name="hero-calendar" class="h-5 w-5 opacity-70 shrink-0" />
@@ -30,40 +62,99 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
             placeholder={gettext("Data de Nascimento")}
           />
         </label>
-        
+
         <label class="input input-bordered flex items-center gap-2 w-full sm:w-[48%] pr-0">
           <.icon name="hero-user-group" class="h-5 w-5 opacity-70 shrink-0" />
           <select class="select select-bordered w-full max-w-xs h-[calc(3rem-2px)] min-h-[calc(3rem-2px)] text-gray-500 text-base">
             <option disabled selected><%= gettext("Gênero") %></option>
-            
+
             <option><%= gettext("Masculino") %></option>
-            
+
             <option><%= gettext("Feminino") %></option>
           </select>
         </label>
       </div>
-      
+
       <label class="input input-bordered flex items-center gap-2 mb-9 w-full sm:w-3/4">
         <.icon name="hero-briefcase" class="h-5 w-5 opacity-70" />
         <input type="text" class="grow" placeholder={gettext("Profissão")} />
-      </label>
+      </label> --%>
     </div>
     """
   end
 
   def mount(socket) do
-    {:ok, socket}
+    changeset = build_changeset()
+
+    {:ok, assign_form(socket, changeset) |> assign(loading: false)}
   end
 
-  def update(%{action: :submit}, socket) do
-    IO.inspect("opa submeti")
-
-    send_update(WizardStructureComponent, %{id: :wizard, action: :can_continue})
-
-    {:ok, socket}
+  def update(%{inn_id: inn_id, user_email: user_email}, socket) do
+    {:ok, socket |> assign(user_email: user_email, inn_id: inn_id)}
   end
 
   def update(_, socket) do
     {:ok, socket}
+  end
+
+  def handle_event("validate", %{"object" => object_params}, socket) do
+    changeset =
+      object_params
+      |> build_changeset()
+      |> Map.put(:action, :validate)
+
+    {:noreply, assign_form(socket, changeset)}
+  end
+
+  def handle_event("submit", %{"object" => object_params}, socket) do
+    changeset = build_changeset(object_params)
+
+    case validate_changeset(changeset) do
+      {:ok, object} ->
+        submit_step(socket, changeset, object)
+
+        {:noreply, assign_form(socket, changeset)}
+
+      {:error, changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
+  end
+
+  defp assign_form(socket, changeset) do
+    assign(socket, form: to_form(changeset, as: :object))
+  end
+
+  defp build_changeset(params \\ %{}) do
+    data = %{}
+
+    types = %{name: :string, birthday: :string, gender: :string, job: :string}
+
+    {data, types}
+    |> Ecto.Changeset.cast(params, Map.keys(types))
+    |> Ecto.Changeset.validate_required(:name, message: "É necessário inserir um nome")
+    |> Ecto.Changeset.validate_required(:birthday,
+      message: "É necessário inserir uma data de nascimento"
+    )
+    |> Ecto.Changeset.validate_required(:gender, message: "É necessário selecionar um gênero")
+    |> Ecto.Changeset.validate_required(:job, message: "É necessário inserir uma profissão")
+  end
+
+  defp validate_changeset(changeset) do
+    Ecto.Changeset.apply_action(changeset, :validate)
+  end
+
+  defp submit_step(socket, changeset, params) do
+    user_registration =
+      Map.merge(params, CheckinController.get_table_cache(:user, socket.assigns.user_email))
+
+    CheckinController.update_user(user_registration)
+
+    send_update(WizardStructureComponent, %{
+      id: :wizard,
+      action: :can_continue,
+      user_email: user_registration.email
+    })
+
+    {:noreply, assign_form(socket, changeset) |> assign(loading: true)}
   end
 end

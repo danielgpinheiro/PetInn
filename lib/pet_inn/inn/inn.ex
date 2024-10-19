@@ -1,4 +1,4 @@
-defmodule PetInn.Inn.Inn do
+defmodule PetInn.Inn do
   use Ecto.Schema
   import Ecto.Changeset
 

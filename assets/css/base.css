@@ -11,37 +11,32 @@
 }
 
 .live_phone {
-  border-radius: var(--rounded-btn);
-  height: 3rem;
-  padding: 0 1rem;
-  width: 75%;
+  height: 40px;
+
+  @media (prefers-color-scheme: dark) {
+    background: rgb(31 41 55);
+    color: rgb(209 213 219);
+    border-color: rgb(75 85 99);
+
+    &.live_phone-valid {
+      background: rgb(20 83 45);
+    } 
+  }
 
   @media all and (max-width: 639px) {
     width: 100%;
   }
 
-  &.live_phone-valid {
-    background: none;
-  }
-
-  &:focus-within {
-    box-shadow: none;
-    border-color: var(--fallback-bc,oklch(var(--bc)/0.2));
-    outline-style: solid;
-    outline-width: 2px;
-    outline-offset: 2px;
-    outline-color: var(--fallback-bc,oklch(var(--bc)/0.2));
-  }
-
-  .live_phone-country {
-    padding: 0;
-  }
-
   .live_phone-input {
     font-family: "Poppins", sans-serif;
     padding: 0.5rem 0.75rem;
-    font-size: 1rem;
+    font-size: 0.875rem;
     outline: none;
+    width: 20.5rem;
+
+    @media all and (max-width: 639px) {
+      font-size: 1rem;
+    }
   }
 }
 

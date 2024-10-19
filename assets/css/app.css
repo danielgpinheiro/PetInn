@@ -1,5 +1,6 @@
 @import "./base.css";
 @import "tailwindcss/base";
+@import "../../deps/petal_components/assets/default.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import '../node_modules/tippy.js/dist/tippy.css';
@@ -30,10 +31,6 @@ select {
     &:required {
         box-shadow: none !important;
     }
-
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
 }
 
 textarea {

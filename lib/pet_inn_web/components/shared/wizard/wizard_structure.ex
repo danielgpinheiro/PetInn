@@ -29,18 +29,9 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
           module={Enum.at(@steps, @current_step).component}
           id={:step}
           inn_id={@inn_id}
+          user_email={@user_email}
         />
       </div>
-      
-      <%= if !@final_step do %>
-        <button
-          class="btn btn-wide bg-orange-600 text-white"
-          phx-click="next_step"
-          phx-target={@myself}
-        >
-          Continuar
-        </button>
-      <% end %>
     </div>
     """
   end
@@ -53,21 +44,26 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(steps: steps)
-     |> assign(current_step: 0)
-     |> assign(final_step: false)
-     |> assign(loading: false)
-     |> assign(inn_id: inn_id)}
+     |> assign(current_step: 1)
+     #  |> assign(current_step: 0)
+     |> assign(inn_id: inn_id)
+     |> assign(user_email: "")}
   end
 
   def update(
-        %{action: :can_continue},
-        %{assigns: %{current_step: current_step, steps: steps} = _assigns} = socket
+        %{action: :can_continue, user_email: user_email},
+        %{assigns: %{current_step: current_step, steps: steps} = _assigns} =
+          socket
       ) do
     {:ok,
-     socket
-     |> assign(
-       current_step: current_step + 1,
-       final_step: Enum.count(steps) === current_step + 2
+     push_event(
+       socket
+       |> assign(
+         current_step: current_step + 1,
+         user_email: user_email
+       ),
+       "scroll_to_element",
+       %{element: "body"}
      )}
   end
 
@@ -90,25 +86,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:noreply,
      push_event(
        socket
-       |> assign(
-         current_step: current_step - 1,
-         final_step: Enum.count(steps) === current_step - 2
-       ),
-       "scroll_to_element",
-       %{element: "body"}
-     )}
-  end
-
-  def handle_event(
-        "next_step",
-        _params,
-        %{assigns: %{steps: steps, current_step: current_step} = _assigns} = socket
-      ) do
-    send_update(Enum.at(steps, current_step).component, %{id: :step, action: :submit})
-
-    {:noreply,
-     push_event(
-       socket,
+       |> assign(current_step: current_step - 1),
        "scroll_to_element",
        %{element: "body"}
      )}

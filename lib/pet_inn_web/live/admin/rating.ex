@@ -6,8 +6,8 @@ defmodule PetInnWeb.Admin.RatingLive do
     <section class="w-full h-full overflow-hidden" id="rating">
       <header
         class="w-full h-12 border-b-[1px] border-gray-300 flex items-center justify-between px-2"
-        id="gantt-datepicker"
-        phx-hook="GanttDatePicker"
+        id="rating-datepicker"
+        phx-hook="RatingDatePicker"
       >
         <input
           id="datepicker"

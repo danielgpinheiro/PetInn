@@ -14,8 +14,8 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
         data-tippy-content={gettext("Mudar Lingua")}
         data-tippy-placement="bottom"
       >
-        <.icon name="hero-globe-alt" class="text-gray-600 sm:w-6 sm:h-6 w-4 h-4" />
-        <span class="text-gray-400 uppercase">
+        <.icon name="hero-globe-alt" class="text-gray-600 dark:text-gray-200 sm:w-6 sm:h-6 w-4 h-4" />
+        <span class="text-gray-400 dark:text-gray-200 uppercase">
           <%= String.replace(Gettext.get_locale(), "_BR", "") %>
         </span>
       </button>
@@ -26,14 +26,14 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
         id="language-modal-overlay"
       />
       <div
-        class="fixed z-50 w-[700px] h-40 rounded-lg bg-slate-50 bottom-6 left-[calc(50%-350px)] shadow overflow-hidden hidden"
+        class="fixed z-50 w-[700px] h-40 rounded-lg bg-slate-50 dark:bg-gray-700 bottom-6 left-[calc(50%-350px)] shadow overflow-hidden hidden"
         id="language-modal"
       >
-        <div class="w-full h-12 bg-slate-200 flex px-3 justify-between items-center">
-          <span class="text-slate-500">Mudar lingua</span>
+        <div class="w-full h-12 bg-slate-200 dark:bg-gray-800 flex px-3 justify-between items-center">
+          <span class="text-slate-500 dark:text-gray-200"><%= gettext("Mudar lingua") %></span>
           <button
             phx-click={toggle_modal()}
-            class="px-3 py-2 rounded-full bg-slate-300 text-slate-500"
+            class="px-3 py-2 rounded-full bg-slate-300 text-slate-500 dark:text-gray-200 dark:bg-gray-700"
           >
             <%= gettext("Fechar") %>
           </button>
@@ -42,34 +42,37 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
         <ul class="w-full h-28 flex justify-center items-center">
           <li class="w-1/4 mr-4 max-w-60">
             <button
-              class="flex w-full h-8 justify-center items-center bg-slate-200 rounded"
+              class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"
               phx-click="change_lang"
               phx-target={@myself}
               phx-value-lang="pt_BR"
             >
-              <span class="text-lg mr-2">🇧🇷</span> <span><%= gettext("Português") %></span>
+              <span class="text-lg mr-2">🇧🇷</span>
+              <span class="dark:text-gray-200"><%= gettext("Português") %></span>
             </button>
           </li>
           
           <li class="w-1/4 mr-4 max-w-60">
             <button
-              class="flex w-full h-8 justify-center items-center bg-slate-200 rounded"
+              class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"
               phx-click="change_lang"
               phx-target={@myself}
               phx-value-lang="en"
             >
-              <span class="text-lg mr-2">🇺🇸</span> <span><%= gettext("Inglês") %></span>
+              <span class="text-lg mr-2">🇺🇸</span>
+              <span class="dark:text-gray-200"><%= gettext("Inglês") %></span>
             </button>
           </li>
           
           <li class="w-1/4 max-w-60">
             <button
-              class="flex w-full h-8 justify-center items-center bg-slate-200 rounded"
+              class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"
               phx-click="change_lang"
               phx-target={@myself}
               phx-value-lang="es"
             >
-              <span class="text-lg mr-2">🇪🇸</span> <span><%= gettext("Espanhol") %></span>
+              <span class="text-lg mr-2">🇪🇸</span>
+              <span class="dark:text-gray-200"><%= gettext("Espanhol") %></span>
             </button>
           </li>
         </ul>

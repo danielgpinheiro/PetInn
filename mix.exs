@@ -59,7 +59,8 @@ defmodule PetInn.MixProject do
       {:bandit, "~> 1.5"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:live_phone, "~> 0.8"},
-      {:req, "~> 0.5.0"}
+      {:req, "~> 0.5.0"},
+      {:petal_components, "~> 2.2"}
     ]
   end
 

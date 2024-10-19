@@ -16,7 +16,7 @@ defmodule PetInnWeb.CheckinLive do
 
   def render(assigns) do
     ~H"""
-    <section id="checkin" class="w-full h-full">
+    <section id="checkin" class="w-full h-full bg-white dark:bg-gray-800">
       <.live_component module={HeaderComponent} id={:header} inn_id={@inn_id} />
       <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
         <.live_component

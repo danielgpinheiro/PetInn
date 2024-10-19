@@ -23,6 +23,7 @@ defmodule PetInnWeb.Router do
       live "/checkin/:inn_id", CheckinLive, :checkin
       live "/checkout", CheckoutLive, :checkout
       live "/confirm", ConfirmLive, :confirm
+      live "/404", FourOhFourLive, :four_oh_four
     end
   end
 
@@ -34,12 +35,6 @@ defmodule PetInnWeb.Router do
       live "/rating", Admin.RatingLive, :rating
       live "/generate", Admin.GenerateLive, :generate
     end
-  end
-
-  scope "/api", PetInnWeb do
-    pipe_through :browser
-
-    # get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
@@ -61,5 +56,11 @@ defmodule PetInnWeb.Router do
 
       live_dashboard "/dashboard", metrics: PetInnWeb.Telemetry
     end
+  end
+
+  scope "/", PetInnWeb do
+    pipe_through :browser
+
+    get "/*path", FourOhFourController, :index
   end
 end

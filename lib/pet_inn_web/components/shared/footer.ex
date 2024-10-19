@@ -3,7 +3,7 @@ defmodule PetInnWeb.Shared.FooterComponent do
 
   def render(assigns) do
     ~H"""
-    <footer class="text-gray-500 relative p-3 pb-8 flex justify-between">
+    <footer class="text-gray-500 dark:text-gray-200 relative p-3 pb-8 flex justify-between">
       <div>
         <button class="link">contato@petinns.com.br</button> <br /><small> www.petinns.com.br </small>
         <br /><small> © 2024 PetInns. All rights reserved. </small>
