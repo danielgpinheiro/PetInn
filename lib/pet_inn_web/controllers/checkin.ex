@@ -6,20 +6,20 @@ defmodule PetInnWeb.CheckinController do
 
   def get_inn(inn_id) do
     case Inn.Methods.get_by_id(inn_id) do
-      {:ok, value} -> create_table_cache(:inn) |> :ets.insert({inn_id, value})
+      {:ok, value} -> create_or_load_table_cache(:inn) |> :ets.insert({inn_id, value})
       {:error, _} -> nil
     end
   end
 
   def update_user(params) do
-    :ets.lookup(:user, params.email) |> :ets.insert(params)
+    create_or_load_table_cache(:user) |> :ets.insert({params.email, params})
   end
 
   def get_table_cache(name, id) do
     :ets.lookup(name, id) |> Enum.at(0) |> elem(1)
   end
 
-  def create_table_cache(name) do
+  def create_or_load_table_cache(name) do
     if Enum.member?(:ets.all(), name) == false do
       :ets.new(name, [:public, :set, :named_table])
     else
@@ -29,8 +29,11 @@ defmodule PetInnWeb.CheckinController do
 
   def create_or_load_user(params) do
     case User.Methods.get_by_email_and_phone(params) do
-      {:error, :not_found} -> create_table_cache(:user) |> :ets.insert({params.email, params})
-      {:ok, values} -> create_table_cache(:user) |> :ets.insert({values.email, values})
+      {:error, :not_found} ->
+        create_or_load_table_cache(:user) |> :ets.insert({params.email, params})
+
+      {:ok, values} ->
+        create_or_load_table_cache(:user) |> :ets.insert({values.email, Map.from_struct(values)})
     end
   end
 end

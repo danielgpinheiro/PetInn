@@ -1,7 +1,7 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
-  alias PetInnWeb.CheckinController
   use PetInnWeb, :live_component
 
+  alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
 
   def render(assigns) do
@@ -60,16 +60,11 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
   def update(%{inn_id: inn_id, user_email: user_email}, socket) do
     user = CheckinController.get_table_cache(:user, user_email)
 
-    if is_struct(user) do
-      changeset =
-        Map.from_struct(user)
-        |> build_changeset()
-        |> Map.put(:action, :validate)
+    changeset =
+      user
+      |> build_changeset()
 
-      {:ok, assign_form(socket, changeset) |> assign(user_email: user_email, inn_id: inn_id)}
-    else
-      {:ok, socket |> assign(user_email: user_email, inn_id: inn_id)}
-    end
+    {:ok, assign_form(socket, changeset) |> assign(user_email: user_email, inn_id: inn_id)}
   end
 
   def update(_, socket) do
@@ -91,8 +86,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
     case validate_changeset(changeset) do
       {:ok, object} ->
         submit_step(socket, changeset, object)
-
-        {:noreply, assign_form(socket, changeset)}
 
       {:error, changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -124,7 +117,10 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
 
   defp submit_step(socket, changeset, params) do
     user_registration =
-      Map.merge(params, CheckinController.get_table_cache(:user, socket.assigns.user_email))
+      Map.merge(
+        CheckinController.get_table_cache(:user, socket.assigns.user_email),
+        params
+      )
 
     CheckinController.update_user(user_registration)
 

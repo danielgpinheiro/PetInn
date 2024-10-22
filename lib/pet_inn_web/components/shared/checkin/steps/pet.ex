@@ -1,6 +1,7 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   use PetInnWeb, :live_component
 
+  alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
 
   def render(assigns) do
@@ -122,13 +123,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
     {:ok, socket}
   end
 
-  def update(%{action: :submit}, socket) do
-    IO.inspect("opa submeti")
+  # def update(%{inn_id: inn_id, user_email: user_email}, socket) do
+  #   user = CheckinController.get_table_cache(:user, user_email)
 
-    send_update(WizardStructureComponent, %{id: :wizard, action: :can_continue})
+  #   IO.inspect(user)
 
-    {:ok, socket}
-  end
+  #   {:ok, socket |> assign(user_email: user_email, inn_id: inn_id)}
+  # end
 
   def update(_, socket) do
     {:ok, socket}

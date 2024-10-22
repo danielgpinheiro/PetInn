@@ -1,8 +1,8 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
   use PetInnWeb, :live_component
 
-  alias PetInnWeb.Shared.Wizard.WizardStructureComponent
   alias PetInnWeb.CheckinController
+  alias PetInnWeb.Shared.Wizard.WizardStructureComponent
 
   def render(assigns) do
     ~H"""
