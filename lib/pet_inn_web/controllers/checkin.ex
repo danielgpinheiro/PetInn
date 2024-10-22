@@ -30,7 +30,7 @@ defmodule PetInnWeb.CheckinController do
   def create_or_load_user(params) do
     case User.Methods.get_by_email_and_phone(params) do
       {:error, :not_found} -> create_table_cache(:user) |> :ets.insert({params.email, params})
-      {:ok, _} -> get_table_cache(:user, params.email)
+      {:ok, values} -> create_table_cache(:user) |> :ets.insert({values.email, values})
     end
   end
 end

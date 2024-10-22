@@ -58,7 +58,18 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
   end
 
   def update(%{inn_id: inn_id, user_email: user_email}, socket) do
-    {:ok, socket |> assign(user_email: user_email, inn_id: inn_id)}
+    user = CheckinController.get_table_cache(:user, user_email)
+
+    if is_struct(user) do
+      changeset =
+        Map.from_struct(user)
+        |> build_changeset()
+        |> Map.put(:action, :validate)
+
+      {:ok, assign_form(socket, changeset) |> assign(user_email: user_email, inn_id: inn_id)}
+    else
+      {:ok, socket |> assign(user_email: user_email, inn_id: inn_id)}
+    end
   end
 
   def update(_, socket) do
