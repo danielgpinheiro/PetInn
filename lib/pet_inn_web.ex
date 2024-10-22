@@ -84,6 +84,7 @@ defmodule PetInnWeb do
   defp html_helpers do
     quote do
       use Gettext, backend: PetInnWeb.Gettext
+
       import PetalComponents.Button
       import PetalComponents.Card
       import PetalComponents.Dropdown

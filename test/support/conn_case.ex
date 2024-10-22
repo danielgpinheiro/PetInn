@@ -20,6 +20,7 @@ defmodule PetInnWeb.ConnCase do
   using do
     quote do
       use PetInnWeb, :verified_routes
+
       import PetInnWeb.ConnCase
       import Phoenix.ConnTest
       import Plug.Conn
