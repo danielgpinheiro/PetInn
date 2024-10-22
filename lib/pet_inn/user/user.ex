@@ -1,5 +1,7 @@
 defmodule PetInn.User do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}

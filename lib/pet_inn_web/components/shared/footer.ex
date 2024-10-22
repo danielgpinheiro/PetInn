@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.FooterComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   def render(assigns) do

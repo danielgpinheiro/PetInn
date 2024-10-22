@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Checkout.Steps.ReviewComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent

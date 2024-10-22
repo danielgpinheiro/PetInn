@@ -45,12 +45,7 @@ defmodule PetInn.MixProject do
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:heroicons,
-       github: "tailwindlabs/heroicons",
-       tag: "v2.1.1",
-       sparse: "optimized",
-       app: false,
-       compile: false,
-       depth: 1},
+       github: "tailwindlabs/heroicons", tag: "v2.1.1", sparse: "optimized", app: false, compile: false, depth: 1},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
@@ -60,7 +55,8 @@ defmodule PetInn.MixProject do
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:live_phone, "~> 0.8"},
       {:req, "~> 0.5.0"},
-      {:petal_components, "~> 2.2"}
+      {:petal_components, "~> 2.2"},
+      {:styler, "~> 1.1", only: [:dev, :test], runtime: false}
     ]
   end
 

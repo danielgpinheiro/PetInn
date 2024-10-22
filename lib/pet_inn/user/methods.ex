@@ -1,8 +1,9 @@
 defmodule PetInn.User.Methods do
+  @moduledoc false
+  import Ecto.Query
+
   alias PetInn.Repo
   alias PetInn.User
-
-  import Ecto.Query
 
   def get_by_email_and_phone(params) do
     case User

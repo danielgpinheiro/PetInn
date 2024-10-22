@@ -1,4 +1,5 @@
 defmodule PetInnWeb.FourOhFourLive do
+  @moduledoc false
   use PetInnWeb, :live_view
 
   def render(assigns) do

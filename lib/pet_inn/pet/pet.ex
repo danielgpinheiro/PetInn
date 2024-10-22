@@ -1,5 +1,7 @@
 defmodule PetInn.Pet do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
@@ -21,7 +23,27 @@ defmodule PetInn.Pet do
   @doc false
   def changeset(pet, attrs) do
     pet
-    |> cast(attrs, [:user_id, :name, :specie, :race, :photo, :food_hours, :is_natural_food, :vaccination_card, :notes_about_pet])
-    |> validate_required([:user_id, :name, :specie, :race, :photo, :food_hours, :is_natural_food, :vaccination_card, :notes_about_pet])
+    |> cast(attrs, [
+      :user_id,
+      :name,
+      :specie,
+      :race,
+      :photo,
+      :food_hours,
+      :is_natural_food,
+      :vaccination_card,
+      :notes_about_pet
+    ])
+    |> validate_required([
+      :user_id,
+      :name,
+      :specie,
+      :race,
+      :photo,
+      :food_hours,
+      :is_natural_food,
+      :vaccination_card,
+      :notes_about_pet
+    ])
   end
 end

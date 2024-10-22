@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   def render(assigns) do

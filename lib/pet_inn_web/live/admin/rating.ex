@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Admin.RatingLive do
+  @moduledoc false
   use PetInnWeb, :live_view
 
   def render(assigns) do

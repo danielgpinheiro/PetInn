@@ -1,7 +1,8 @@
 defmodule PetInnWeb.Shared.Header.HeaderComponent do
-  alias PetInnWeb.CheckinController
+  @moduledoc false
   use PetInnWeb, :live_component
 
+  alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Header.ChangeLanguage
 
   def render(assigns) do

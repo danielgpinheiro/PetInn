@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Admin.Booking.DetailedBooking do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   def render(assigns) do
@@ -43,6 +44,6 @@ defmodule PetInnWeb.Shared.Admin.Booking.DetailedBooking do
   end
 
   def handle_event("close_modal", _, socket) do
-    {:noreply, socket |> assign(opened: false)}
+    {:noreply, assign(socket, opened: false)}
   end
 end

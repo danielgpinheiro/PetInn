@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Admin.GenerateLive do
+  @moduledoc false
   use PetInnWeb, :live_view
 
   alias Phoenix.LiveView.JS

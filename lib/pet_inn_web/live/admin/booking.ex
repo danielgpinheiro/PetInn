@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Admin.BookingLive do
+  @moduledoc false
   use PetInnWeb, :live_view
 
   alias PetInnWeb.Shared.Admin.Booking.DetailedBooking
@@ -46,7 +47,7 @@ defmodule PetInnWeb.Admin.BookingLive do
       :error -> Gettext.put_locale("pt_BR")
     end
 
-    {:ok, socket |> assign(detailed_opened: false, detailed_params: nil)}
+    {:ok, assign(socket, detailed_opened: false, detailed_params: nil)}
   end
 
   def handle_event("open_detailed_booking", params, socket) do

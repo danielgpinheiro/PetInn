@@ -1,8 +1,9 @@
 defmodule PetInnWeb.AdminLayout do
+  @moduledoc false
   use PetInnWeb, :live_view
 
-  alias Phoenix.LiveView.JS
   alias PetInnWeb.Shared.Header.ChangeLanguage
+  alias Phoenix.LiveView.JS
 
   def render(assigns) do
     ~H"""

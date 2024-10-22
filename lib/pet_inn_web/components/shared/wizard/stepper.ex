@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Wizard.StepperComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
@@ -71,11 +72,7 @@ defmodule PetInnWeb.Shared.Wizard.StepperComponent do
      |> assign(current_step: current_step)}
   end
 
-  def handle_event(
-        "go_to_step",
-        %{"step" => step} = _params,
-        socket
-      ) do
+  def handle_event("go_to_step", %{"step" => step} = _params, socket) do
     send_update(WizardStructureComponent, %{id: :wizard, action: :go_to_step, step: step})
 
     {:noreply, socket}

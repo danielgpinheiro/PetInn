@@ -19,15 +19,14 @@ defmodule PetInnWeb.ConnCase do
 
   using do
     quote do
+      use PetInnWeb, :verified_routes
+      import PetInnWeb.ConnCase
+      import Phoenix.ConnTest
+      import Plug.Conn
       # The default endpoint for testing
       @endpoint PetInnWeb.Endpoint
 
-      use PetInnWeb, :verified_routes
-
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest
-      import PetInnWeb.ConnCase
     end
   end
 

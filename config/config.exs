@@ -7,11 +7,21 @@
 # General application configuration
 import Config
 
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  pet_inn: [
+    args: ~w(js/app.ts --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
 config :gettext, default_locale: "pt_BR"
 
-config :pet_inn,
-  ecto_repos: [PetInn.Repo],
-  generators: [timestamp_type: :utc_datetime]
+# Configures Elixir's Logger
+config :logger, :console,
+  format: "$time $metadata[$level] $message\n",
+  metadata: [:request_id]
 
 # Configures the endpoint
 config :pet_inn, PetInnWeb.Endpoint,
@@ -24,15 +34,12 @@ config :pet_inn, PetInnWeb.Endpoint,
   pubsub_server: PetInn.PubSub,
   live_view: [signing_salt: "er5pRhbb"]
 
-# Configure esbuild (the version is required)
-config :esbuild,
-  version: "0.17.11",
-  pet_inn: [
-    args:
-      ~w(js/app.ts --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
-  ]
+config :pet_inn,
+  ecto_repos: [PetInn.Repo],
+  generators: [timestamp_type: :utc_datetime]
+
+# Use Jason for JSON parsing in Phoenix
+config :phoenix, :json_library, Jason
 
 # Configure tailwind (the version is required)
 config :tailwind,
@@ -43,17 +50,10 @@ config :tailwind,
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),
+
+    # Import environment specific config. This must remain at the bottom
+    # of this file so it overrides the configuration defined above.
     cd: Path.expand("../assets", __DIR__)
   ]
 
-# Configures Elixir's Logger
-config :logger, :console,
-  format: "$time $metadata[$level] $message\n",
-  metadata: [:request_id]
-
-# Use Jason for JSON parsing in Phoenix
-config :phoenix, :json_library, Jason
-
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

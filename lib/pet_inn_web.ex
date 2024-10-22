@@ -23,10 +23,11 @@ defmodule PetInnWeb do
     quote do
       use Phoenix.Router, helpers: false
 
-      # Import common connection and controller functions to use in pipelines
-      import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+
+      # Import common connection and controller functions to use in pipelines
+      import Plug.Conn
     end
   end
 
@@ -42,8 +43,9 @@ defmodule PetInnWeb do
         formats: [:html, :json],
         layouts: [html: PetInnWeb.Layouts]
 
-      import Plug.Conn
       use Gettext, backend: PetInnWeb.Gettext
+
+      import Plug.Conn
 
       unquote(verified_routes())
     end
@@ -81,23 +83,20 @@ defmodule PetInnWeb do
 
   defp html_helpers do
     quote do
+      use Gettext, backend: PetInnWeb.Gettext
+      import PetalComponents.Button
+      import PetalComponents.Card
+      import PetalComponents.Dropdown
+      import PetalComponents.Field
+      import PetalComponents.Form
+      import PetalComponents.Loading
+      import PetInnWeb.CoreComponents
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import PetInnWeb.CoreComponents
-      use Gettext, backend: PetInnWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
-
-      import PetalComponents.{
-        Button,
-        Form,
-        Field,
-        Loading,
-        Dropdown,
-        Card
-      }
 
       # Routes generation with the ~p sigil
       unquote(verified_routes())

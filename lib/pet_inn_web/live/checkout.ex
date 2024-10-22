@@ -1,12 +1,12 @@
 defmodule PetInnWeb.CheckoutLive do
+  @moduledoc false
   use PetInnWeb, :live_view
-
-  alias PetInnWeb.Shared.Header.HeaderComponent
-  alias PetInnWeb.Shared.Wizard.WizardStructureComponent
-  alias PetInnWeb.Shared.FooterComponent
 
   alias PetInnWeb.Shared.Checkout.Steps.ConfirmationComponent
   alias PetInnWeb.Shared.Checkout.Steps.ReviewComponent
+  alias PetInnWeb.Shared.FooterComponent
+  alias PetInnWeb.Shared.Header.HeaderComponent
+  alias PetInnWeb.Shared.Wizard.WizardStructureComponent
 
   def render(assigns) do
     ~H"""
@@ -29,14 +29,9 @@ defmodule PetInnWeb.CheckoutLive do
     end
 
     {:ok,
-     socket
-     |> assign(
+     assign(socket,
        steps: [
-         %WizardStructureComponent{
-           title: gettext("Avaliação"),
-           icon: "hero-star-solid",
-           component: ReviewComponent
-         },
+         %WizardStructureComponent{title: gettext("Avaliação"), icon: "hero-star-solid", component: ReviewComponent},
          %WizardStructureComponent{
            title: gettext("Confirmação"),
            icon: "hero-check-badge-solid",

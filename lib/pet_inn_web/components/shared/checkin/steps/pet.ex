@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   alias PetInnWeb.CheckinController

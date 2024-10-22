@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   alias PetInnWeb.CheckinController
@@ -50,7 +51,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
   def mount(socket) do
     changeset = build_changeset()
 
-    {:ok, assign_form(socket, changeset) |> assign(loading: false)}
+    {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
   end
 
   def update(_, socket) do
@@ -90,9 +91,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
     {data, types}
     |> Ecto.Changeset.cast(params, Map.keys(types))
     |> Ecto.Changeset.validate_required(:email, message: "É necessário inserir um e-mail")
-    |> Ecto.Changeset.validate_format(:email, ~r/@/,
-      message: "É necessário inserir um e-mail válido"
-    )
+    |> Ecto.Changeset.validate_format(:email, ~r/@/, message: "É necessário inserir um e-mail válido")
     |> Ecto.Changeset.validate_required(:phone, message: "É necessário inserir um telefone")
   end
 
@@ -110,7 +109,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
         user_email: params.email
       })
 
-      {:noreply, assign_form(socket, changeset) |> assign(loading: true)}
+      {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}
     else
       {:noreply, assign_form(socket, changeset)}
     end

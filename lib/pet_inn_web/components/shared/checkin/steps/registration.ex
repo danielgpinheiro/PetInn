@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   alias PetInnWeb.CheckinController
@@ -54,17 +55,16 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
   def mount(socket) do
     changeset = build_changeset()
 
-    {:ok, assign_form(socket, changeset) |> assign(loading: false)}
+    {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
   end
 
   def update(%{inn_id: inn_id, user_email: user_email}, socket) do
     user = CheckinController.get_table_cache(:user, user_email)
 
     changeset =
-      user
-      |> build_changeset()
+      build_changeset(user)
 
-    {:ok, assign_form(socket, changeset) |> assign(user_email: user_email, inn_id: inn_id)}
+    {:ok, socket |> assign_form(changeset) |> assign(user_email: user_email, inn_id: inn_id)}
   end
 
   def update(_, socket) do
@@ -130,6 +130,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
       user_email: user_registration.email
     })
 
-    {:noreply, assign_form(socket, changeset) |> assign(loading: true)}
+    {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}
   end
 end

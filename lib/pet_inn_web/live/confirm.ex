@@ -1,12 +1,12 @@
 defmodule PetInnWeb.ConfirmLive do
+  @moduledoc false
   use PetInnWeb, :live_view
 
+  alias PetInnWeb.Shared.Confirm.Steps.ConfirmationComponent
+  alias PetInnWeb.Shared.Confirm.Steps.SelectDateComponent
+  alias PetInnWeb.Shared.FooterComponent
   alias PetInnWeb.Shared.Header.HeaderComponent
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
-  alias PetInnWeb.Shared.FooterComponent
-
-  alias PetInnWeb.Shared.Confirm.Steps.SelectDateComponent
-  alias PetInnWeb.Shared.Confirm.Steps.ConfirmationComponent
 
   def render(assigns) do
     ~H"""
@@ -29,8 +29,7 @@ defmodule PetInnWeb.ConfirmLive do
     end
 
     {:ok,
-     socket
-     |> assign(
+     assign(socket,
        steps: [
          %WizardStructureComponent{
            title: gettext("Selecionar Data"),

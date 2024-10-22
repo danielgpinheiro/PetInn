@@ -1,9 +1,9 @@
 defmodule PetInnWeb.Shared.Header.ChangeLanguage do
+  @moduledoc false
   use PetInnWeb, :live_component
+  use Gettext, backend: PetInnWeb.Gettext
 
   alias Phoenix.LiveView.JS
-
-  use Gettext, backend: PetInnWeb.Gettext
 
   def render(assigns) do
     ~H"""
@@ -99,11 +99,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
     )
   end
 
-  def handle_event(
-        "change_lang",
-        %{"lang" => lang},
-        socket
-      ) do
+  def handle_event("change_lang", %{"lang" => lang}, socket) do
     {:noreply,
      push_event(
        socket,

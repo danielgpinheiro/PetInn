@@ -1,4 +1,5 @@
 defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
+  @moduledoc false
   use PetInnWeb, :live_component
 
   alias PetInnWeb.Shared.Wizard.StepperComponent
@@ -51,41 +52,28 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
 
   def update(
         %{action: :can_continue, user_email: user_email},
-        %{assigns: %{current_step: current_step} = _assigns} =
-          socket
+        %{assigns: %{current_step: current_step} = _assigns} = socket
       ) do
     {:ok,
      push_event(
-       socket
-       |> assign(
-         current_step: current_step + 1,
-         user_email: user_email
-       ),
+       assign(socket, current_step: current_step + 1, user_email: user_email),
        "scroll_to_element",
        %{element: "body"}
      )}
   end
 
-  def update(
-        %{action: :go_to_step, step: step},
-        socket
-      ) do
-    {:ok, socket |> assign(current_step: String.to_integer(step))}
+  def update(%{action: :go_to_step, step: step}, socket) do
+    {:ok, assign(socket, current_step: String.to_integer(step))}
   end
 
   def update(_, socket) do
     {:ok, socket}
   end
 
-  def handle_event(
-        "previous_step",
-        _params,
-        %{assigns: %{current_step: current_step} = _assigns} = socket
-      ) do
+  def handle_event("previous_step", _params, %{assigns: %{current_step: current_step} = _assigns} = socket) do
     {:noreply,
      push_event(
-       socket
-       |> assign(current_step: current_step - 1),
+       assign(socket, current_step: current_step - 1),
        "scroll_to_element",
        %{element: "body"}
      )}
