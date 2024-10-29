@@ -23,30 +23,30 @@ defmodule PetInnWeb.AdminLayout do
               >
                 <.icon name="hero-bars-3-bottom-left" class="mr-2" /> <%= gettext("Reservas") %>
               </.link>
-              
+
               <.link
                 navigate="/admin/rating"
                 class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
               >
                 <.icon name="hero-star" class="mr-2" /> <%= gettext("Avaliações") %>
               </.link>
-              
+
               <.link
                 navigate="/admin/generate"
                 class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
               >
                 <.icon name="hero-qr-code" class="mr-2" /> <%= gettext("Gerar Link de Check-In") %>
               </.link>
-              
+
               <div class="absolute bottom-0 left-0 w-full p-2">
                 <button class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors flex items-center">
                   <.icon name="hero-power" class="mr-2" /> <%= gettext("Sair") %>
                 </button>
-                 <.live_component module={ChangeLanguage} id={:change_language} />
+                <.live_component module={ChangeLanguage} id={:change_language} />
               </div>
             </nav>
           </aside>
-          
+
           <div class="w-full h-full flex flex-col">
             <header class="w-full h-16 flex justify-between items-center px-4 shrink-0">
               <div class="flex items-center">
@@ -74,7 +74,7 @@ defmodule PetInnWeb.AdminLayout do
                       />
                     </g>
                   </svg>
-                  
+
                   <svg
                     class="close-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -90,14 +90,14 @@ defmodule PetInnWeb.AdminLayout do
                     </g>
                   </svg>
                 </button>
-                
+
                 <h1 class="font-medium text-[18px] text-gray-800 dark:text-gray-200">
                   Santo Chico Hotel e Pet Shop
                 </h1>
               </div>
-               <img src="/images/logo.jpg" class="w-11 h-11" />
+              <img src="/images/logo.jpg" class="w-11 h-11" />
             </header>
-            
+
             <div class="w-full h-[calc(100%-64px)] p-2">
               <div class="w-full h-full overflow-hidden border-[1px] border-gray-300 dark:border-gray-900 bg-white dark:bg-gray-700 rounded-lg">
                 <%= @inner_content %>

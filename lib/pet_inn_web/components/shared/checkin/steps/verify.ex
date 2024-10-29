@@ -13,7 +13,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
           <.spinner show={true} size="lg" class="pointer-events-none text-orange-400" />
         </div>
       <% end %>
-      
+
       <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
         <%= gettext(
           "Em pouco tempo, o cadastro de você e do seu Pet será feito. %{break_line} Após isso, você poderá reutilizar seu registro em outros lugares com o ecosistema Pet Inns.",
@@ -21,13 +21,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
         )
         |> raw() %>
       </h1>
-      
+
       <.simple_form
         for={@form}
-        phx-change="validate"
+        phx-change="change_form"
         phx-submit="submit"
         phx-target={@myself}
-        as={:phone}
         class="flex flex-col w-full justify-center items-center"
       >
         <.field type="email" field={@form[:email]} class="w-96" />
@@ -58,17 +57,15 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
     {:ok, socket}
   end
 
-  def handle_event("validate", %{"object" => object_params}, socket) do
+  def handle_event("change_form", %{"object" => object_params}, socket) do
     changeset =
-      object_params
-      |> build_changeset()
-      |> Map.put(:action, :validate)
+      build_changeset(object_params)
 
     {:noreply, assign_form(socket, changeset)}
   end
 
   def handle_event("submit", %{"object" => object_params}, socket) do
-    changeset = build_changeset(object_params)
+    changeset = object_params |> build_changeset() |> Map.put(:action, :validate)
 
     case validate_changeset(changeset) do
       {:ok, object} ->

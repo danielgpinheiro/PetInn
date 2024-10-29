@@ -13,7 +13,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
           <.spinner show={true} size="lg" class="pointer-events-none text-orange-400" />
         </div>
       <% end %>
-      
+
       <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
         <%= gettext(
           "%{strong} Olá, bem vindo!%{close_strong}%{break_line}Continue o cadastro de você e do seu Pet para reservar uma estadia.",
@@ -23,10 +23,10 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
         )
         |> raw() %>
       </h1>
-      
+
       <.simple_form
         for={@form}
-        phx-change="validate"
+        phx-change="change_form"
         phx-submit="submit"
         phx-target={@myself}
         class="flex flex-col w-full justify-center items-center"
@@ -71,17 +71,15 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
     {:ok, socket}
   end
 
-  def handle_event("validate", %{"object" => object_params}, socket) do
+  def handle_event("change_form", %{"object" => object_params}, socket) do
     changeset =
-      object_params
-      |> build_changeset()
-      |> Map.put(:action, :validate)
+      build_changeset(object_params)
 
     {:noreply, assign_form(socket, changeset)}
   end
 
   def handle_event("submit", %{"object" => object_params}, socket) do
-    changeset = build_changeset(object_params)
+    changeset = object_params |> build_changeset() |> Map.put(:action, :validate)
 
     case validate_changeset(changeset) do
       {:ok, object} ->

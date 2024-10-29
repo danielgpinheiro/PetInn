@@ -17,12 +17,12 @@ defmodule PetInnWeb.Shared.Header.HeaderComponent do
         <span class="text-lg font-semibold tracking-tight text-orange-400 whitespace-nowrap absolute top-0 right-8 leading-[60px]">
           Pet Check-in Online
         </span>
-         <div class="w-[1px] h-8 bg-gray-300" />
+        <div class="w-[1px] h-8 bg-gray-300" />
         <span class="text-lg font-semibold tracking-tight text-orange-400 whitespace-nowrap absolute top-0 left-8 leading-[60px]">
           <%= @name %>
         </span>
       </div>
-       <.live_component module={ChangeLanguage} id={:change_language} />
+      <.live_component module={ChangeLanguage} id={:change_language} />
     </header>
     """
   end

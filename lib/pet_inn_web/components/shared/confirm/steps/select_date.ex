@@ -14,7 +14,7 @@ defmodule PetInnWeb.Shared.Confirm.Steps.SelectDateComponent do
       <h1 class="text-center text-lg text-gray-800 mb-11">
         <%= gettext("Por favor, selecione a data e o horário de Check-In e Check-Out do seu Pet") %>
       </h1>
-      
+
       <input
         id="datepicker"
         class="input input-bordered cursor-pointer mx-auto w-full sm:w-[60%]"

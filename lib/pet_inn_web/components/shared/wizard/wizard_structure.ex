@@ -18,7 +18,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
       >
         <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> Voltar
       </button>
-      
+
       <.live_component
         module={StepperComponent}
         id={:stepper}
@@ -45,7 +45,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(steps: steps)
-     |> assign(current_step: 0)
+     |> assign(current_step: 2)
      |> assign(inn_id: inn_id)
      |> assign(user_email: "")}
   end

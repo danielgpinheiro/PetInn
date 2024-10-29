@@ -15,7 +15,7 @@ defmodule PetInnWeb.ConfirmLive do
       <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
         <.live_component module={WizardStructureComponent} id={:wizard} steps={@steps} />
       </div>
-       <.live_component module={FooterComponent} id={:footer} />
+      <.live_component module={FooterComponent} id={:footer} />
     </section>
     """
   end

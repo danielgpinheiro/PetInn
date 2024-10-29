@@ -25,7 +25,7 @@ defmodule PetInnWeb.CheckinLive do
           inn_id={@inn_id}
         />
       </div>
-       <.live_component module={FooterComponent} id={:footer} />
+      <.live_component module={FooterComponent} id={:footer} />
     </section>
     """
   end
