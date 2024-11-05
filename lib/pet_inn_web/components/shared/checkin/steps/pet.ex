@@ -7,7 +7,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
 
   def render(assigns) do
     ~H"""
-    <div class="w-[650px] mx-auto flex justify-center flex-col">
+    <div class="w-[650px] mx-auto flex justify-center flex-col" phx-hook="TriggerButton" id="pet-step">
       <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
         <%= gettext(
           "Insira os dados do seu Pet, para entendermos quais as necessidades do seu Pet na Estadia."
@@ -30,7 +30,62 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
               phx-target={@myself}
               class="flex flex-col w-full justify-center items-center"
             >
-              <.field type="file" field={@form[:photo]} label="Foto do Pet" accept="image/*" />
+              <div class="flex w-full justify-center items-center relative mb-10">
+                <div
+                  class="w-32 h-32 p-[4px] rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col mb-4 text-center relative flex border-dashed"
+                  style={"border-width: #{if length(@uploads.images.entries) == 0, do: "1px", else: "0px"}"}
+                  phx-drop-target={@uploads.images.ref}
+                >
+                  <.live_file_input
+                    upload={@uploads.images}
+                    class="w-full h-full opacity-0 absolute top-0 left-0 cursor-pointer"
+                  />
+
+                  <span class="pointer-events-none dark:text-gray-200">
+                    <.icon name="hero-camera" class="w-10 h-10" />
+                    <br /> <%= gettext("Foto do Pet") %>
+                  </span>
+
+                  <div
+                    :for={entry <- @uploads.images.entries}
+                    class="flex items-center justify-center absolute top-0 left-0 z-10 w-full h-full p-[4px]"
+                  >
+                    <.live_img_preview
+                      entry={entry}
+                      class="w-full h-full rounded-full shadow object-cover"
+                    />
+
+                    <div
+                      class="radial-progress"
+                      role="progressbar"
+                      aria-valuenow="0"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      style={"--progress:" <> Integer.to_string(entry.progress) <> "%"}
+                    >
+                    </div>
+
+                    <a
+                      class="btn rounded-full btn-sm absolute top-[-15px] right-[-15px] shadow bg-white dark:bg-gray-700 flex justify-center items-center w-6 h-6 cursor-pointer"
+                      phx-click="cancel"
+                      phx-target={@myself}
+                      phx-value-ref={entry.ref}
+                    >
+                      <.icon name="hero-x-mark" class="w-5 h-5 dark:text-white" />
+                    </a>
+
+                    <div class="absolute bottom-[-36px] left-0 text-center w-full flex justify-center">
+                      <.error :for={err <- upload_errors(@uploads.images, entry)}>
+                        <%= Phoenix.Naming.humanize(err) %>
+                      </.error>
+                    </div>
+                  </div>
+                </div>
+
+                <.error :for={err <- upload_errors(@uploads.images)}>
+                  <%= Phoenix.Naming.humanize(err) %>
+                </.error>
+              </div>
 
               <div class="w-full flex justify-between">
                 <.field
@@ -44,49 +99,26 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
                   type="select"
                   field={@form[:specie]}
                   label={gettext("Espécie")}
-                  options={["Cachorro", "Gato", "Avés"]}
+                  options={List.insert_at(@species_pet_allowed, 0, "")}
                   class="w-48 mr-2"
                 />
 
                 <.field field={@form[:race]} label={gettext("Raça")} type="text" class="w-48 mr-2" />
               </div>
+
+              <hr />
+
+              <:actions>
+                <.button
+                  color="warning"
+                  variant="shadow"
+                  class="opacity-0 w-[1px] h-[1px] absolute top-0 left-0 pointer-events-none"
+                  id="pet-submit-button"
+                />
+              </:actions>
             </.simple_form>
 
-            <%!-- <button class="w-24 h-24 p-[4px] bg-white rounded-lg justify-center items-center text-gray-500 border-[1px] border-gray-300 flex-col mb-4">
-              <img src="/images/pet.jpg" class="w-full rounded" />
-              <span>
-                <.icon name="hero-camera" class="w-10 h-10" /> <br /> Foto do Pet
-              </span>
-            </button>
-
-            <div class="w-full flex justify-between">
-              <label class="input input-bordered flex items-center gap-2 w-48 mr-2">
-                <input type="text" class="w-full" placeholder="Nome do Pet" />
-              </label>
-
-              <label class="input input-bordered flex items-center gap-2 w-48 pr-0 mr-2">
-                <select class="select select-bordered w-full max-w-xs h-[calc(3rem-2px)] min-h-[calc(3rem-2px)] text-gray-500 text-base">
-                  <option disabled selected>Espécie</option>
-
-                  <option>Cachorro</option>
-
-                  <option>Gato</option>
-
-                  <option>Avés</option>
-
-                  <option>Répteis</option>
-
-                  <option>Roedores</option>
-                </select>
-              </label>
-
-              <label class="input input-bordered flex items-center gap-2 w-48">
-                <input type="text" class="w-full" placeholder="Raça" />
-              </label>
-            </div>
-
-            <div class="divider"></div>
-
+            <%!--
             <div class="w-full flex items-center flex-wrap mt-2">
               <label class="input input-bordered flex items-center gap-2 w-48 pr-0 relative mb-2 mr-2">
                 <span class="label-text absolute bottom-[100%] left-0">
@@ -145,27 +177,51 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
       </ul>
 
       <.button color="white" variant="outline" class="w-64 mx-auto">
-        <.icon name="hero-plus" class="w-6 h-6 mr-2" /> Adicionar outro Pet
+        <.icon name="hero-plus" class="w-6 h-6 mr-2" /> <%= gettext("Adicionar outro Pet") %>
       </.button>
 
-      <.button color="warning" label="Continuar" variant="shadow" class="mt-24 w-64 mx-auto" />
+      <.button
+        color="warning"
+        label={gettext("Continuar")}
+        variant="shadow"
+        class="mt-24 w-64 mx-auto"
+        phx-click="trigger_button"
+        phx-target={@myself}
+        phx-value-button_id="pet-submit-button"
+      />
     </div>
     """
   end
 
+  @max_entries 1
+  @max_file_size 5_000_000
+
   def mount(socket) do
     changeset = build_changeset()
 
-    {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
+    {:ok,
+     socket
+     |> assign_form(changeset)
+     |> allow_upload(:images, accept: ~w(.png .jpg .jpeg), max_entries: @max_entries, max_file_size: @max_file_size)
+     |> assign(loading: false)}
   end
 
-  # def update(%{inn_id: inn_id, user_email: user_email}, socket) do
-  #   user = CheckinController.get_table_cache(:user, user_email)
+  def update(%{inn_id: inn_id, user_email: user_email}, socket) do
+    # user = CheckinController.get_table_cache(:user, user_email)
+    # IO.inspect(user)
+    inn = CheckinController.get_table_cache(:inn, inn_id)
 
-  #   IO.inspect(user)
+    species_pet_allowed =
+      inn.species_pet_allowed
+      |> Enum.at(0)
+      |> String.replace(~s("), "")
+      |> String.replace(" ", "")
+      |> String.split(",")
 
-  #   {:ok, assign(socket, user_email: user_email, inn_id: inn_id)}
-  # end
+    IO.inspect(species_pet_allowed)
+
+    {:ok, assign(socket, user_email: user_email, inn_id: inn_id, species_pet_allowed: species_pet_allowed)}
+  end
 
   def update(_, socket) do
     {:ok, socket}
@@ -177,9 +233,25 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
     {:noreply, socket}
   end
 
+  def handle_event("cancel", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :images, ref)}
+  end
+
   def handle_event("submit", %{"object" => object_params}, socket) do
     IO.inspect(object_params)
+
+    # handle_file_upload(socket)
+
     {:noreply, socket}
+  end
+
+  def handle_event("trigger_button", %{"button_id" => button_id}, socket) do
+    {:noreply,
+     push_event(
+       socket,
+       "trigger_button",
+       %{button_id: button_id}
+     )}
   end
 
   defp assign_form(socket, changeset) do
@@ -189,12 +261,26 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   defp build_changeset(params \\ %{}) do
     data = %{}
 
-    types = %{photo: :string, name: :string, specie: :string, race: :string}
+    types = %{photo_url: :string, name: :string, specie: :string, race: :string}
 
     Ecto.Changeset.cast({data, types}, params, Map.keys(types))
   end
 
   defp validate_changeset(changeset) do
     Ecto.Changeset.apply_action(changeset, :validate)
+  end
+
+  defp handle_file_upload(socket) do
+    IO.inspect("show")
+
+    [file_path] =
+      consume_uploaded_entries(socket, :images, fn %{path: path}, entry ->
+        path_with_extension = path <> String.replace(entry.client_type, "image/", ".")
+        dest = Path.join(Application.app_dir(:pet_inn, "priv/static/uploads"), Path.basename(path_with_extension))
+        # File.cp!(path, dest)
+        {:ok, ~p"/uploads/#{Path.basename(dest)}"}
+      end)
+
+    IO.inspect(file_path)
   end
 end

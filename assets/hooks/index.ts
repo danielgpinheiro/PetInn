@@ -7,6 +7,7 @@ import RatingDatePicker from "./ratingDatePicker"
 import Calendar from './calendar'
 import Clipboard from "./clipboard"
 import QRCode from "./qrcode"
+import TriggerButton from './triggerButton'
 
 const hooks = {
   Clipboard,
@@ -18,6 +19,7 @@ const hooks = {
   RatingDatePicker,
   ScrollToElement,
   Tooltip,
+  TriggerButton
 };
 
 export default hooks;

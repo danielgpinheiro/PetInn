@@ -155,3 +155,39 @@ input[type="date"], input[type="time"] {
     margin-bottom: 0;
   }
 }
+
+.radial-progress {
+  --hue: 220;
+  --holesize: 67%;
+  --track-bg: hsl(233, 34%, 92%);
+
+  height: 100%;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  place-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+
+.radial-progress::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 50%;
+  z-index: -1;
+  background: conic-gradient(hsl(var(--hue) 100% 70%),
+          hsl(var(--hue) 100% 40%),
+          hsl(var(--hue) 100% 70%) var(--progress, 0%),
+          var(--track-bg) var(--progress, 0%) 100%);
+  -webkit-mask-image: radial-gradient(transparent var(--holesize),
+          black calc(var(--holesize) + 0.5px));
+  mask-image: radial-gradient(transparent var(--holesize),
+          black calc(var(--holesize) + 0.5px));
+}
