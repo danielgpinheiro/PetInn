@@ -8,6 +8,7 @@ import Calendar from './calendar'
 import Clipboard from "./clipboard"
 import QRCode from "./qrcode"
 import TriggerButton from './triggerButton'
+import ThemeSelector from "./themeSelector"
 
 const hooks = {
   Clipboard,
@@ -19,7 +20,8 @@ const hooks = {
   RatingDatePicker,
   ScrollToElement,
   Tooltip,
-  TriggerButton
+  TriggerButton,
+  ThemeSelector
 };
 
 export default hooks;

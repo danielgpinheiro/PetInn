@@ -208,7 +208,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
 
   def update(%{inn_id: inn_id, user_email: user_email}, socket) do
     # user = CheckinController.get_table_cache(:user, user_email)
-    # IO.inspect(user)
     inn = CheckinController.get_table_cache(:inn, inn_id)
 
     species_pet_allowed =
@@ -217,8 +216,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
       |> String.replace(~s("), "")
       |> String.replace(" ", "")
       |> String.split(",")
-
-    IO.inspect(species_pet_allowed)
 
     {:ok, assign(socket, user_email: user_email, inn_id: inn_id, species_pet_allowed: species_pet_allowed)}
   end

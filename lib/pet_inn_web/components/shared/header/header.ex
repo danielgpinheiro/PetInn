@@ -4,6 +4,7 @@ defmodule PetInnWeb.Shared.Header.HeaderComponent do
 
   alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Header.ChangeLanguage
+  alias PetInnWeb.Shared.Header.ThemeSelector
 
   def render(assigns) do
     ~H"""
@@ -23,6 +24,7 @@ defmodule PetInnWeb.Shared.Header.HeaderComponent do
         </span>
       </div>
       <.live_component module={ChangeLanguage} id={:change_language} />
+      <.live_component module={ThemeSelector} id={:theme_selector} />
     </header>
     """
   end

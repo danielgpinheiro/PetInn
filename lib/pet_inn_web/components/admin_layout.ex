@@ -3,6 +3,7 @@ defmodule PetInnWeb.AdminLayout do
   use PetInnWeb, :live_view
 
   alias PetInnWeb.Shared.Header.ChangeLanguage
+  alias PetInnWeb.Shared.Header.ThemeSelector
   alias Phoenix.LiveView.JS
 
   def render(assigns) do
@@ -19,30 +20,31 @@ defmodule PetInnWeb.AdminLayout do
             <nav class="w-full flex flex-col">
               <.link
                 navigate="/admin/booking"
-                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4 no-wrap"
+                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors mb-4 no-wrap"
               >
                 <.icon name="hero-bars-3-bottom-left" class="mr-2" /> <%= gettext("Reservas") %>
               </.link>
 
               <.link
                 navigate="/admin/rating"
-                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
+                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors mb-4"
               >
                 <.icon name="hero-star" class="mr-2" /> <%= gettext("Avaliações") %>
               </.link>
 
               <.link
                 navigate="/admin/generate"
-                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors mb-4"
+                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors mb-4"
               >
                 <.icon name="hero-qr-code" class="mr-2" /> <%= gettext("Gerar Link de Check-In") %>
               </.link>
 
               <div class="absolute bottom-0 left-0 w-full p-2">
-                <button class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 p-2 rounded transition-colors flex items-center">
+                <button class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors flex items-center">
                   <.icon name="hero-power" class="mr-2" /> <%= gettext("Sair") %>
                 </button>
                 <.live_component module={ChangeLanguage} id={:change_language} />
+                <.live_component module={ThemeSelector} id={:change_language} />
               </div>
             </nav>
           </aside>
