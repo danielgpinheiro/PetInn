@@ -33,9 +33,7 @@ defmodule PetInnWeb.Shared.Header.HeaderComponent do
     {:ok, socket}
   end
 
-  def update(%{inn_id: inn_id} = _assigns, socket) do
-    inn = CheckinController.get_table_cache(:inn, inn_id)
-
+  def update(%{inn: inn} = _assigns, socket) do
     {:ok, socket |> assign(logo: inn.logo) |> assign(name: inn.name)}
   end
 end

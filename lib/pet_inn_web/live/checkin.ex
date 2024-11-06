@@ -15,17 +15,21 @@ defmodule PetInnWeb.CheckinLive do
 
   def render(assigns) do
     ~H"""
-    <section id="checkin" class="w-full h-full bg-white dark:bg-gray-800">
-      <.live_component module={HeaderComponent} id={:header} inn_id={@inn_id} />
-      <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
-        <.live_component
-          module={WizardStructureComponent}
-          id={:wizard}
-          steps={@steps}
-          inn_id={@inn_id}
-        />
+    <section id="checkin" class="w-full h-full bg-white dark:bg-gray-800 relative">
+      <div
+        :if={@inn.loading}
+        class="w-full h-screen absolute top-0 left-0 border-[1px] border-red-500 z-10 flex justify-center items-center bg-black dark:bg-gray-500 bg-opacity-10"
+      >
+        <.spinner size="lg" class="text-primary-500" />
       </div>
-      <.live_component module={FooterComponent} id={:footer} />
+
+      <div :if={inn = @inn.ok? && @inn.result}>
+        <.live_component module={HeaderComponent} id={:header} inn={inn} />
+        <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
+          <.live_component module={WizardStructureComponent} id={:wizard} steps={@steps} inn={inn} />
+        </div>
+        <.live_component module={FooterComponent} id={:footer} />
+      </div>
     </section>
     """
   end
@@ -39,10 +43,9 @@ defmodule PetInnWeb.CheckinLive do
       :error -> Gettext.put_locale("pt_BR")
     end
 
-    CheckinController.get_inn(inn_id)
-
     {:ok,
      socket
+     |> assign_async(:inn, fn -> {:ok, %{inn: CheckinController.get_inn(inn_id)}} end)
      |> assign(inn_id: inn_id)
      |> assign(
        steps: [

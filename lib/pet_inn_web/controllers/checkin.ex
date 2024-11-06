@@ -6,8 +6,11 @@ defmodule PetInnWeb.CheckinController do
 
   def get_inn(inn_id) do
     case Inn.Methods.get_by_id(inn_id) do
-      {:ok, value} -> :inn |> create_or_load_table_cache() |> :ets.insert({inn_id, value})
-      {:error, _} -> nil
+      {:ok, value} ->
+        value
+
+      {:error, _} ->
+        nil
     end
   end
 

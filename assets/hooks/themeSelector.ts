@@ -16,8 +16,6 @@ const themeSelector = {
           lightSwitch.checked = true
         }
 
-        console.log(lightSwitch)
-
         lightSwitch.addEventListener('change', () => {
           const {
             checked

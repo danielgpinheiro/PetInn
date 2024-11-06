@@ -6,18 +6,22 @@
   font-style: normal;
 }
 
+html {
+  &.dark {
+    .live_phone {
+      background: rgb(31 41 55);
+      color: rgb(209 213 219);
+      border-color: rgb(75 85 99);
+
+      &.live_phone-valid {
+        background: rgb(20 83 45);
+      } 
+    }
+  }
+}
+
 .live_phone {
   height: 40px;
-
-  @media (prefers-color-scheme: dark) {
-    background: rgb(31 41 55);
-    color: rgb(209 213 219);
-    border-color: rgb(75 85 99);
-
-    &.live_phone-valid {
-      background: rgb(20 83 45);
-    } 
-  }
 
   @media all and (max-width: 639px) {
     width: 100%;

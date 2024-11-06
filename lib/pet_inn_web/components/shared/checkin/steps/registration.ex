@@ -58,13 +58,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
     {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
   end
 
-  def update(%{inn_id: inn_id, user_email: user_email}, socket) do
+  def update(%{inn: inn, user_email: user_email}, socket) do
     user = CheckinController.get_table_cache(:user, user_email)
 
     changeset =
       build_changeset(user)
 
-    {:ok, socket |> assign_form(changeset) |> assign(user_email: user_email, inn_id: inn_id)}
+    {:ok, socket |> assign_form(changeset) |> assign(user_email: user_email, inn: inn)}
   end
 
   def update(_, socket) do

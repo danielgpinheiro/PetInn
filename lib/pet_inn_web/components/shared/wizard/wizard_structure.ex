@@ -29,7 +29,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
         <.live_component
           module={Enum.at(@steps, @current_step).component}
           id={:step}
-          inn_id={@inn_id}
+          inn={@inn}
           user_email={@user_email}
         />
       </div>
@@ -41,12 +41,12 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok, socket}
   end
 
-  def update(%{steps: steps, inn_id: inn_id} = _assigns, socket) do
+  def update(%{steps: steps, inn: inn} = _assigns, socket) do
     {:ok,
      socket
      |> assign(steps: steps)
      |> assign(current_step: 2)
-     |> assign(inn_id: inn_id)
+     |> assign(inn: inn)
      |> assign(user_email: "")}
   end
 
