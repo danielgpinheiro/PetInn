@@ -17,36 +17,52 @@ defmodule PetInnWeb.AdminLayout do
             class="w-64 h-full border-r-[1px] border-gray-300 dark:border-gray-900 shrink-0 transition-all duration-300 p-2 relative"
           >
             <img src="/images/logo_inn.png" class="w-20 mx-auto mb-20" />
-            <nav class="w-full flex flex-col">
-              <.link
-                navigate="/admin/booking"
-                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors mb-4 no-wrap"
-              >
-                <.icon name="hero-bars-3-bottom-left" class="mr-2" /> <%= gettext("Reservas") %>
-              </.link>
 
-              <.link
-                navigate="/admin/rating"
-                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors mb-4"
-              >
-                <.icon name="hero-star" class="mr-2" /> <%= gettext("Avaliações") %>
-              </.link>
+            <.vertical_menu
+              title={gettext("Menu de Navegação")}
+              current_page={:data}
+              menu_items={[
+                %{
+                  name: :booking,
+                  label: gettext("Reservas"),
+                  icon: "hero-bars-3-bottom-left",
+                  menu_items: [
+                    %{
+                      name: :data,
+                      label: gettext("Calendário"),
+                      path: ~p"/admin/booking",
+                      icon: "hero-calendar-days"
+                    },
+                    %{
+                      name: :data2,
+                      label: gettext("Criar Reserva"),
+                      path: ~p"/admin/booking/new",
+                      icon: "hero-plus"
+                    },
+                    %{
+                      name: :generate,
+                      label: gettext("Gerar Link de Check-In"),
+                      path: ~p"/admin/generate",
+                      icon: "hero-qr-code"
+                    }
+                  ]
+                },
+                %{
+                  name: :rating,
+                  label: gettext("Avaliações"),
+                  path: ~p"/admin/rating",
+                  icon: "hero-star"
+                }
+              ]}
+            />
 
-              <.link
-                navigate="/admin/generate"
-                class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors mb-4"
-              >
-                <.icon name="hero-qr-code" class="mr-2" /> <%= gettext("Gerar Link de Check-In") %>
-              </.link>
-
-              <div class="absolute bottom-0 left-0 w-full p-2">
-                <button class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors flex items-center">
-                  <.icon name="hero-power" class="mr-2" /> <%= gettext("Sair") %>
-                </button>
-                <.live_component module={ChangeLanguage} id={:change_language} />
-                <.live_component module={ThemeSelector} id={:change_language} />
-              </div>
-            </nav>
+            <div class="absolute bottom-0 left-0 w-full p-2">
+              <button class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors flex items-center">
+                <.icon name="hero-power" class="mr-2" /> <%= gettext("Sair") %>
+              </button>
+              <.live_component module={ChangeLanguage} id={:change_language} />
+              <.live_component module={ThemeSelector} id={:change_language} />
+            </div>
           </aside>
 
           <div class="w-full h-full flex flex-col">

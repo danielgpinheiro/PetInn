@@ -91,6 +91,7 @@ defmodule PetInnWeb do
       import PetalComponents.Field
       import PetalComponents.Form
       import PetalComponents.Loading
+      import PetalComponents.Menu
       import PetInnWeb.CoreComponents
       # HTML escaping functionality
       import Phoenix.HTML

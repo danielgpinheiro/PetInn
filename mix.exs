@@ -56,7 +56,8 @@ defmodule PetInn.MixProject do
       {:live_phone, "~> 0.8"},
       {:req, "~> 0.5.0"},
       {:petal_components, "~> 2.2"},
-      {:styler, "~> 1.1", only: [:dev, :test], runtime: false}
+      {:styler, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:ecto_nested_changeset, "~> 0.2.1"}
     ]
   end
 

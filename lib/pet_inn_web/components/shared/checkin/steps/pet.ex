@@ -1,7 +1,9 @@
 defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   @moduledoc false
   use PetInnWeb, :live_component
+  use Ecto.Schema
 
+  alias PetInn.Pet.FoodHours
   alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
 
@@ -110,11 +112,44 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
               <hr />
 
               <div class="w-full flex items-center flex-wrap mt-2">
-                <%!-- <.field type="time" label={gettext("1º Horário da Alimentação")} field={@form[:name]} /> --%>
+                <.inputs_for :let={item_food_hour} field={@form[:food_hours]}>
+                  <.field
+                    type="time"
+                    label={
+                      gettext(
+                        "%{index}º Horário da Alimentação",
+                        index: item_food_hour.index + 1
+                      )
+                    }
+                    field={item_food_hour[:hour]}
+                    class="w-40"
+                  />
 
-                <a class="p-2 flex justify-center items-center cursor-pointer">
-                  <.icon name="hero-plus-circle" />
-                </a>
+                  <a
+                    class="p-2 flex justify-center items-center cursor-pointer ml-[-27px]"
+                    phx-click="remove_food_hours"
+                    phx-target={@myself}
+                    phx-value-index={item_food_hour.index}
+                    data-tippy-content={gettext("Remover")}
+                    data-tippy-placement="bottom"
+                  >
+                    <.icon name="hero-minus-circle" />
+                  </a>
+                </.inputs_for>
+              </div>
+
+              <div class="w-full flex justify-center">
+                <.button
+                  color="white"
+                  variant="outline"
+                  class="w-64"
+                  phx-click="add_food_hours"
+                  phx-target={@myself}
+                >
+                  <.icon name="hero-plus" class="w-6 h-6 mr-2" /> <%= gettext(
+                    "Adicionar novo horário"
+                  ) %>
+                </.button>
               </div>
 
               <.field
@@ -183,6 +218,65 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
                 </.error>
               </div>
 
+              <div class="w-full flex items-center flex-wrap mt-2">
+                <.inputs_for :let={item_food_hour} field={@form[:food_hours]}>
+                  <.field
+                    type="text"
+                    label={
+                      gettext(
+                        "%{index}º Remédio",
+                        index: item_food_hour.index + 1
+                      )
+                    }
+                    field={item_food_hour[:hour]}
+                  />
+
+                  <div class="mr-2" />
+
+                  <.field
+                    type="time"
+                    label={
+                      gettext(
+                        "Horário do Remédio",
+                        index: item_food_hour.index + 1
+                      )
+                    }
+                    field={item_food_hour[:hour]}
+                  />
+
+                  <a
+                    class="p-2 flex justify-center items-center cursor-pointer"
+                    phx-click="remove_food_hours"
+                    phx-target={@myself}
+                    phx-value-index={item_food_hour.index}
+                    data-tippy-content={gettext("Remover")}
+                    data-tippy-placement="bottom"
+                  >
+                    <.icon name="hero-minus-circle" />
+                  </a>
+                </.inputs_for>
+              </div>
+
+              <div class="w-full flex justify-center">
+                <.button
+                  color="white"
+                  variant="outline"
+                  class="w-64"
+                  phx-click="add_food_hours"
+                  phx-target={@myself}
+                >
+                  <.icon name="hero-plus" class="w-6 h-6 mr-2" /> <%= gettext(
+                    "Adicionar novo remédio"
+                  ) %>
+                </.button>
+              </div>
+
+              <.field
+                field={@form[:notes_about_pet]}
+                type="textarea"
+                label={gettext("Observações sobre o Pet")}
+              />
+
               <:actions>
                 <.button
                   color="warning"
@@ -192,61 +286,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
                 />
               </:actions>
             </.simple_form>
-
-            <%!--
-            <div class="w-full flex items-center flex-wrap mt-2">
-              <label class="input input-bordered flex items-center gap-2 w-48 pr-0 relative mb-2 mr-2">
-                <span class="label-text absolute bottom-[100%] left-0">
-                  1º Horário da Alimentação
-                </span>
-                <.icon name="hero-clock" class="h-5 w-5 opacity-70 shrink-0" />
-                <input type="time" class="w-full text-gray-500 text-base" />
-              </label>
-
-              <button class="p-2 flex justify-center items-center mt-[-8px]">
-                <.icon name="hero-plus-circle" />
-              </button>
-            </div>
-
-            <div class="form-control w-52 self-start">
-              <label class="label cursor-pointer">
-                <span class="label-text">Alimentação é comida natural?</span>
-                <input type="checkbox" class="toggle toggle-warning" checked="checked" />
-              </label>
-            </div>
-
-            <div class="divider"></div>
-
-            <button class="w-24 h-30 p-[4px] bg-white rounded-lg justify-center items-center text-gray-500 border-[1px] border-gray-300 flex-col mb-8">
-              <span>
-                <.icon name="hero-camera" class="w-10 h-10" /> <br /> Foto do cartão de vacina
-              </span>
-            </button>
-
-            <div class="w-full flex">
-              <label class="input input-bordered flex items-center gap-2 w-1/2 relative mr-2">
-                <span class="label-text absolute bottom-[100%] left-0">
-                  1º Remédio
-                </span>
-                <input type="text" class="w-full" placeholder="Nome do Remédio" />
-              </label>
-
-              <label class="input input-bordered flex items-center gap-2 w-48 pr-0 relative mb-2 mr-2">
-                <span class="label-text absolute bottom-[100%] left-0">
-                  Horário do Remédio
-                </span>
-                <.icon name="hero-clock" class="h-5 w-5 opacity-70 shrink-0" />
-                <input type="time" class="w-full text-gray-500 text-base" />
-              </label>
-
-              <button class="p-2 flex justify-center items-center mt-[-8px]">
-                <.icon name="hero-plus-circle" />
-              </button>
-            </div>
-            <textarea
-              class="textarea textarea-bordered w-full"
-              placeholder="Observações sobre o Pet"
-            ></textarea> --%>
           </.card_content>
         </.card>
       </ul>
@@ -270,6 +309,20 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
 
   @max_entries 1
   @max_file_size 5_000_000
+
+  embedded_schema do
+    field :name, :string
+    field :specie, :string
+    field :race, :string
+    field :photo, :string
+    field :is_natural_food, :boolean, default: false
+    field :vaccination_card, :string
+    field :notes_about_pet, :string
+
+    has_many :food_hours, FoodHours
+  end
+
+  @required_fields [:name, :specie, :race]
 
   def mount(socket) do
     changeset = build_changeset()
@@ -315,7 +368,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   def handle_event("submit", %{"object" => object_params}, socket) do
     IO.inspect(object_params)
 
-    handle_file_upload(socket)
+    # handle_file_upload(socket)
 
     {:noreply, socket}
   end
@@ -329,23 +382,38 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
      )}
   end
 
+  def handle_event("add_food_hours", _, socket) do
+    changeset =
+      EctoNestedChangeset.append_at(socket.assigns.form.source, :food_hours, %{})
+
+    {:noreply, assign_form(socket, changeset)}
+  end
+
+  def handle_event("remove_food_hours", %{"index" => index}, socket) do
+    index = String.to_integer(index)
+
+    changeset =
+      EctoNestedChangeset.delete_at(
+        socket.assigns.form.source,
+        [:food_hours, index],
+        mode: {:flag, :delete}
+      )
+
+    {:noreply, assign_form(socket, changeset)}
+  end
+
   defp assign_form(socket, changeset) do
     assign(socket, form: to_form(changeset, as: :object))
   end
 
   defp build_changeset(params \\ %{}) do
-    data = %{}
-
-    types = %{
-      photo: :string,
-      vaccination_card: :string,
-      name: :string,
-      specie: :string,
-      race: :string,
-      is_natural_food: :boolean
-    }
-
-    Ecto.Changeset.cast({data, types}, params, Map.keys(types))
+    %__MODULE__{food_hours: []}
+    |> Ecto.Changeset.cast(params, @required_fields)
+    |> Ecto.Changeset.cast_assoc(:food_hours,
+      required: true,
+      with: &FoodHours.changeset/2
+    )
+    |> EctoNestedChangeset.append_at(:food_hours, %{})
   end
 
   defp validate_changeset(changeset) do
