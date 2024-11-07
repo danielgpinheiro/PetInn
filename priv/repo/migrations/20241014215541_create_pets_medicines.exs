@@ -6,7 +6,7 @@ defmodule PetInn.Repo.Migrations.CreatePetsMedicines do
       add :id, :binary_id, primary_key: true
       add :pet_id, :string
       add :name, :string
-      add :hours, {:array, :string}
+      add :hours, :string
 
       timestamps(type: :utc_datetime)
     end

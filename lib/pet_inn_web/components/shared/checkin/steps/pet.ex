@@ -4,6 +4,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   use Ecto.Schema
 
   alias PetInn.Pet.FoodHours
+  alias PetInn.Pet.Medicine
   alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
 
@@ -138,25 +139,25 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
                 </.inputs_for>
               </div>
 
+              <.field
+                type="switch"
+                label={gettext("Alimentação é comida natural?")}
+                field={@form[:is_natural_food]}
+              />
+
               <div class="w-full flex justify-center">
-                <.button
+                <a
                   color="white"
                   variant="outline"
-                  class="w-64"
+                  class="border-[1px] border-gray-600 dark:border-white text-gray-600 dark:text-white py-[4px] px-2 rounded text-sm cursor-pointer"
                   phx-click="add_food_hours"
                   phx-target={@myself}
                 >
                   <.icon name="hero-plus" class="w-6 h-6 mr-2" /> <%= gettext(
                     "Adicionar novo horário"
                   ) %>
-                </.button>
+                </a>
               </div>
-
-              <.field
-                type="switch"
-                label={gettext("Alimentação é comida natural?")}
-                field={@form[:is_natural_food]}
-              />
 
               <hr />
 
@@ -219,16 +220,16 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
               </div>
 
               <div class="w-full flex items-center flex-wrap mt-2">
-                <.inputs_for :let={item_food_hour} field={@form[:food_hours]}>
+                <.inputs_for :let={item_medicine} field={@form[:medicines]}>
                   <.field
                     type="text"
                     label={
                       gettext(
                         "%{index}º Remédio",
-                        index: item_food_hour.index + 1
+                        index: item_medicine.index + 1
                       )
                     }
-                    field={item_food_hour[:hour]}
+                    field={item_medicine[:name]}
                   />
 
                   <div class="mr-2" />
@@ -238,17 +239,17 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
                     label={
                       gettext(
                         "Horário do Remédio",
-                        index: item_food_hour.index + 1
+                        index: item_medicine.index + 1
                       )
                     }
-                    field={item_food_hour[:hour]}
+                    field={item_medicine[:hours]}
                   />
 
                   <a
                     class="p-2 flex justify-center items-center cursor-pointer"
-                    phx-click="remove_food_hours"
+                    phx-click="remove_medicine"
                     phx-target={@myself}
-                    phx-value-index={item_food_hour.index}
+                    phx-value-index={item_medicine.index}
                     data-tippy-content={gettext("Remover")}
                     data-tippy-placement="bottom"
                   >
@@ -258,24 +259,20 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
               </div>
 
               <div class="w-full flex justify-center">
-                <.button
+                <a
                   color="white"
                   variant="outline"
-                  class="w-64"
-                  phx-click="add_food_hours"
+                  class="border-[1px] border-gray-600 dark:border-white text-gray-600 dark:text-white py-[4px] px-2 rounded text-sm cursor-pointer"
+                  phx-click="add_medicine"
                   phx-target={@myself}
                 >
                   <.icon name="hero-plus" class="w-6 h-6 mr-2" /> <%= gettext(
                     "Adicionar novo remédio"
                   ) %>
-                </.button>
+                </a>
               </div>
 
-              <.field
-                field={@form[:notes_about_pet]}
-                type="textarea"
-                label={gettext("Observações sobre o Pet")}
-              />
+              <.field field={@form[:notes]} type="text" label={gettext("Observações sobre o Pet")} />
 
               <:actions>
                 <.button
@@ -317,9 +314,10 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
     field :photo, :string
     field :is_natural_food, :boolean, default: false
     field :vaccination_card, :string
-    field :notes_about_pet, :string
+    field :notes, :string
 
     has_many :food_hours, FoodHours
+    has_many :medicines, Medicine
   end
 
   @required_fields [:name, :specie, :race]
@@ -332,7 +330,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
      |> assign_form(changeset)
      |> allow_upload(:photo, accept: ~w(.png .jpg .jpeg), max_entries: @max_entries, max_file_size: @max_file_size)
      |> allow_upload(:vaccination_card,
-       accept: ~w(.png .jpg .jpeg .pdf),
+       accept: ~w(.png .jpg .jpeg),
        max_entries: @max_entries,
        max_file_size: @max_file_size
      )
@@ -356,9 +354,10 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   end
 
   def handle_event("change_form", %{"object" => object_params}, socket) do
-    IO.inspect(object_params)
+    changeset =
+      build_changeset(object_params)
 
-    {:noreply, socket}
+    {:noreply, assign_form(socket, changeset)}
   end
 
   def handle_event("cancel", %{"ref" => ref, "name" => name}, socket) do
@@ -366,11 +365,15 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   end
 
   def handle_event("submit", %{"object" => object_params}, socket) do
-    IO.inspect(object_params)
+    changeset = object_params |> build_changeset() |> Map.put(:action, :validate)
 
-    # handle_file_upload(socket)
+    case validate_changeset(changeset) do
+      {:ok, object} ->
+        submit_step(socket, changeset, object)
 
-    {:noreply, socket}
+      {:error, changeset} ->
+        {:noreply, assign_form(socket, changeset)}
+    end
   end
 
   def handle_event("trigger_button", %{"button_id" => button_id}, socket) do
@@ -402,27 +405,50 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
     {:noreply, assign_form(socket, changeset)}
   end
 
+  def handle_event("add_medicine", _, socket) do
+    changeset =
+      EctoNestedChangeset.append_at(socket.assigns.form.source, :medicines, %{})
+
+    {:noreply, assign_form(socket, changeset)}
+  end
+
+  def handle_event("remove_medicine", %{"index" => index}, socket) do
+    index = String.to_integer(index)
+
+    changeset =
+      EctoNestedChangeset.delete_at(
+        socket.assigns.form.source,
+        [:medicines, index],
+        mode: {:flag, :delete}
+      )
+
+    {:noreply, assign_form(socket, changeset)}
+  end
+
   defp assign_form(socket, changeset) do
     assign(socket, form: to_form(changeset, as: :object))
   end
 
   defp build_changeset(params \\ %{}) do
-    %__MODULE__{food_hours: []}
+    %__MODULE__{food_hours: [], medicines: []}
     |> Ecto.Changeset.cast(params, @required_fields)
     |> Ecto.Changeset.cast_assoc(:food_hours,
-      required: true,
+      required: false,
       with: &FoodHours.changeset/2
     )
-    |> EctoNestedChangeset.append_at(:food_hours, %{})
+    |> Ecto.Changeset.cast_assoc(:medicines, required: false, with: &Medicine.changeset/2)
+    |> Ecto.Changeset.validate_required(:name, message: "É necessário inserir um nome")
+    |> Ecto.Changeset.validate_required(:specie, message: "É necessário selecionar uma espécie")
+    |> Ecto.Changeset.validate_required(:race, message: "É necessário inserir um nome de raça")
   end
 
   defp validate_changeset(changeset) do
     Ecto.Changeset.apply_action(changeset, :validate)
   end
 
-  defp handle_file_upload(socket) do
+  defp handle_file_upload(socket, name) do
     [file_path] =
-      consume_uploaded_entries(socket, :photo, fn %{path: path}, entry ->
+      consume_uploaded_entries(socket, name, fn %{path: path}, entry ->
         path_with_extension = path <> String.replace(entry.client_type, "image/", ".")
         dest = Path.join(Application.app_dir(:pet_inn, "priv/static/uploads"), Path.basename(path_with_extension))
         File.cp!(path, dest)
@@ -430,6 +456,20 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
       end)
 
     file_path
+  end
+
+  defp submit_step(socket, changeset, params) do
+    IO.inspect(params)
+    # photo_path = if length(socket.assigns.uploads.photo.entries) > 0, do: handle_file_upload(socket, :photo)
+
+    # vaccination_card_path =
+    #   if length(socket.assigns.uploads.vaccination_card.entries) > 0, do: handle_file_upload(socket, :vaccination_card)
+
+    # IO.inspect(params)
+    # IO.inspect(photo_path)
+    # IO.inspect(vaccination_card_path)
+
+    {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}
   end
 
   defp upload_error_to_string(:too_many_files), do: gettext("Permitido somente 1 arquivo.")

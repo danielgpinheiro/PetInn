@@ -8,7 +8,7 @@ defmodule PetInn.Pet.Medicine do
   @foreign_key_type :binary_id
   schema "pets_medicines" do
     field :name, :string
-    field :hours, {:array, :string}
+    field :hours, :string
     field :pet_id, :string
 
     timestamps(type: :utc_datetime)
@@ -16,8 +16,6 @@ defmodule PetInn.Pet.Medicine do
 
   @doc false
   def changeset(medicine, attrs) do
-    medicine
-    |> cast(attrs, [:pet_id, :name, :hours])
-    |> validate_required([:name, :hours])
+    cast(medicine, attrs, [:pet_id, :name, :hours])
   end
 end

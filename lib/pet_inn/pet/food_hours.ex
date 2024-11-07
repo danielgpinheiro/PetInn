@@ -9,12 +9,6 @@ defmodule PetInn.Pet.FoodHours do
   end
 
   def changeset(food_hours, attrs) do
-    food_hours
-    |> cast(attrs, [
-      :hour
-    ])
-    |> validate_required([
-      :hour
-    ])
+    cast(food_hours, attrs, [:hour])
   end
 end
