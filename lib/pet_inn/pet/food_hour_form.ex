@@ -1,10 +1,10 @@
-defmodule PetInn.Pet.FoodHours do
+defmodule PetInn.Pet.FoodHourForm do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  schema "food_hours" do
+  schema "pets_food_hours_form" do
     field :hour, :string
   end
 

@@ -58,7 +58,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
      push_event(
        assign(socket, current_step: current_step + 1, user_email: user_email),
        "scroll_to_element",
-       %{element: "body"}
+       %{element: "body", top: 0, left: 0, behavior: "instant", fade_wizard: true}
      )}
   end
 
@@ -75,7 +75,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
      push_event(
        assign(socket, current_step: current_step - 1),
        "scroll_to_element",
-       %{element: "body"}
+       %{element: "body", top: 0, left: 0, behavior: "instant", c: true}
      )}
   end
 end

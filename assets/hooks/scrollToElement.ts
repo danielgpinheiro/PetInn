@@ -2,20 +2,26 @@ const scrollToElement = {
   mounted() {
     window.addEventListener("phx:scroll_to_element", (event) => {
       const { detail } = event as CustomEvent
-      const { element } = detail
+      const { element, top, left, behavior, fade_wizard } = detail
       const elementDOM = document.querySelector<HTMLElement>(element)
       const wizardContentElement = document.querySelector('.wizard-animate-content')
 
-      setTimeout(() => {
-        wizardContentElement?.classList.add('fadeInLeft')
-      }, 10)
+      if (fade_wizard) {
+        setTimeout(() => {
+          wizardContentElement?.classList.add('fadeInLeft')
+        }, 10)
 
-      setTimeout(() => {
-        wizardContentElement?.classList.remove('fadeInLeft')
-      }, 600)
+        setTimeout(() => {
+          wizardContentElement?.classList.remove('fadeInLeft')
+        }, 600)
+      }
       
       if (elementDOM) {
-        elementDOM.scrollTop = 0
+        elementDOM.scrollTo({
+          top,
+          left,
+          behavior,
+        })
       }
     });
   },
