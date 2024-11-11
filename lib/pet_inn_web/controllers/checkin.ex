@@ -2,6 +2,7 @@ defmodule PetInnWeb.CheckinController do
   use PetInnWeb, :controller
 
   alias PetInn.Inn
+  alias PetInn.Pet
   alias PetInn.User
 
   def get_inn(inn_id) do
@@ -37,6 +38,14 @@ defmodule PetInnWeb.CheckinController do
 
       {:ok, values} ->
         :user |> create_or_load_table_cache() |> :ets.insert({values.email, Map.from_struct(values)})
+    end
+  end
+
+  def get_pets(user_id) do
+    case Pet.Methods.get_by_user_id(user_id) do
+      {:ok, values} -> values
+      {:error, :not_found} -> {:not_found}
+      _ -> {:not_found}
     end
   end
 end

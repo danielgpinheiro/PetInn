@@ -48,7 +48,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
   end
 
   def mount(socket) do
-    changeset = build_changeset()
+    changeset =
+      build_changeset(%{
+        email: "dedelabritos@gmail.com",
+        phone: "+5534999078965"
+      })
+
+    # changeset = build_changeset()
 
     {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
   end

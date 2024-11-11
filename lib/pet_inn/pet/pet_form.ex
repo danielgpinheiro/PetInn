@@ -13,6 +13,8 @@ defmodule PetInn.Pet.PetForm do
     field :race, :string
     field :is_natural_food, :boolean, default: false
     field :notes, :string
+    field :photo, :string
+    field :vaccination_card, :string
 
     has_many :food_hours, FoodHourForm
     has_many :medicines, MedicineForm
@@ -25,7 +27,9 @@ defmodule PetInn.Pet.PetForm do
       :specie,
       :race,
       :is_natural_food,
-      :notes
+      :notes,
+      :photo,
+      :vaccination_card
     ])
     |> validate_required(:name, message: "É necessário inserir um nome")
     |> validate_required(:specie, message: "É necessário selecionar uma espécie")

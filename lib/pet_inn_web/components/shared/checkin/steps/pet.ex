@@ -363,6 +363,10 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
 
   def update(%{inn: inn, user_email: user_email}, socket) do
     # user = CheckinController.get_table_cache(:user, user_email)
+
+    # pets = handle_user_pets(CheckinController.get_pets(user.id))
+    pets = handle_user_pets(CheckinController.get_pets("813fce44-a335-42e2-8c41-aa8d2207c87b"))
+
     species_pet_allowed =
       inn.species_pet_allowed
       |> Enum.at(0)
@@ -370,7 +374,10 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
       |> String.replace(" ", "")
       |> String.split(",")
 
-    {:ok, assign(socket, user_email: user_email, inn: inn, species_pet_allowed: species_pet_allowed)}
+    case pets do
+      {:not_found} -> {:ok, assign(socket, user_email: user_email, inn: inn, species_pet_allowed: species_pet_allowed)}
+      _ -> {:ok, assign(socket, user_email: user_email, inn: inn, species_pet_allowed: species_pet_allowed)}
+    end
   end
 
   def update(_, socket) do
@@ -538,7 +545,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
       consume_uploaded_entries(socket, name, fn %{path: path}, entry ->
         path_with_extension = path <> String.replace(entry.client_type, "image/", ".")
         dest = Path.join(Application.app_dir(:pet_inn, "priv/static/uploads"), Path.basename(path_with_extension))
-        File.cp!(path, dest)
         {:ok, ~p"/uploads/#{Path.basename(dest)}"}
       end)
 
@@ -546,18 +552,50 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   end
 
   defp submit_step(socket, changeset, params) do
-    IO.inspect(params)
-    IO.inspect(socket.assigns.uploads)
-    # photo_path = if length(socket.assigns.uploads.photo.entries) > 0, do: handle_file_upload(socket, :photo)
+    pets =
+      params.pets
+      |> Enum.with_index()
+      |> Enum.map(fn {pet, index} ->
+        uploads = socket.assigns.uploads
+        photo_assign = String.to_atom("photo_#{index}")
+        vaccination_card_assign = String.to_atom("vaccination_card_#{index}")
+        photo_entries = uploads[photo_assign].entries
+        vaccination_card_entries = uploads[vaccination_card_assign].entries
+        photo_path = if length(photo_entries) > 0, do: handle_file_upload(socket, photo_assign)
 
-    # vaccination_card_path =
-    #   if length(socket.assigns.uploads.vaccination_card.entries) > 0, do: handle_file_upload(socket, :vaccination_card)
+        vaccination_card_path =
+          if length(vaccination_card_entries) > 0, do: handle_file_upload(socket, vaccination_card_assign)
 
-    # IO.inspect(params)
-    # IO.inspect(photo_path)
-    # IO.inspect(vaccination_card_path)
+        %{pet | photo: photo_path, vaccination_card: vaccination_card_path}
+      end)
+
+    user_data_with_pets =
+      Map.put(
+        CheckinController.get_table_cache(:user, socket.assigns.user_email),
+        :pets,
+        pets
+      )
+
+    CheckinController.update_user(user_data_with_pets)
+
+    send_update(WizardStructureComponent, %{
+      id: :wizard,
+      action: :can_continue,
+      user_email: user_data_with_pets.email
+    })
 
     {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}
+  end
+
+  defp handle_user_pets(pets) do
+    case pets do
+      {:not_found} ->
+        {:not_found}
+
+      _ ->
+        IO.inspect(pets)
+        pets
+    end
   end
 
   defp upload_error_to_string(:too_many_files), do: gettext("Permitido somente 1 arquivo.")
