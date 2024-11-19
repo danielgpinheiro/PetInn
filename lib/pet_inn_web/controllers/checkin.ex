@@ -43,9 +43,29 @@ defmodule PetInnWeb.CheckinController do
 
   def get_pets(user_id) do
     case Pet.Methods.get_by_user_id(user_id) do
-      {:ok, values} -> values
-      {:error, :not_found} -> {:not_found}
-      _ -> {:not_found}
+      {:ok, []} ->
+        {:not_found}
+
+      {:ok, pets} ->
+        Enum.map(pets, fn pet ->
+          Map.put(pet, :medicines, get_pets_medicines(pet.id))
+        end)
+
+      {:error, :not_found} ->
+        {:not_found}
+    end
+  end
+
+  def get_pets_medicines(pet_id) do
+    case Pet.Methods.get_medicines_by_pet_id(pet_id) do
+      {:ok, []} ->
+        {:not_found}
+
+      {:ok, values} ->
+        values
+
+      {:error, :not_found} ->
+        {:not_found}
     end
   end
 end
