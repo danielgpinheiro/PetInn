@@ -40,87 +40,88 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
                 </div>
 
                 <div class="w-full block space-y-8">
-                  <%= if pet[:photo].value != nil do %>
-                    <div class="flex w-full justify-center items-center relative mb-10">
-                      <div class="w-32 h-32 p-[4px] rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col mb-4 text-center relative flex">
-                        <img
-                          src={pet[:photo].value}
-                          class="w-full h-full rounded-full shadow object-cover"
-                        />
-                        <a
-                          class="btn rounded-full btn-sm absolute top-[-15px] right-[-15px] shadow bg-white dark:bg-gray-700 flex justify-center items-center w-6 h-6 cursor-pointer"
-                          phx-click="remove_photo"
-                          phx-target={@myself}
-                          phx-value-index={pet.index}
-                        >
-                          <.icon name="hero-x-mark" class="w-5 h-5 dark:text-white" />
-                        </a>
-                      </div>
-                    </div>
-                  <% else %>
-                    <div class="flex w-full justify-center items-center relative mb-10">
-                      <div
-                        class="w-32 h-32 p-[4px] rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col mb-4 text-center relative flex border-dashed"
-                        style={"border-width: #{if length(@uploads[String.to_atom("photo_#{pet.index}")].entries) == 0, do: "1px", else: "0px"}"}
-                        phx-drop-target={@uploads[String.to_atom("photo_#{pet.index}")].ref}
-                      >
-                        <.live_file_input
-                          upload={@uploads[String.to_atom("photo_#{pet.index}")]}
-                          class="w-full h-full opacity-0 absolute top-0 left-0 cursor-pointer"
-                        />
-
-                        <span class="pointer-events-none dark:text-gray-200">
-                          <.icon name="hero-camera" class="w-10 h-10" />
-                          <br /> <%= gettext("Foto do Pet") %>
-                        </span>
-
-                        <div
-                          :for={entry <- @uploads[String.to_atom("photo_#{pet.index}")].entries}
-                          class="flex items-center justify-center absolute top-0 left-0 z-10 w-full h-full p-[4px]"
-                        >
-                          <.live_img_preview
-                            entry={entry}
+                  <div class="flex w-full justify-center items-center relative mb-10">
+                    <%= if pet[:photo].value != nil and pet[:photo].value !== "" do %>
+                      <div class="w-full h-[132px] absolute top-0 left-0 z-10 flex justify-center items-center">
+                        <div class="w-[132px] h-full rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col text-center flex relative">
+                          <img
+                            src={pet[:photo].value}
                             class="w-full h-full rounded-full shadow object-cover"
                           />
-
-                          <div
-                            class="radial-progress"
-                            role="progressbar"
-                            aria-valuenow="0"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                            style={"--progress:" <> Integer.to_string(entry.progress) <> "%"}
-                          >
-                          </div>
-
                           <a
                             class="btn rounded-full btn-sm absolute top-[-15px] right-[-15px] shadow bg-white dark:bg-gray-700 flex justify-center items-center w-6 h-6 cursor-pointer"
-                            phx-click="cancel"
+                            phx-click="remove_saved_element"
                             phx-target={@myself}
-                            phx-value-ref={entry.ref}
-                            phx-value-name={"photo_#{pet.index}"}
+                            phx-value-index={pet.index}
+                            phx-value-element={:photo}
                           >
                             <.icon name="hero-x-mark" class="w-5 h-5 dark:text-white" />
                           </a>
-
-                          <div class="absolute bottom-[-36px] left-0 text-center w-full flex justify-center whitespace-nowrap">
-                            <.error :for={
-                              err <-
-                                upload_errors(@uploads[String.to_atom("photo_#{pet.index}")], entry)
-                            }>
-                              <%= upload_error_to_string(err) %>
-                            </.error>
-                          </div>
                         </div>
                       </div>
+                    <% end %>
 
-                      <.error :for={
-                        err <- upload_errors(@uploads[String.to_atom("photo_#{pet.index}")])
-                      }>
-                        <%= upload_error_to_string(err) %>
-                      </.error>
+                    <div
+                      class="w-32 h-32 p-[4px] rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col mb-4 text-center relative flex border-dashed"
+                      style={"border-width: #{if length(@uploads[String.to_atom("photo_#{pet.index}")].entries) == 0, do: "1px", else: "0px"}"}
+                      phx-drop-target={@uploads[String.to_atom("photo_#{pet.index}")].ref}
+                    >
+                      <.live_file_input
+                        upload={@uploads[String.to_atom("photo_#{pet.index}")]}
+                        class="w-full h-full opacity-0 absolute top-0 left-0 cursor-pointer"
+                      />
+
+                      <span class="pointer-events-none dark:text-gray-200">
+                        <.icon name="hero-camera" class="w-10 h-10" />
+                        <br /> <%= gettext("Foto do Pet") %>
+                      </span>
+
+                      <div
+                        :for={entry <- @uploads[String.to_atom("photo_#{pet.index}")].entries}
+                        class="flex items-center justify-center absolute top-0 left-0 z-10 w-full h-full p-[4px]"
+                      >
+                        <.live_img_preview
+                          entry={entry}
+                          class="w-full h-full rounded-full shadow object-cover"
+                        />
+
+                        <div
+                          class="radial-progress"
+                          role="progressbar"
+                          aria-valuenow="0"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                          style={"--progress:" <> Integer.to_string(entry.progress) <> "%"}
+                        >
+                        </div>
+
+                        <a
+                          class="btn rounded-full btn-sm absolute top-[-15px] right-[-15px] shadow bg-white dark:bg-gray-700 flex justify-center items-center w-6 h-6 cursor-pointer"
+                          phx-click="cancel"
+                          phx-target={@myself}
+                          phx-value-ref={entry.ref}
+                          phx-value-name={"photo_#{pet.index}"}
+                        >
+                          <.icon name="hero-x-mark" class="w-5 h-5 dark:text-white" />
+                        </a>
+
+                        <div class="absolute bottom-[-36px] left-0 text-center w-full flex justify-center whitespace-nowrap">
+                          <.error :for={
+                            err <-
+                              upload_errors(@uploads[String.to_atom("photo_#{pet.index}")], entry)
+                          }>
+                            <%= upload_error_to_string(err) %>
+                          </.error>
+                        </div>
+                      </div>
                     </div>
-                  <% end %>
+
+                    <.error :for={
+                      err <- upload_errors(@uploads[String.to_atom("photo_#{pet.index}")])
+                    }>
+                      <%= upload_error_to_string(err) %>
+                    </.error>
+                  </div>
 
                   <div class="w-full flex justify-between">
                     <.field
@@ -197,6 +198,26 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
                   <hr />
 
                   <div class="flex w-full justify-center items-center relative mb-10">
+                    <%= if pet[:vaccination_card].value != nil and pet[:vaccination_card].value !== "" do %>
+                      <div class="w-full h-[132px] absolute top-0 left-0 z-10 flex justify-center items-center">
+                        <div class="w-[132px] h-full rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col text-center flex relative">
+                          <img
+                            src={pet[:vaccination_card].value}
+                            class="w-full h-full rounded-full shadow object-cover"
+                          />
+                          <a
+                            class="btn rounded-full btn-sm absolute top-[-15px] right-[-15px] shadow bg-white dark:bg-gray-700 flex justify-center items-center w-6 h-6 cursor-pointer"
+                            phx-click="remove_saved_element"
+                            phx-target={@myself}
+                            phx-value-index={pet.index}
+                            phx-value-element={:vaccination_card}
+                          >
+                            <.icon name="hero-x-mark" class="w-5 h-5 dark:text-white" />
+                          </a>
+                        </div>
+                      </div>
+                    <% end %>
+
                     <div
                       class="w-32 h-32 p-[4px] rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col mb-4 text-center relative flex border-dashed"
                       style={"border-width: #{if length(@uploads[String.to_atom("vaccination_card_#{pet.index}")].entries) == 0, do: "1px", else: "0px"}"}
@@ -403,6 +424,8 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
       _ ->
         changeset = build_changeset(pets)
 
+        IO.inspect(changeset)
+
         {:ok,
          socket
          |> assign_form(changeset)
@@ -536,11 +559,27 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
     {:noreply, assign_form(socket, changeset)}
   end
 
-  def handle_event("remove_photo", %{"index" => index}, socket) do
-    pets = socket.assigns.form.source.params["pets"]
-    pet = pets |> Enum.at(String.to_integer(index)) |> Map.replace(:photo, nil)
-    opa = List.replace_at(pets, String.to_integer(index), pet)
-    changeset = build_changeset(opa)
+  def handle_event("remove_saved_element", %{"index" => index, "element" => element}, socket) do
+    element = String.to_atom(element)
+    pet = socket.assigns.form.source.params["pets"] |> Enum.at(String.to_integer(index)) |> Map.replace(element, nil)
+    pets = List.replace_at(socket.assigns.form.source.params["pets"], String.to_integer(index), pet)
+
+    map_pets =
+      Enum.map(pets, fn pet ->
+        %{
+          name: pet.name,
+          is_natural_food: pet.is_natural_food,
+          notes: pet.notes,
+          race: pet.race,
+          specie: pet.specie,
+          photo: pet.photo,
+          vaccination_card: pet.vaccination_card,
+          food_hours: pet.food_hours,
+          medicines: pet.medicines
+        }
+      end)
+
+    changeset = Map.new() |> Map.put("pets", map_pets) |> build_changeset()
 
     {:noreply, assign_form(socket, changeset)}
   end
@@ -591,39 +630,43 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
   end
 
   defp submit_step(socket, changeset, params) do
-    # pets =
-    #   params.pets
-    #   |> Enum.with_index()
-    #   |> Enum.map(fn {pet, index} ->
-    #     uploads = socket.assigns.uploads
-    #     photo_assign = String.to_atom("photo_#{index}")
-    #     vaccination_card_assign = String.to_atom("vaccination_card_#{index}")
-    #     photo_entries = uploads[photo_assign].entries
-    #     vaccination_card_entries = uploads[vaccination_card_assign].entries
-    #     photo_path = if length(photo_entries) > 0, do: handle_file_upload(socket, photo_assign)
+    pets =
+      params.pets
+      |> Enum.with_index()
+      |> Enum.map(fn {pet, index} ->
+        uploads = socket.assigns.uploads
+        photo_assign = String.to_atom("photo_#{index}")
+        vaccination_card_assign = String.to_atom("vaccination_card_#{index}")
+        photo_entries = uploads[photo_assign].entries
+        vaccination_card_entries = uploads[vaccination_card_assign].entries
 
-    #     vaccination_card_path =
-    #       if length(vaccination_card_entries) > 0, do: handle_file_upload(socket, vaccination_card_assign)
+        photo_path =
+          if length(photo_entries) > 0 and pet.photo === nil,
+            do: handle_file_upload(socket, photo_assign),
+            else: pet.photo
 
-    #     %{pet | photo: photo_path, vaccination_card: vaccination_card_path}
-    #   end)
+        vaccination_card_path =
+          if length(vaccination_card_entries) > 0 and pet.vaccination_card === nil,
+            do: handle_file_upload(socket, vaccination_card_assign),
+            else: pet.vaccination_card
 
-    IO.inspect(params.pets)
+        %{pet | photo: photo_path, vaccination_card: vaccination_card_path}
+      end)
 
-    # user_data_with_pets =
-    #   Map.put(
-    #     CheckinController.get_table_cache(:user, socket.assigns.user_email),
-    #     :pets,
-    #     pets
-    #   )
+    user_data_with_pets =
+      Map.put(
+        CheckinController.get_table_cache(:user, socket.assigns.user_email),
+        :pets,
+        pets
+      )
 
-    # CheckinController.update_user(user_data_with_pets)
+    CheckinController.update_user(user_data_with_pets)
 
-    # send_update(WizardStructureComponent, %{
-    #   id: :wizard,
-    #   action: :can_continue,
-    #   user_email: user_data_with_pets.email
-    # })
+    send_update(WizardStructureComponent, %{
+      id: :wizard,
+      action: :can_continue,
+      user_email: user_data_with_pets.email
+    })
 
     {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}
   end
@@ -645,23 +688,20 @@ defmodule PetInnWeb.Shared.Checkin.Steps.PetComponent do
               photo: pet.photo,
               vaccination_card: pet.vaccination_card,
               food_hours:
-                if(length(pet.food_hours),
-                  do: Enum.map(pet.food_hours, fn hour -> %{hour: hour} end),
-                  else: [%FoodHourForm{id: Ecto.UUID.generate()}]
+                if(pet.food_hours === nil,
+                  do: [%{}],
+                  else: Enum.map(pet.food_hours, fn hour -> %{hour: hour} end)
                 ),
               medicines:
                 if(length(pet.medicines),
                   do: Enum.map(pet.medicines, fn medicine -> %{name: medicine.name, hours: medicine.hours} end),
-                  else: [%FoodHourForm{id: Ecto.UUID.generate()}]
+                  else: [%{}]
                 )
             }
           end)
 
         Map.put(Map.new(), "pets", map_pets)
     end
-  end
-
-  defp handle_pets_images(pets) do
   end
 
   defp upload_error_to_string(:too_many_files), do: gettext("Permitido somente 1 arquivo.")
