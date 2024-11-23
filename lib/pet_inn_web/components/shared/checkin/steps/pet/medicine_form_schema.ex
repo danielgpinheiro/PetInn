@@ -1,4 +1,4 @@
-defmodule PetInn.Pet.MedicineForm do
+defmodule PetInnWeb.Shared.Checkin.Steps.Pet.MedicineFormSchema do
   @moduledoc false
   use Ecto.Schema
 

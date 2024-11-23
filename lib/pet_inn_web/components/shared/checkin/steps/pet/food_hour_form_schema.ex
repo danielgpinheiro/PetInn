@@ -1,4 +1,4 @@
-defmodule PetInn.Pet.FoodHourForm do
+defmodule PetInnWeb.Shared.Checkin.Steps.Pet.FoodHourFormSchema do
   @moduledoc false
   use Ecto.Schema
 

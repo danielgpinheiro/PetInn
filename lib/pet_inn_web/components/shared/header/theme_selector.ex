@@ -5,7 +5,7 @@ defmodule PetInnWeb.Shared.Header.ThemeSelector do
   def render(assigns) do
     ~H"""
     <div
-      class="flex flex-col justify-center ml-3 absolute top-0 right-24 h-full"
+      class="flex flex-col justify-center ml-3 absolute top-0 right-16 sm:right-24 h-full"
       data-tippy-content={gettext("Mudar Tema")}
       data-tippy-placement="bottom"
       id="theme_selector_content"

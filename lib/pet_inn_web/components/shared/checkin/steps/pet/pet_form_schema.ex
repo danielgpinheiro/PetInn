@@ -1,11 +1,11 @@
-defmodule PetInn.Pet.PetForm do
+defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetFormSchema do
   @moduledoc false
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias PetInn.Pet.FoodHourForm
-  alias PetInn.Pet.MedicineForm
+  alias PetInnWeb.Shared.Checkin.Steps.Pet.FoodHourFormSchema
+  alias PetInnWeb.Shared.Checkin.Steps.Pet.MedicineFormSchema
 
   schema "pet_form" do
     field :name, :string
@@ -16,8 +16,8 @@ defmodule PetInn.Pet.PetForm do
     field :photo, :string
     field :vaccination_card, :string
 
-    has_many :food_hours, FoodHourForm
-    has_many :medicines, MedicineForm
+    has_many :food_hours, FoodHourFormSchema
+    has_many :medicines, MedicineFormSchema
   end
 
   def changeset(pet_form, attrs) do
@@ -36,8 +36,8 @@ defmodule PetInn.Pet.PetForm do
     |> validate_required(:race, message: "É necessário inserir um nome de raça")
     |> Ecto.Changeset.cast_assoc(:food_hours,
       required: false,
-      with: &FoodHourForm.changeset/2
+      with: &FoodHourFormSchema.changeset/2
     )
-    |> Ecto.Changeset.cast_assoc(:medicines, required: false, with: &MedicineForm.changeset/2)
+    |> Ecto.Changeset.cast_assoc(:medicines, required: false, with: &MedicineFormSchema.changeset/2)
   end
 end

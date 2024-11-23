@@ -5,7 +5,7 @@ defmodule PetInnWeb.CheckinLive do
   alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Checkin.Steps.AddressComponent
   alias PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent
-  alias PetInnWeb.Shared.Checkin.Steps.PetComponent
+  alias PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent
   alias PetInnWeb.Shared.Checkin.Steps.RegistrationComponent
   alias PetInnWeb.Shared.Checkin.Steps.ResumeComponent
   alias PetInnWeb.Shared.Checkin.Steps.VerifyComponent
@@ -18,7 +18,7 @@ defmodule PetInnWeb.CheckinLive do
     <section id="checkin" class="w-full h-full bg-white dark:bg-gray-800 relative">
       <div
         :if={@inn.loading}
-        class="w-full h-screen absolute top-0 left-0 border-[1px] border-red-500 z-10 flex justify-center items-center bg-black dark:bg-gray-500 bg-opacity-10"
+        class="w-full h-screen absolute top-0 left-0 z-10 flex justify-center items-center bg-black dark:bg-gray-500 bg-opacity-10"
       >
         <.spinner size="lg" class="text-primary-500" />
       </div>
@@ -81,5 +81,9 @@ defmodule PetInnWeb.CheckinLive do
          }
        ]
      )}
+  end
+
+  def handle_info({:update_flash, {flash_type, msg}}, socket) do
+    {:noreply, put_flash(socket, flash_type, msg)}
   end
 end

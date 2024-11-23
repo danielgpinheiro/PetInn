@@ -11,5 +11,11 @@ config :logger, level: :info
 
 config :pet_inn, PetInnWeb.Endpoint, cache_static_manifest: "priv/static/cache_manifest.json"
 
+config :sentry,
+  dsn: System.get_env("SENTRY_DSN"),
+  environment_name: Mix.env(),
+  enable_source_code_context: true,
+  root_source_code_paths: [File.cwd!()]
+
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
