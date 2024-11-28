@@ -15,7 +15,44 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
         phx-target={@myself}
         class="flex flex-col w-full justify-center items-center"
       >
-        <.field field={@form[:name]} label={gettext("Nome Completo")} type="text" class="w-96" />
+        <.field
+          field={@form[:country]}
+          label={gettext("País")}
+          type="select"
+          options={[{"Option 1", "1"}, {"Option 2", "2"}, {"Option 3", "3"}]}
+          prompt={gettext("Selecione uma opção")}
+          class="w-[450px]"
+        />
+        <.field
+          field={@form[:state]}
+          label={gettext("Estado")}
+          type="select"
+          options={[{"Option 1", "1"}, {"Option 2", "2"}, {"Option 3", "3"}]}
+          prompt={gettext("Selecione uma opção")}
+          class="w-[450px]"
+        />
+
+        <div class="flex w-full justify-between">
+          <.field
+            field={@form[:city]}
+            label={gettext("Cidade")}
+            type="select"
+            options={[{"Option 1", "1"}, {"Option 2", "2"}, {"Option 3", "3"}]}
+            prompt={gettext("Selecione uma opção")}
+            class="w-52"
+          />
+
+          <.field field={@form[:neighborhood]} label={gettext("Bairro")} type="text" class="w-52" />
+        </div>
+
+        <.field field={@form[:street]} label={gettext("Logradouro")} type="text" class="w-[450px]" />
+
+        <div class="flex w-full justify-between">
+          <.field field={@form[:number]} label={gettext("Número")} type="text" class="w-36" />
+          <.field field={@form[:complement]} label={gettext("Complemento")} type="text" class="w-36" />
+          <.field field={@form[:code]} label={gettext("CEP")} type="text" class="w-36" />
+        </div>
+
         <:actions>
           <.button color="warning" label="Continuar" variant="shadow" class="mt-24 w-64 mx-auto" />
         </:actions>
@@ -124,12 +161,24 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
   defp build_changeset(params \\ %{}) do
     data = %{}
 
-    types = %{email: :string, phone: :string}
+    types = %{
+      country: :string,
+      state: :string,
+      city: :string,
+      neighborhood: :string,
+      street: :string,
+      number: :string,
+      complement: :string,
+      code: :string
+    }
 
     {data, types}
     |> Ecto.Changeset.cast(params, Map.keys(types))
-    |> Ecto.Changeset.validate_required(:email, message: "É necessário inserir um e-mail")
-    |> Ecto.Changeset.validate_required(:phone, message: "É necessário inserir um telefone")
+    |> Ecto.Changeset.validate_required(:country, message: "É necessário selecionar um País")
+    |> Ecto.Changeset.validate_required(:state, message: "É necessário selecionar um Estado")
+    |> Ecto.Changeset.validate_required(:city, message: "É necessário selecionar uma Cidade")
+    |> Ecto.Changeset.validate_required(:street, message: "É necessário inserir uma Rua")
+    |> Ecto.Changeset.validate_required(:number, message: "É necessário inserir um Número")
   end
 
   defp validate_changeset(changeset) do
@@ -144,13 +193,15 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
         params
       )
 
-    CheckinController.update_user(user_address)
+    IO.inspect(user_address)
 
-    send_update(WizardStructureComponent, %{
-      id: :wizard,
-      action: :can_continue,
-      user_email: user_address.email
-    })
+    # CheckinController.update_user(user_address)
+
+    # send_update(WizardStructureComponent, %{
+    #   id: :wizard,
+    #   action: :can_continue,
+    #   user_email: user_address.email
+    # })
 
     {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}
   end

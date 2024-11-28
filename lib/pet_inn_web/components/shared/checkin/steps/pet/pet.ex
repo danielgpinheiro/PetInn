@@ -98,8 +98,9 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       type="select"
                       field={pet[:specie]}
                       label={gettext("Espécie")}
-                      options={List.insert_at(@species_pet_allowed, 0, "")}
+                      options={@species_pet_allowed}
                       class="w-full sm:w-48 sm:mr-2 mb-2 sm:mb-0"
+                      prompt={gettext("Selecione uma raça")}
                     />
 
                     <.field
