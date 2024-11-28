@@ -59,7 +59,8 @@ defmodule PetInn.MixProject do
       {:styler, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ecto_nested_changeset, "~> 0.2.1"},
       {:sentry, "~> 10.2.0"},
-      {:hackney, "~> 1.8"}
+      {:hackney, "~> 1.8"},
+      {:place, "~> 0.1"}
     ]
   end
 

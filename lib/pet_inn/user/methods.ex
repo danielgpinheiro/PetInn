@@ -4,6 +4,7 @@ defmodule PetInn.User.Methods do
 
   alias PetInn.Repo
   alias PetInn.User
+  alias PetInn.User.Address
 
   def get_by_email_and_phone(params) do
     case User
@@ -12,6 +13,13 @@ defmodule PetInn.User.Methods do
          |> Repo.one() do
       nil -> {:error, :not_found}
       user -> {:ok, user}
+    end
+  end
+
+  def get_address_by_user_id(user_id) do
+    case Address |> where(user_id: ^user_id) |> Repo.one() do
+      nil -> {:error, :not_found}
+      address -> {:ok, address}
     end
   end
 

@@ -323,9 +323,8 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
   end
 
   def update(%{inn: inn, user_email: user_email}, socket) do
-    # user = CheckinController.get_table_cache(:user, user_email)
-    pets = handle_user_pets(CheckinController.get_pets("00"))
-    # pets = handle_user_pets(CheckinController.get_pets(user.id))
+    user = CheckinController.get_table_cache(:user, user_email)
+    pets = handle_user_pets(CheckinController.get_pets(user.id))
 
     species_pet_allowed =
       inn.species_pet_allowed

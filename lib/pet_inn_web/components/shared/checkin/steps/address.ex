@@ -19,17 +19,17 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
           field={@form[:country]}
           label={gettext("País")}
           type="select"
-          options={[{"Option 1", "1"}, {"Option 2", "2"}, {"Option 3", "3"}]}
+          options={@countries}
           prompt={gettext("Selecione uma opção")}
-          class="w-[450px]"
+          class="w-full sm:w-[450px]"
         />
         <.field
           field={@form[:state]}
           label={gettext("Estado")}
           type="select"
-          options={[{"Option 1", "1"}, {"Option 2", "2"}, {"Option 3", "3"}]}
+          options={@states}
           prompt={gettext("Selecione uma opção")}
-          class="w-[450px]"
+          class="w-full sm:w-[450px]"
         />
 
         <div class="flex w-full justify-between">
@@ -37,90 +37,41 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
             field={@form[:city]}
             label={gettext("Cidade")}
             type="select"
-            options={[{"Option 1", "1"}, {"Option 2", "2"}, {"Option 3", "3"}]}
+            options={@cities}
             prompt={gettext("Selecione uma opção")}
-            class="w-52"
+            class="w-40 sm:w-52"
           />
 
-          <.field field={@form[:neighborhood]} label={gettext("Bairro")} type="text" class="w-52" />
+          <.field
+            field={@form[:neighborhood]}
+            label={gettext("Bairro")}
+            type="text"
+            class="w-40 sm:w-52"
+          />
         </div>
 
-        <.field field={@form[:street]} label={gettext("Logradouro")} type="text" class="w-[450px]" />
+        <.field
+          field={@form[:street]}
+          label={gettext("Logradouro")}
+          type="text"
+          class="w-full sm:w-[450px]"
+        />
 
         <div class="flex w-full justify-between">
-          <.field field={@form[:number]} label={gettext("Número")} type="text" class="w-36" />
-          <.field field={@form[:complement]} label={gettext("Complemento")} type="text" class="w-36" />
-          <.field field={@form[:code]} label={gettext("CEP")} type="text" class="w-36" />
+          <.field field={@form[:number]} label={gettext("Número")} type="text" class="w-28 sm:w-36" />
+          <.field
+            field={@form[:complement]}
+            label={gettext("Complemento")}
+            type="text"
+            class="w-28 sm:w-36"
+          />
+          <.field field={@form[:code]} label={gettext("CEP")} type="text" class="w-28 sm:w-36" />
         </div>
 
         <:actions>
           <.button color="warning" label="Continuar" variant="shadow" class="mt-24 w-64 mx-auto" />
         </:actions>
       </.simple_form>
-      <%!-- <div class="w-full flex flex-col items-center">
-        <label class="input input-bordered flex items-center gap-2 mb-4 w-full sm:w-3/4">
-          CEP
-          <input type="text" class="grow" placeholder="Insira o CEP para facilitar o preenchimento" />
-        </label>
-        <button class="btn mb-4">Buscar</button>
-        <button class="btn mb-9">Informar manualmente</button>
-      </div>
-
-      <label class="input input-bordered flex items-center gap-2 w-full pr-0 mr-2 mb-2">
-        <select class="select select-bordered w-full h-[calc(3rem-2px)] min-h-[calc(3rem-2px)] text-gray-500 text-base">
-          <option disabled selected>País</option>
-
-          <option>Cachorro</option>
-
-          <option>Gato</option>
-
-          <option>Avés</option>
-
-          <option>Répteis</option>
-
-          <option>Roedores</option>
-        </select>
-      </label>
-
-      <label class="input input-bordered flex items-center gap-2 w-full pr-0 mr-2 mb-2">
-        <select class="select select-bordered w-full h-[calc(3rem-2px)] min-h-[calc(3rem-2px)] text-gray-500 text-base">
-          <option disabled selected>Estado</option>
-
-          <option>Cachorro</option>
-
-          <option>Gato</option>
-
-          <option>Avés</option>
-
-          <option>Répteis</option>
-
-          <option>Roedores</option>
-        </select>
-      </label>
-
-      <div class="flex w-full mb-2 justify-between flex-wrap sm:flex-nowrap">
-        <label class="input input-bordered flex items-center gap-2 w-full mb-2 sm:mb-0 sm:w-[calc(50%-20px)]">
-          Cidade <input type="text" class="grow" />
-        </label>
-
-        <label class="input input-bordered flex items-center gap-2 w-full sm:w-[calc(50%-20px)]">
-          Bairro <input type="text" class="grow" />
-        </label>
-      </div>
-
-      <label class="input input-bordered flex items-center gap-2 w-full mb-2">
-        Logradouro <input type="text" class="grow" />
-      </label>
-
-      <div class="flex w-full mb-2 justify-between flex-wrap sm:flex-nowrap">
-        <label class="input input-bordered flex items-center gap-2 w-full mb-2 sm:mb-0 sm:w-[calc(50%-20px)]">
-          Número <input type="text" class="grow" />
-        </label>
-
-        <label class="input input-bordered flex items-center gap-2 w-full sm:w-[calc(50%-20px)]">
-          Complemento <input type="text" class="grow" />
-        </label>
-      </div> --%>
     </div>
     """
   end
@@ -128,7 +79,49 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
   def mount(socket) do
     changeset = build_changeset()
 
-    {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
+    countries =
+      Place.get_countries()
+      |> Enum.map(fn country ->
+        {Map.get(country.translations, String.replace(Gettext.get_locale(), "_", "-"), country.name), country.iso2}
+      end)
+      |> Enum.sort()
+
+    {:ok,
+     socket
+     |> assign_form(changeset)
+     |> assign(loading: false)
+     |> assign(countries: countries)
+     |> assign(states: [])
+     |> assign(cities: [])}
+  end
+
+  def update(%{inn: inn, user_email: user_email}, socket) do
+    user = CheckinController.get_table_cache(:user, user_email)
+    address = CheckinController.get_user_address(user.id)
+
+    case address do
+      {:not_found} ->
+        {:ok, assign(socket, user_email: user_email, inn: inn)}
+
+      _ ->
+        changeset =
+          build_changeset(%{
+            city: address.city,
+            code: address.code,
+            complement: address.complement,
+            country: address.country,
+            neighborhood: address.neighborhood,
+            number: address.number,
+            state: address.state,
+            street: address.street
+          })
+
+        states = get_states(address.country)
+        cities = get_cities(address.country, address.state)
+
+        {:ok,
+         socket |> assign_form(changeset) |> assign(user_email: user_email, inn: inn, states: states, cities: cities)}
+    end
   end
 
   def update(_, socket) do
@@ -136,10 +129,35 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
   end
 
   def handle_event("change_form", %{"object" => object_params}, socket) do
+    previous_selected_country = Map.get(socket.assigns.form.params, "country")
+    selected_country = Map.get(object_params, "country")
+
+    previous_selected_state = Map.get(socket.assigns.form.params, "state")
+    selected_state = Map.get(object_params, "state")
+
+    states =
+      if previous_selected_country !== selected_country and selected_country !== "" do
+        Map.replace(object_params, "state", "")
+        Map.replace(object_params, "city", "")
+
+        get_states(selected_country)
+      else
+        socket.assigns.states
+      end
+
+    cities =
+      if previous_selected_state !== selected_state and selected_state !== "" do
+        Map.replace(object_params, "city", "")
+
+        get_cities(selected_country, selected_state)
+      else
+        socket.assigns.cities
+      end
+
     changeset =
       build_changeset(object_params)
 
-    {:noreply, assign_form(socket, changeset)}
+    {:noreply, socket |> assign_form(changeset) |> assign(states: states) |> assign(cities: cities)}
   end
 
   def handle_event("submit", %{"object" => object_params}, socket) do
@@ -152,6 +170,24 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
       {:error, changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
+  end
+
+  defp get_states(selected_country) do
+    [country_code: selected_country]
+    |> Place.get_states()
+    |> Enum.map(fn state ->
+      {state.name, state.state_code}
+    end)
+    |> Enum.sort()
+  end
+
+  defp get_cities(selected_country, selected_state) do
+    [country_code: selected_country, state_code: selected_state]
+    |> Place.get_cities()
+    |> Enum.map(fn city ->
+      city.name
+    end)
+    |> Enum.sort()
   end
 
   defp assign_form(socket, changeset) do
@@ -193,15 +229,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
         params
       )
 
-    IO.inspect(user_address)
+    CheckinController.update_user(user_address)
 
-    # CheckinController.update_user(user_address)
-
-    # send_update(WizardStructureComponent, %{
-    #   id: :wizard,
-    #   action: :can_continue,
-    #   user_email: user_address.email
-    # })
+    send_update(WizardStructureComponent, %{
+      id: :wizard,
+      action: :can_continue,
+      user_email: user_address.email
+    })
 
     {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}
   end

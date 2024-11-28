@@ -26,7 +26,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
         id="language-modal-overlay"
       />
       <div
-        class="fixed z-50 w-[700px] h-40 rounded-lg bg-slate-50 dark:bg-gray-700 bottom-6 left-[calc(50%-350px)] shadow overflow-hidden hidden"
+        class="fixed z-50 w-[calc(100%-15px)] sm:w-[700px] h-60 sm:h-40 rounded-lg bg-slate-50 dark:bg-gray-700 bottom-6 left-[7px] sm:left-[calc(50%-350px)] shadow overflow-hidden hidden"
         id="language-modal"
       >
         <div class="w-full h-12 bg-slate-200 dark:bg-gray-800 flex px-3 justify-between items-center">
@@ -39,8 +39,8 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
           </button>
         </div>
 
-        <ul class="w-full h-28 flex justify-center items-center">
-          <li class="w-1/4 mr-4 max-w-60">
+        <ul class="w-full h-48 sm:h-28 flex justify-center items-center flex-col sm:flex-row">
+          <li class="w-full sm:w-1/4 sm:mr-4 mb-4 sm:mb-0 max-w-60">
             <button
               class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"
               phx-click="change_lang"
@@ -52,7 +52,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
             </button>
           </li>
 
-          <li class="w-1/4 mr-4 max-w-60">
+          <li class="w-full sm:w-1/4 sm:mr-4 mb-4 sm:mb-0 max-w-60">
             <button
               class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"
               phx-click="change_lang"
@@ -64,7 +64,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
             </button>
           </li>
 
-          <li class="w-1/4 max-w-60">
+          <li class="w-full sm:w-1/4 max-w-60">
             <button
               class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"
               phx-click="change_lang"

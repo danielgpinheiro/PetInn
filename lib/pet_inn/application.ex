@@ -19,7 +19,8 @@ defmodule PetInn.Application do
       # Start a worker by calling: PetInn.Worker.start_link(arg)
       # {PetInn.Worker, arg},
       # Start to serve requests, typically the last entry
-      PetInnWeb.Endpoint
+      PetInnWeb.Endpoint,
+      Place
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

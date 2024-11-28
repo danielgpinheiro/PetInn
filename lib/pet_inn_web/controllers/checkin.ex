@@ -68,4 +68,14 @@ defmodule PetInnWeb.CheckinController do
         {:not_found}
     end
   end
+
+  def get_user_address(user_id) do
+    case User.Methods.get_address_by_user_id(user_id) do
+      {:ok, values} ->
+        values
+
+      {:error, :not_found} ->
+        {:not_found}
+    end
+  end
 end
