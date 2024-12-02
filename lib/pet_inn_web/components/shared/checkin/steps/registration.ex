@@ -124,8 +124,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
 
     send_update(WizardStructureComponent, %{
       id: :wizard,
-      action: :can_continue,
-      user_email: user_registration.email
+      action: :can_continue
     })
 
     {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}

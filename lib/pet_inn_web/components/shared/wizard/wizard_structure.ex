@@ -45,7 +45,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(steps: steps)
-     |> assign(current_step: 0)
+     |> assign(current_step: 5)
      |> assign(inn: inn)
      |> assign(user_email: "")}
   end
@@ -57,6 +57,15 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      push_event(
        assign(socket, current_step: current_step + 1, user_email: user_email),
+       "scroll_to_element",
+       %{element: "body", top: 0, left: 0, behavior: "instant", fade_wizard: true}
+     )}
+  end
+
+  def update(%{action: :can_continue}, %{assigns: %{current_step: current_step} = _assigns} = socket) do
+    {:ok,
+     push_event(
+       assign(socket, current_step: current_step + 1),
        "scroll_to_element",
        %{element: "body", top: 0, left: 0, behavior: "instant", fade_wizard: true}
      )}

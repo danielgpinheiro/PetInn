@@ -128,8 +128,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
   def update(%{inn: inn, user_email: user_email}, socket) do
     user = CheckinController.get_table_cache(:user, user_email)
 
-    IO.inspect(user)
-
     {:ok, assign(socket, inn: inn, user: user)}
   end
 
@@ -146,8 +144,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
   def handle_event("submit", _, socket) do
     send_update(WizardStructureComponent, %{
       id: :wizard,
-      action: :can_continue,
-      user_email: ""
+      action: :can_continue
     })
 
     {:noreply, socket}

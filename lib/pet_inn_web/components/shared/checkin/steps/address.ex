@@ -233,8 +233,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
 
     send_update(WizardStructureComponent, %{
       id: :wizard,
-      action: :can_continue,
-      user_email: user_address.email
+      action: :can_continue
     })
 
     {:noreply, socket |> assign_form(changeset) |> assign(loading: true)}

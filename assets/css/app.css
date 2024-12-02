@@ -1,12 +1,13 @@
 @import "./base.css";
 @import "tailwindcss/base";
-@import "../../deps/petal_components/assets/default.css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import '../node_modules/tippy.js/dist/tippy.css';
 @import '../node_modules/tippy.js/dist/backdrop.css';
 @import '../node_modules/tippy.js/animations/shift-away.css';
 @import '../node_modules/@event-calendar/core/index.css';
+@import "../../deps/petal_components/assets/default.css";
+@import "../../deps/live_phone/assets/live_phone";
 
 /* This file is for your main application CSS */
 input[type="number"]::-webkit-inner-spin-button,
