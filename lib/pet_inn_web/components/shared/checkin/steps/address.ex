@@ -31,7 +31,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
           prompt={gettext("Selecione uma opção")}
           class="w-full sm:w-[450px]"
         />
-
         <div class="flex w-full justify-between">
           <.field
             field={@form[:city]}
@@ -41,7 +40,6 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
             prompt={gettext("Selecione uma opção")}
             class="w-40 sm:w-52"
           />
-
           <.field
             field={@form[:neighborhood]}
             label={gettext("Bairro")}
@@ -49,14 +47,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
             class="w-40 sm:w-52"
           />
         </div>
-
+        
         <.field
           field={@form[:street]}
           label={gettext("Logradouro")}
           type="text"
           class="w-full sm:w-[450px]"
         />
-
         <div class="flex w-full justify-between">
           <.field field={@form[:number]} label={gettext("Número")} type="text" class="w-28 sm:w-36" />
           <.field
@@ -64,10 +61,9 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
             label={gettext("Complemento")}
             type="text"
             class="w-28 sm:w-36"
-          />
-          <.field field={@form[:code]} label={gettext("CEP")} type="text" class="w-28 sm:w-36" />
+          /> <.field field={@form[:code]} label={gettext("CEP")} type="text" class="w-28 sm:w-36" />
         </div>
-
+        
         <:actions>
           <.button color="warning" label="Continuar" variant="shadow" class="mt-24 w-64 mx-auto" />
         </:actions>
@@ -97,7 +93,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
 
   def update(%{inn: inn, user_email: user_email}, socket) do
     user = CheckinController.get_table_cache(:user, user_email)
-    address = CheckinController.get_user_address(user.id)
+
+    address =
+      case Map.get(user, :id) do
+        nil -> {:not_found}
+        _ -> CheckinController.get_user_address(user.id)
+      end
 
     case address do
       {:not_found} ->

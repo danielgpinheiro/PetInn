@@ -13,7 +13,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
           <.spinner show={true} size="lg" class="pointer-events-none text-orange-400" />
         </div>
       <% end %>
-
+      
       <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
         <%= gettext(
           "Em pouco tempo, o cadastro de você e do seu Pet será feito. %{break_line} Após isso, você poderá reutilizar seu registro em outros lugares com o ecosistema Pet Inns.",
@@ -21,7 +21,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
         )
         |> raw() %>
       </h1>
-
+      
       <.simple_form
         for={@form}
         phx-change="change_form"
@@ -48,13 +48,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
   end
 
   def mount(socket) do
-    changeset =
-      build_changeset(%{
-        email: "dedelabritos@gmail.com",
-        phone: "+5534999078965"
-      })
+    # changeset =
+    #   build_changeset(%{
+    #     email: "dedelabritos@gmail.com",
+    #     phone: "+5534999078965"
+    #   })
 
-    # changeset = build_changeset()
+    changeset = build_changeset()
 
     {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
   end

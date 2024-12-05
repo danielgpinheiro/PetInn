@@ -57,3 +57,10 @@ config :tailwind,
   ]
 
 import_config "#{config_env()}.exs"
+
+# Config Mailer
+config :pet_inn, PetInn.Mailer.Adapter,
+  adapter: Swoosh.Adapters.Brevo,
+  api_key: System.get_env("BREVO_API_KEY")
+
+config :swoosh, :api_client, Swoosh.ApiClient.Req

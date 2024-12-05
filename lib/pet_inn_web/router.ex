@@ -22,7 +22,7 @@ defmodule PetInnWeb.Router do
 
       live "/checkin/:inn_id", CheckinLive, :checkin
       live "/checkout", CheckoutLive, :checkout
-      live "/confirm", ConfirmLive, :confirm
+      live "/confirm/:inn_id/:user_id", ConfirmLive, :confirm
       live "/404", FourOhFourLive, :four_oh_four
     end
   end

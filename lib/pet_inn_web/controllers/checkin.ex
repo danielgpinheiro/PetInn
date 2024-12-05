@@ -2,6 +2,7 @@ defmodule PetInnWeb.CheckinController do
   use PetInnWeb, :controller
 
   alias PetInn.Inn
+  alias PetInn.Mailer
   alias PetInn.Pet
   alias PetInn.User
 
@@ -76,6 +77,13 @@ defmodule PetInnWeb.CheckinController do
 
       {:error, :not_found} ->
         {:not_found}
+    end
+  end
+
+  def send_confirmation_email(user, inn) do
+    case user |> Mailer.UserConfirmationEmail.confirmation(inn) |> Mailer.Adapter.deliver() do
+      {:ok, _} -> {:ok}
+      {_, _} -> {:error}
     end
   end
 end
