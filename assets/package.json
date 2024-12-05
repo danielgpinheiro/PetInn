@@ -24,6 +24,7 @@
     "@event-calendar/list": "^3.6.1",
     "@event-calendar/time-grid": "^3.6.1",
     "live_phone": "file:../deps/live_phone",
+    "lottie-web": "^5.12.2",
     "qrcode": "^1.5.4",
     "tippy.js": "^6.3.7",
     "topbar": "^3.0.0"

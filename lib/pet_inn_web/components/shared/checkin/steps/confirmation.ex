@@ -6,14 +6,15 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent do
 
   def render(assigns) do
     ~H"""
-    <div class="w-full h-full border-[1px] border-red-500">
+    <div class="w-full h-full border-[1px] border-red-500" id="confirmation-step" phx-hook="Lottie">
       <%= if @loading do %>
         <div class="w-full sm:w-[400px] flex flex-col justify-center items-center mx-auto">
-          <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
+          <h1 class="text-center text-lg text-gray-800 dark:text-gray-200">
             <%= gettext(
               "Estamos guardando as suas informações com segurança. Por favor, não feche essa janela até tudo ficar pronto."
             ) %>
           </h1>
+           <div data-lottie="running-dog" class="w-96 mt-[-45px]" />
         </div>
       <% else %>
         <div class="w-full sm:w-[400px] flex flex-col justify-center items-center mx-auto">
@@ -35,9 +36,69 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent do
 
   def update(%{inn: inn, user_email: user_email}, socket) do
     # user = CheckinController.get_table_cache(:user, user_email)
+    user = %{
+      id: "813fce44-a335-42e2-8c41-aa8d2207c87b",
+      name: "Daniel Pinheiro",
+      address: %{
+        code: "38405056",
+        state: "MG",
+        number: "610",
+        street: "Av Italia",
+        neighborhood: "Tibery",
+        country: "BR",
+        complement: "AP 105",
+        city: "Uberlândia"
+      },
+      inserted_at: ~U[2024-10-14 22:12:41Z],
+      email: "dedelabritos@gmail.com",
+      updated_at: ~U[2024-10-14 22:12:41Z],
+      phone: "+5534999078965",
+      job: "Developer",
+      gender: "Masculino",
+      birthday: "1995-08-31",
+      pets: %{
+        id: nil,
+        empty_field: nil,
+        pets: [
+          %{
+            id: nil,
+            name: "Sonic",
+            specie: "Cachorro",
+            race: "Golden Retriever",
+            is_natural_food: true,
+            notes: "Ele é muito fofinho",
+            photo:
+              "https://diordogs.com.br/wp-content/uploads/2024/02/Imagem-do-WhatsApp-de-2024-02-08-as-21.15.06_a6fea464-768x1024.jpg",
+            vaccination_card:
+              "https://diordogs.com.br/wp-content/uploads/2024/02/Imagem-do-WhatsApp-de-2024-02-08-as-21.15.06_a6fea464-768x1024.jpg",
+            food_hours: [
+              %{
+                id: nil,
+                hour: "12:00"
+              },
+              %{
+                id: nil,
+                hour: "18:00"
+              }
+            ],
+            medicines: [
+              %{
+                id: nil,
+                name: "Remédinho Brabo",
+                hours: "18:00"
+              },
+              %{
+                id: nil,
+                name: "Top Dog",
+                hours: "13:00"
+              }
+            ]
+          }
+        ]
+      }
+    }
 
-    # IO.inspect(user)
-    # IO.inspect(inn)
+    IO.inspect(inn)
 
     {:ok, socket}
   end

@@ -10,6 +10,7 @@ import Clipboard from "./clipboard"
 import QRCode from "./qrcode"
 import TriggerButton from './triggerButton'
 import ThemeSelector from "./themeSelector"
+import Lottie from './lottie'
 
 const hooks = {
   Clipboard,
@@ -18,6 +19,7 @@ const hooks = {
   InputFileToBase64,
   LivePhone,
   Locale,
+  Lottie,
   QRCode,
   RatingDatePicker,
   ScrollToElement,
