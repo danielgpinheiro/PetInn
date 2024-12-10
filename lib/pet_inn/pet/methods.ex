@@ -23,4 +23,24 @@ defmodule PetInn.Pet.Methods do
       medicines -> {:ok, medicines}
     end
   end
+
+  def delete_all_pets_by_user_id(user_id) do
+    Pet |> where(user_id: ^user_id) |> Repo.delete_all()
+  end
+
+  def create_pet(params) do
+    params
+    |> Pet.changeset()
+    |> Repo.insert()
+  end
+
+  def delete_all_medicines_by_pet_id(pet_id) do
+    Medicine |> where(pet_id: ^pet_id) |> Repo.delete_all()
+  end
+
+  def create_medicine(params) do
+    params
+    |> Medicine.changeset()
+    |> Repo.insert()
+  end
 end

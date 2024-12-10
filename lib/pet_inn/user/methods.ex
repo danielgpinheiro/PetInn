@@ -16,6 +16,13 @@ defmodule PetInn.User.Methods do
     end
   end
 
+  def get_by_user_id(user_id) do
+    case Repo.get_by(User, id: user_id) do
+      nil -> {:error, :not_found}
+      user -> {:ok, user}
+    end
+  end
+
   def get_address_by_user_id(user_id) do
     case Address |> where(user_id: ^user_id) |> Repo.one() do
       nil -> {:error, :not_found}
@@ -25,7 +32,23 @@ defmodule PetInn.User.Methods do
 
   def create_user(params) do
     params
-    |> User.changeset(User)
+    |> User.changeset()
     |> Repo.insert()
+  end
+
+  def update_user(user, params) do
+    user
+    |> User.changeset(params)
+    |> Repo.update()
+  end
+
+  def create_address(params) do
+    params |> Address.changeset() |> Repo.insert()
+  end
+
+  def update_addres(address, params) do
+    address
+    |> Address.changeset(params)
+    |> Repo.update()
   end
 end

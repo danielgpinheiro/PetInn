@@ -15,7 +15,7 @@ defmodule PetInn.Pet.Medicine do
   end
 
   @doc false
-  def changeset(medicine, attrs) do
+  def changeset(medicine \\ %__MODULE__{}, attrs) do
     medicine
     |> cast(attrs, [:pet_id, :name, :hours])
     |> validate_required([:name, :hours, :pet_id])

@@ -216,6 +216,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
     |> Ecto.Changeset.validate_required(:city, message: "É necessário selecionar uma Cidade")
     |> Ecto.Changeset.validate_required(:street, message: "É necessário inserir uma Rua")
     |> Ecto.Changeset.validate_required(:number, message: "É necessário inserir um Número")
+    |> Ecto.Changeset.validate_required(:code, message: "É necessário inserir um CEP")
   end
 
   defp validate_changeset(changeset) do

@@ -18,7 +18,7 @@ defmodule PetInn.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(user \\ %__MODULE__{}, attrs) do
     user
     |> cast(attrs, [:email, :phone, :name, :birthday, :gender, :job])
     |> validate_required([:email, :phone, :name, :birthday, :gender, :job])

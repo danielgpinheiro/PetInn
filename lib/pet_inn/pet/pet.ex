@@ -21,7 +21,7 @@ defmodule PetInn.Pet do
   end
 
   @doc false
-  def changeset(pet, attrs) do
+  def changeset(pet \\ %__MODULE__{}, attrs) do
     pet
     |> cast(attrs, [
       :user_id,
@@ -38,12 +38,7 @@ defmodule PetInn.Pet do
       :user_id,
       :name,
       :specie,
-      :race,
-      :photo,
-      :food_hours,
-      :is_natural_food,
-      :vaccination_card,
-      :notes_about_pet
+      :race
     ])
   end
 end

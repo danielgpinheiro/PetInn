@@ -513,7 +513,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
       Map.put(
         CheckinController.get_table_cache(:user, socket.assigns.user_email),
         :pets,
-        params
+        params.pets
       )
 
     CheckinController.update_user(user_data_with_pets)

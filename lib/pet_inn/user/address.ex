@@ -21,9 +21,9 @@ defmodule PetInn.User.Address do
   end
 
   @doc false
-  def changeset(address, attrs) do
+  def changeset(address \\ %__MODULE__{}, attrs) do
     address
     |> cast(attrs, [:user_id, :country, :state, :city, :neighborhood, :street, :number, :complement, :code])
-    |> validate_required([:user_id, :country, :state, :city, :neighborhood, :street, :number, :complement, :code])
+    |> validate_required([:user_id, :country, :state, :city, :street, :number, :code])
   end
 end
