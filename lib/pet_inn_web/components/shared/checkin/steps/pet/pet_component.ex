@@ -3,11 +3,13 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
   use PetInnWeb, :live_component
   use Ecto.Schema
 
-  alias PetInnWeb.CheckinController
+  alias PetInnWeb.PetController
   alias PetInnWeb.Shared.Checkin.Steps.Pet.FoodHourFormSchema
   alias PetInnWeb.Shared.Checkin.Steps.Pet.MedicineFormSchema
   alias PetInnWeb.Shared.Checkin.Steps.Pet.PetFormSchema
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
+  alias PetInnWeb.UserController
+  alias PetInnWeb.Utils.EtsUtils
 
   def render(assigns) do
     ~H"""
@@ -309,7 +311,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
   end
 
   def update(%{inn: inn, user_email: user_email}, socket) do
-    user = CheckinController.get_table_cache(:user, user_email)
+    user = EtsUtils.get_table_cache(:user, user_email)
 
     pets =
       case Map.get(user, :id) do
@@ -317,7 +319,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
           {:not_found}
 
         _ ->
-          handle_user_pets(CheckinController.get_pets(user.id))
+          handle_user_pets(PetController.get_pets(user.id))
       end
 
     species_pet_allowed =
@@ -511,12 +513,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
   defp submit_step(socket, changeset, params) do
     user_data_with_pets =
       Map.put(
-        CheckinController.get_table_cache(:user, socket.assigns.user_email),
+        EtsUtils.get_table_cache(:user, socket.assigns.user_email),
         :pets,
         params.pets
       )
 
-    CheckinController.update_user(user_data_with_pets)
+    UserController.update_user(user_data_with_pets)
 
     send_update(WizardStructureComponent, %{
       id: :wizard,
@@ -548,7 +550,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                   else: Enum.map(pet.food_hours, fn hour -> %{hour: hour} end)
                 ),
               medicines:
-                if(length(pet.medicines),
+                if(pet.medicines === nil,
                   do: Enum.map(pet.medicines, fn medicine -> %{name: medicine.name, hours: medicine.hours} end),
                   else: [%{}]
                 )

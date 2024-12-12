@@ -2,8 +2,8 @@ defmodule PetInnWeb.Shared.Header.HeaderComponent do
   @moduledoc false
   use PetInnWeb, :live_component
 
-  alias PetInnWeb.Shared.Header.ChangeLanguage
-  alias PetInnWeb.Shared.Header.ThemeSelector
+  alias PetInnWeb.Shared.Header.ChangeLanguageComponent
+  alias PetInnWeb.Shared.Header.ThemeSelectorComponent
 
   def render(assigns) do
     ~H"""
@@ -22,8 +22,8 @@ defmodule PetInnWeb.Shared.Header.HeaderComponent do
           <%= @name %>
         </span>
       </div>
-       <.live_component module={ChangeLanguage} id={:change_language} />
-      <.live_component module={ThemeSelector} id={:theme_selector} />
+       <.live_component module={ChangeLanguageComponent} id={:change_language} />
+      <.live_component module={ThemeSelectorComponent} id={:theme_selector} />
     </header>
     """
   end

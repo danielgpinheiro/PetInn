@@ -2,8 +2,8 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
   @moduledoc false
   use PetInnWeb, :live_component
 
-  alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
+  alias PetInnWeb.UserController
 
   def render(assigns) do
     ~H"""
@@ -104,7 +104,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.VerifyComponent do
 
   defp submit_step(socket, changeset, params) do
     if LivePhone.Util.valid?(params.phone) do
-      CheckinController.create_or_load_user(params)
+      UserController.create_or_load_user(params)
 
       send_update(WizardStructureComponent, %{
         id: :wizard,

@@ -2,8 +2,8 @@ defmodule PetInnWeb.AdminLayout do
   @moduledoc false
   use PetInnWeb, :live_view
 
-  alias PetInnWeb.Shared.Header.ChangeLanguage
-  alias PetInnWeb.Shared.Header.ThemeSelector
+  alias PetInnWeb.Shared.Header.ChangeLanguageComponent
+  alias PetInnWeb.Shared.Header.ThemeSelectorComponent
   alias Phoenix.LiveView.JS
 
   def render(assigns) do
@@ -17,7 +17,6 @@ defmodule PetInnWeb.AdminLayout do
             class="w-64 h-full border-r-[1px] border-gray-300 dark:border-gray-900 shrink-0 transition-all duration-300 p-2 relative"
           >
             <img src="/images/logo_inn.png" class="w-20 mx-auto mb-20" />
-
             <.vertical_menu
               title={gettext("Menu de Navegação")}
               current_page={:data}
@@ -55,16 +54,15 @@ defmodule PetInnWeb.AdminLayout do
                 }
               ]}
             />
-
             <div class="absolute bottom-0 left-0 w-full p-2">
               <button class="leading-6 text-zinc-900 dark:text-gray-200 hover:text-zinc-700 hover:bg-slate-200 hover:dark:bg-gray-600 hover:dark:text-gray-200 p-2 rounded transition-colors flex items-center">
                 <.icon name="hero-power" class="mr-2" /> <%= gettext("Sair") %>
               </button>
-              <.live_component module={ChangeLanguage} id={:change_language} />
-              <.live_component module={ThemeSelector} id={:change_language} />
+               <.live_component module={ChangeLanguageComponent} id={:change_language} />
+              <.live_component module={ThemeSelectorComponent} id={:change_language} />
             </div>
           </aside>
-
+          
           <div class="w-full h-full flex flex-col">
             <header class="w-full h-16 flex justify-between items-center px-4 shrink-0">
               <div class="flex items-center">
@@ -92,7 +90,7 @@ defmodule PetInnWeb.AdminLayout do
                       />
                     </g>
                   </svg>
-
+                  
                   <svg
                     class="close-icon"
                     xmlns="http://www.w3.org/2000/svg"
@@ -108,14 +106,14 @@ defmodule PetInnWeb.AdminLayout do
                     </g>
                   </svg>
                 </button>
-
+                
                 <h1 class="font-medium text-[18px] text-gray-800 dark:text-gray-200">
                   Santo Chico Hotel e Pet Shop
                 </h1>
               </div>
-              <img src="/images/logo.jpg" class="w-11 h-11" />
+               <img src="/images/logo.jpg" class="w-11 h-11" />
             </header>
-
+            
             <div class="w-full h-[calc(100%-64px)] p-2">
               <div class="w-full h-full overflow-hidden border-[1px] border-gray-300 dark:border-gray-900 bg-white dark:bg-gray-700 rounded-lg">
                 <%= @inner_content %>

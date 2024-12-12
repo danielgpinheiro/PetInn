@@ -15,13 +15,15 @@ defmodule PetInnWeb.ConfirmLive do
       <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
         <.live_component module={WizardStructureComponent} id={:wizard} steps={@steps} />
       </div>
-      <.live_component module={FooterComponent} id={:footer} />
+       <.live_component module={FooterComponent} id={:footer} />
     </section>
     """
   end
 
   def mount(params, _session, socket) do
     locale = Map.fetch(params, "locale")
+    inn_id = Map.fetch!(params, "inn_id")
+    user_id = Map.fetch!(params, "user_id")
 
     case locale do
       {:ok, value} -> Gettext.put_locale(value)

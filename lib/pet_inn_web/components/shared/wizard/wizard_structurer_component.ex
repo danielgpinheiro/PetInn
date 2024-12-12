@@ -45,7 +45,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok,
      socket
      |> assign(steps: steps)
-     |> assign(current_step: 5)
+     |> assign(current_step: 0)
      |> assign(inn: inn)
      |> assign(user_email: "")}
   end

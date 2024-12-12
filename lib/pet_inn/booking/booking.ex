@@ -16,7 +16,7 @@ defmodule PetInn.Booking do
   end
 
   @doc false
-  def changeset(booking, attrs) do
+  def changeset(booking \\ %__MODULE__{}, attrs) do
     booking
     |> cast(attrs, [:start, :end, :pet_id, :inn_id])
     |> validate_required([:start, :end, :pet_id, :inn_id])

@@ -2,7 +2,7 @@ defmodule PetInnWeb.CheckinLive do
   @moduledoc false
   use PetInnWeb, :live_view
 
-  alias PetInnWeb.CheckinController
+  alias PetInnWeb.InnController
   alias PetInnWeb.Shared.Checkin.Steps.AddressComponent
   alias PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent
   alias PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent
@@ -22,13 +22,21 @@ defmodule PetInnWeb.CheckinLive do
       >
         <.spinner size="lg" class="text-primary-500" />
       </div>
-
+      
       <div :if={inn = @inn.ok? && @inn.result}>
         <.live_component module={HeaderComponent} id={:header} inn={inn} />
         <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
           <.live_component module={WizardStructureComponent} id={:wizard} steps={@steps} inn={inn} />
         </div>
-        <.live_component module={FooterComponent} id={:footer} />
+         <.live_component module={FooterComponent} id={:footer} />
+      </div>
+      
+      <div :if={@inn.ok? && @inn.result === nil}>
+        Algo de errado não está certo!
+      </div>
+      
+      <div :if={!@inn.ok? && @inn.result === nil}>
+        Algo de errado não está certo! 2
       </div>
     </section>
     """
@@ -45,7 +53,7 @@ defmodule PetInnWeb.CheckinLive do
 
     {:ok,
      socket
-     |> assign_async(:inn, fn -> {:ok, %{inn: CheckinController.get_inn(inn_id)}} end)
+     |> assign_async(:inn, fn -> {:ok, %{inn: InnController.get_inn(inn_id)}} end)
      |> assign(inn_id: inn_id)
      |> assign(
        steps: [

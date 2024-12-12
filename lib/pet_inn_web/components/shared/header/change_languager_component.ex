@@ -1,4 +1,4 @@
-defmodule PetInnWeb.Shared.Header.ChangeLanguage do
+defmodule PetInnWeb.Shared.Header.ChangeLanguageComponent do
   @moduledoc false
   use PetInnWeb, :live_component
   use Gettext, backend: PetInnWeb.Gettext
@@ -19,7 +19,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
           <%= String.replace(Gettext.get_locale(), "_BR", "") %>
         </span>
       </button>
-
+      
       <div
         phx-click={toggle_modal()}
         class="fixed z-40 w-full h-full bg-black bg-opacity-20 top-0 left-0 hidden cursor-pointer"
@@ -38,7 +38,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
             <%= gettext("Fechar") %>
           </button>
         </div>
-
+        
         <ul class="w-full h-48 sm:h-28 flex justify-center items-center flex-col sm:flex-row">
           <li class="w-full sm:w-1/4 sm:mr-4 mb-4 sm:mb-0 max-w-60">
             <button
@@ -51,7 +51,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
               <span class="dark:text-gray-200"><%= gettext("Português") %></span>
             </button>
           </li>
-
+          
           <li class="w-full sm:w-1/4 sm:mr-4 mb-4 sm:mb-0 max-w-60">
             <button
               class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"
@@ -63,7 +63,7 @@ defmodule PetInnWeb.Shared.Header.ChangeLanguage do
               <span class="dark:text-gray-200"><%= gettext("Inglês") %></span>
             </button>
           </li>
-
+          
           <li class="w-full sm:w-1/4 max-w-60">
             <button
               class="flex w-full h-8 justify-center items-center bg-slate-200 dark:bg-gray-800 rounded"

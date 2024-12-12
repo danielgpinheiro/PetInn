@@ -2,8 +2,9 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
   @moduledoc false
   use PetInnWeb, :live_component
 
-  alias PetInnWeb.CheckinController
   alias PetInnWeb.Shared.Wizard.WizardStructureComponent
+  alias PetInnWeb.UserController
+  alias PetInnWeb.Utils.EtsUtils
 
   def render(assigns) do
     ~H"""
@@ -92,12 +93,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
   end
 
   def update(%{inn: inn, user_email: user_email}, socket) do
-    user = CheckinController.get_table_cache(:user, user_email)
+    user = EtsUtils.get_table_cache(:user, user_email)
 
     address =
       case Map.get(user, :id) do
         nil -> {:not_found}
-        _ -> CheckinController.get_user_address(user.id)
+        _ -> UserController.get_user_address(user.id)
       end
 
     case address do
@@ -226,12 +227,12 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
   defp submit_step(socket, changeset, params) do
     user_address =
       Map.put(
-        CheckinController.get_table_cache(:user, socket.assigns.user_email),
+        EtsUtils.get_table_cache(:user, socket.assigns.user_email),
         :address,
         params
       )
 
-    CheckinController.update_user(user_address)
+    UserController.update_user(user_address)
 
     send_update(WizardStructureComponent, %{
       id: :wizard,
