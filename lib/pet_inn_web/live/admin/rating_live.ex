@@ -16,7 +16,7 @@ defmodule PetInnWeb.Admin.RatingLive do
           placeholder="Selecionar Data"
         />
       </header>
-
+      
       <ul class="w-full h-full flex overflow-y-auto flex-wrap p-4">
         <li class="w-1/5 mr-[5%] mb-4">
           <.card class="card bg-base-100 w-80 shadow-md" variant="outline">

@@ -16,9 +16,9 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
         phx-target={@myself}
         class={"absolute top-[-55px] left-0 sm:top-10 sm:left-10 flex items-center text-orange-600 transition-opacity" <> (if @current_step === 0, do: " opacity-0 pointer-events-none", else: "")}
       >
-        <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> Voltar
+        <.icon name="hero-arrow-left" class="w-5 h-5 mr-2" /> <%= gettext("Voltar") %>
       </button>
-      
+
       <.live_component
         module={StepperComponent}
         id={:stepper}

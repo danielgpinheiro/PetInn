@@ -12,7 +12,7 @@ defmodule PetInnWeb.Admin.GenerateLive do
           "Mande esse QRCode ou o link abaixo para o seus clientes fazerem o Check-In Online do Pet"
         ) %>
       </h1>
-      <canvas id="qrcode" phx-hook="QRCode"></canvas>
+       <canvas id="qrcode" phx-hook="QRCode"></canvas>
       <label
         class="input input-bordered flex items-center gap-2 max-w-xs mt-10"
         id="clipboard-input"

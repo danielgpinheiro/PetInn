@@ -26,7 +26,7 @@ defmodule PetInnWeb.Shared.Wizard.StepperComponent do
           </span>
         </div>
       </div>
-
+      
       <ul class="w-full flex justify-between mt-2">
         <%= for {step, index} <- Enum.with_index(@steps) do %>
           <li

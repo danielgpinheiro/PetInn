@@ -11,24 +11,24 @@ defmodule PetInnWeb.Admin.BookingLive do
         <label class="input input-bordered flex items-center gap-2 h-8 mr-4 dark:text-gray-200">
           Pesquisar <input type="text" class="grow rounded dark:bg-gray-900" placeholder="" />
         </label>
-
+        
         <div class="flex items-center">
           <.dropdown label="Espécie" class="mr-4">
             <.dropdown_menu_item link_type="button" label="Cachorro" />
             <.dropdown_menu_item link_type="button" label="Gato" />
           </.dropdown>
-
+          
           <.dropdown label="Tipo">
             <.dropdown_menu_item link_type="button" label="Check-in" />
             <.dropdown_menu_item link_type="button" label="Check-out" />
           </.dropdown>
         </div>
       </header>
-
+      
       <div class="w-full h-full flex overflow-y-auto">
         <div id="calendar" class="w-full h-full" phx-hook="Calendar" />
       </div>
-
+      
       <.live_component
         module={DetailedBooking}
         id={:detailed_booking}

@@ -12,6 +12,7 @@ defmodule PetInn.Repo.Migrations.CreateInns do
       add :diary_price, :string
       add :address, :string
       add :maps_URL, :string
+      add :max_supported_pets, :integer
 
       timestamps(type: :utc_datetime)
     end

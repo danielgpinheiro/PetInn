@@ -5,6 +5,16 @@ defmodule PetInnWeb.UserController do
   alias PetInnWeb.PetController
   alias PetInnWeb.Utils.EtsUtils
 
+  def get_by_user_id(user_id) do
+    case User.Methods.get_by_user_id(user_id) do
+      {:ok, value} ->
+        value
+
+      {:error, _} ->
+        nil
+    end
+  end
+
   def create_or_load_user(params) do
     case User.Methods.get_by_email_and_phone(params) do
       {:error, :not_found} ->
