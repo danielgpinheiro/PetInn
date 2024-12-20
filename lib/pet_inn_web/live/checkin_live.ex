@@ -26,7 +26,13 @@ defmodule PetInnWeb.CheckinLive do
       <div :if={inn = @inn.ok? && @inn.result}>
         <.live_component module={HeaderComponent} id={:header} inn={inn} />
         <div class="w-full relative min-h-[calc(100vh-175px)] p-3">
-          <.live_component module={WizardStructureComponent} id={:wizard} steps={@steps} inn={inn} />
+          <.live_component
+            module={WizardStructureComponent}
+            id={:wizard}
+            steps={@steps}
+            inn={inn}
+            user={nil}
+          />
         </div>
          <.live_component module={FooterComponent} id={:footer} />
       </div>

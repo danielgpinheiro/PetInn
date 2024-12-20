@@ -48,7 +48,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
             class="w-40 sm:w-52"
           />
         </div>
-        
+
         <.field
           field={@form[:street]}
           label={gettext("Logradouro")}
@@ -64,7 +64,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
             class="w-28 sm:w-36"
           /> <.field field={@form[:code]} label={gettext("CEP")} type="text" class="w-28 sm:w-36" />
         </div>
-        
+
         <:actions>
           <.button color="warning" label="Continuar" variant="shadow" class="mt-24 w-64 mx-auto" />
         </:actions>
@@ -92,7 +92,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.AddressComponent do
      |> assign(cities: [])}
   end
 
-  def update(%{inn: inn, user_email: user_email}, socket) do
+  def update(%{inn: inn, user: _user, user_email: user_email}, socket) do
     user = EtsUtils.get_table_cache(:user, user_email)
 
     address =

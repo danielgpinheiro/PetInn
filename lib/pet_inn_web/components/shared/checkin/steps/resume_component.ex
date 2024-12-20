@@ -11,7 +11,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
       <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
         Confira se todos os dados estão corretos, caso não, é possivel edita-los no botão Editar Informações
       </h1>
-      
+
       <div class="w-full flex justify-between mb-12 flex-wrap">
         <div class="w-full sm:w-[49%] mb-2">
           <.card>
@@ -33,7 +33,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
             </.card_content>
           </.card>
         </div>
-        
+
         <div :for={pet <- @user.pets} class="w-full sm:w-[49%] mb-2">
           <.card>
             <.card_content category={gettext("Dados do Pet")}>
@@ -46,24 +46,24 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
                   do: gettext("Sim"),
                   else: gettext("Não") %>
               </span>
-               <br /> <span><strong>Remédios:</strong> Lista</span> <br />
+              <br /> <span><strong>Remédios:</strong> Lista</span> <br />
               <span><strong>Observações:</strong> <%= pet.notes %></span>
             </.card_content>
           </.card>
         </div>
       </div>
-      
+
       <div class="w-full mb-20">
         <.card>
           <.card_content category={gettext("Endereço do ") <> @inn.name}>
             <p><%= @inn.address %></p>
-             <span><strong>Check-In: </strong><%= @inn.checkin_hour %></span>
+            <span><strong>Check-In: </strong><%= @inn.checkin_hour %></span>
             <span><strong>Check-Out: </strong><%= @inn.checkout_hour %></span>
             <span>
               <strong><%= gettext("Valor da Diária: ") %> </strong>R$ <%= @inn.diary_price %>
             </span>
           </.card_content>
-          
+
           <.card_footer>
             <iframe
               src={@inn.maps_URL}
@@ -78,7 +78,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
           </.card_footer>
         </.card>
       </div>
-      
+
       <.button
         color="white"
         variant="outline"
@@ -88,7 +88,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
       >
         <%= gettext("Editar Informações") %>
       </.button>
-      
+
       <.button
         color="warning"
         label={gettext("Continuar")}
@@ -105,7 +105,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ResumeComponent do
     {:ok, socket}
   end
 
-  def update(%{inn: inn, user_email: user_email}, socket) do
+  def update(%{inn: inn, user: _user, user_email: user_email}, socket) do
     user = EtsUtils.get_table_cache(:user, user_email)
 
     {:ok, assign(socket, inn: inn, user: user)}

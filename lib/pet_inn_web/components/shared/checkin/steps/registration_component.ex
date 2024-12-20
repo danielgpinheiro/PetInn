@@ -14,7 +14,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
           <.spinner show={true} size="lg" class="pointer-events-none text-orange-400" />
         </div>
       <% end %>
-      
+
       <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
         <%= gettext(
           "%{strong} Olá, bem vindo!%{close_strong}%{break_line}Continue o cadastro de você e do seu Pet para reservar uma estadia.",
@@ -24,7 +24,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
         )
         |> raw() %>
       </h1>
-      
+
       <.simple_form
         for={@form}
         phx-change="change_form"
@@ -59,7 +59,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.RegistrationComponent do
     {:ok, socket |> assign_form(changeset) |> assign(loading: false)}
   end
 
-  def update(%{inn: inn, user_email: user_email}, socket) do
+  def update(%{inn: inn, user: _user, user_email: user_email}, socket) do
     user = EtsUtils.get_table_cache(:user, user_email)
 
     changeset =

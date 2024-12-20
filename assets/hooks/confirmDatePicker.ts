@@ -4,6 +4,14 @@ import { AmpPlugin } from '@easepick/amp-plugin'
 import { LockPlugin } from '@easepick/lock-plugin'
 import { TimePlugin } from '@easepick/time-plugin'
 import { DateTime } from '@easepick/datetime'
+import { TZDate } from '@date-fns/tz'
+
+let picker
+let date = {
+  start: null,
+  end: null,
+}
+let self
 
 const bookedDates = [
   ['2024-12-01', '2024-12-24'],
@@ -21,65 +29,95 @@ const bookedDates = [
 
 const confirmDatePicker = {
   mounted() {
-    new easepick.create({
-      element: document.getElementById('datepicker') as HTMLDivElement,
-      css: [
-        "https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css"
-      ],
-      lang: setCalendarLanguage().lang,
-      zIndex: 10,
-      format: setCalendarLanguage().format,
-      readonly: false,
-      autoApply: false,
-      locale: {
-        cancel: setCalendarLanguage().cancelButton,
-        apply: setCalendarLanguage().confirmButton
-      },
-      AmpPlugin: {
-        dropdown: {
-          months: true,
-          years: true
-        },
-        darkMode: setDarkModeCalendar()
-      },
-      RangePlugin: {
-        locale: {
-          one: setCalendarLanguage().rangeOne,
-          other: setCalendarLanguage().rangeOthers
-        },
-        delimiter: setCalendarLanguage().rangeDelimiter
-      },
-      LockPlugin: {
-        selectForward: true,
-        inseparable: true,
-        minDate: new Date(),
-        minDays: 2,
-        filter(date, picked) {
-          if (picked.length === 1) {
-            //@ts-ignore
-            const incl = date.isBefore(picked[0]) ? '[)' : '(]';
-
-            return (
-              //@ts-ignore
-              !picked[0].isSame(date, 'day') && date.inArray(bookedDates, incl)
-            );
-          }
-
-          //@ts-ignore
-          return date.inArray(bookedDates, '[)');
-        }
-      },
-      TimePlugin: {
-        stepMinutes: 30
-      },
-      plugins: [
-        AmpPlugin,
-        RangePlugin,
-        LockPlugin,
-        TimePlugin
-      ]
-    })
+    self = this
+    calendar()
+  },
+  updated() {
+    self = this
+    calendar()
   }
+}
+
+const calendar = () => {
+  initCalendar()
+
+  if (date.start && date.end) {
+    picker.setStartDate(date.start)
+    picker.setEndDate(date.end)
+  }
+
+  picker.on('select', (e) => {
+    const { start, end } = e.detail
+
+    date.start = start
+    date.end = end
+
+    self.pushEventTo("#select-date", "set_selected_date", {
+      start: new TZDate(start, "America/Sao_Paulo"),
+      end: new TZDate(end, "America/Sao_Paulo")
+    })
+  })
+}
+
+const initCalendar = () => {
+  picker = new easepick.create({
+    element: document.getElementById('datepicker') as HTMLDivElement,
+    css: [
+      "https://cdn.jsdelivr.net/npm/@easepick/bundle@1.2.1/dist/index.css"
+    ],
+    lang: setCalendarLanguage().lang,
+    zIndex: 10,
+    format: setCalendarLanguage().format,
+    readonly: false,
+    autoApply: false,
+    locale: {
+      cancel: setCalendarLanguage().cancelButton,
+      apply: setCalendarLanguage().confirmButton
+    },
+    AmpPlugin: {
+      dropdown: {
+        months: true,
+        years: true
+      },
+      darkMode: setDarkModeCalendar()
+    },
+    RangePlugin: {
+      locale: {
+        one: setCalendarLanguage().rangeOne,
+        other: setCalendarLanguage().rangeOthers
+      },
+      delimiter: setCalendarLanguage().rangeDelimiter
+    },
+    LockPlugin: {
+      selectForward: true,
+      inseparable: true,
+      minDate: new Date(),
+      minDays: 2,
+      filter(date, picked) {
+        if (picked.length === 1) {
+          //@ts-ignore
+          const incl = date.isBefore(picked[0]) ? '[)' : '(]';
+
+          return (
+            //@ts-ignore
+            !picked[0].isSame(date, 'day') && date.inArray(bookedDates, incl)
+          );
+        }
+
+        //@ts-ignore
+        return date.inArray(bookedDates, '[)');
+      }
+    },
+    TimePlugin: {
+      stepMinutes: 30
+    },
+    plugins: [
+      AmpPlugin,
+      LockPlugin,
+      RangePlugin,
+      TimePlugin
+    ]
+  })
 }
 
 const setCalendarLanguage = () => {

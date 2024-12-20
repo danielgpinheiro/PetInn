@@ -23,7 +23,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
           "Insira os dados do seu Pet, para entendermos quais as necessidades do seu Pet na Estadia."
         ) %>
       </h1>
-      
+
       <ul class="w-full mx-auto mb-12" id="form" phx-hook="InputFileToBase64">
         <.simple_form for={@form} phx-change="change_form" phx-submit="submit" phx-target={@myself}>
           <.inputs_for :let={pet} field={@form[:pets]}>
@@ -45,7 +45,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                     </a>
                   </div>
                 <% end %>
-                
+
                 <div class="w-full block space-y-8">
                   <div class="flex w-full justify-center items-center relative mb-10">
                     <%= if pet[:photo].value != nil and pet[:photo].value !== "" do %>
@@ -67,7 +67,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                         </div>
                       </div>
                     <% end %>
-                    
+
                     <label
                       class="w-32 h-32 p-[4px] rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col mb-4 text-center relative flex border-dashed"
                       style={"border-width: #{if pet[:photo].value != nil and pet[:photo].value !== "", do: "0px", else: "1px"}"}
@@ -85,7 +85,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       </span>
                     </label>
                   </div>
-                  
+
                   <div class="w-full flex flex-col sm:flex-row justify-between">
                     <.field
                       field={pet[:name]}
@@ -108,7 +108,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       class="w-full sm:w-48 sm:mr-2 mb-2 sm:mb-0"
                     />
                   </div>
-                   <hr />
+                  <hr />
                   <div class="w-full flex sm:items-center flex-wrap mt-2">
                     <.inputs_for :let={food_hour} field={pet[:food_hours]}>
                       <.field
@@ -136,7 +136,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       </a>
                     </.inputs_for>
                   </div>
-                  
+
                   <.field
                     type="switch"
                     label={gettext("Alimentação é comida natural?")}
@@ -157,7 +157,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       ) %>
                     </a>
                   </div>
-                   <hr />
+                  <hr />
                   <div class="flex w-full justify-center items-center relative mb-10">
                     <%= if pet[:vaccination_card].value != nil and pet[:vaccination_card].value !== "" do %>
                       <div class="w-full h-[132px] absolute top-0 left-0 z-10 flex justify-center items-center">
@@ -178,7 +178,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                         </div>
                       </div>
                     <% end %>
-                    
+
                     <label
                       class="w-32 h-32 p-[4px] rounded-full justify-center items-center text-gray-500 border-gray-300 flex-col mb-4 text-center relative flex border-dashed"
                       style={"border-width: #{if pet[:vaccination_card].value != nil and pet[:vaccination_card].value !== "", do: "0px", else: "1px"}"}
@@ -196,7 +196,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       </span>
                     </label>
                   </div>
-                  
+
                   <div class="w-full flex items-center flex-wrap mt-2">
                     <.inputs_for :let={medicine} field={pet[:medicines]}>
                       <.field
@@ -235,7 +235,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       </a>
                     </.inputs_for>
                   </div>
-                  
+
                   <div class="w-full flex justify-center">
                     <a
                       color="white"
@@ -251,7 +251,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
                       ) %>
                     </a>
                   </div>
-                  
+
                   <.field
                     field={pet[:notes]}
                     type="textarea"
@@ -261,7 +261,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
               </.card_content>
             </.card>
           </.inputs_for>
-          
+
           <:actions>
             <.button
               color="warning"
@@ -272,7 +272,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
           </:actions>
         </.simple_form>
       </ul>
-      
+
       <.button
         color="white"
         variant="outline"
@@ -282,7 +282,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
       >
         <.icon name="hero-plus" class="w-6 h-6 mr-2" /> <%= gettext("Adicionar outro Pet") %>
       </.button>
-      
+
       <.button
         color="warning"
         label={gettext("Continuar")}
@@ -310,7 +310,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
      |> assign(loading: false)}
   end
 
-  def update(%{inn: inn, user_email: user_email}, socket) do
+  def update(%{inn: inn, user: _user, user_email: user_email}, socket) do
     user = EtsUtils.get_table_cache(:user, user_email)
 
     pets =

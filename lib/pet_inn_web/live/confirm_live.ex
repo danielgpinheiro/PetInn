@@ -28,6 +28,7 @@ defmodule PetInnWeb.ConfirmLive do
             id={:wizard}
             steps={@steps}
             inn={@inn.result}
+            user={@user.result}
           />
         </div>
         <.live_component module={FooterComponent} id={:footer} />

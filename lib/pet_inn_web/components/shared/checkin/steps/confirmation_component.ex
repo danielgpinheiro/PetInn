@@ -17,7 +17,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent do
             <h1 class="text-center text-lg text-gray-800 dark:text-gray-200 mb-11">
               <%= gettext("Ocorreu um erro inesperado, tente por favor novamente!") %>
             </h1>
-             <.button phx-click={JS.navigate("")} color="light" label="Recarregar página" />
+            <.button phx-click={JS.navigate("")} color="light" label="Recarregar página" />
           </div>
         <% @loading -> %>
           <div class="w-full sm:w-[400px] flex flex-col justify-center items-center mx-auto">
@@ -26,7 +26,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent do
                 "Estamos processando as suas informações com segurança. Por favor, não feche essa janela até tudo ficar pronto."
               ) %>
             </h1>
-             <div data-lottie="running-dog" class="w-96 mt-[-45px]" />
+            <div data-lottie="running-dog" class="w-96 mt-[-45px]" />
           </div>
         <% !@loading -> %>
           <div class="w-full sm:w-[400px] flex flex-col justify-center items-center mx-auto">
@@ -46,7 +46,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent do
     {:ok, assign(socket, loading: true, error: false)}
   end
 
-  def update(%{inn: inn, user_email: user_email}, socket) do
+  def update(%{inn: inn, user: _user, user_email: user_email}, socket) do
     user = EtsUtils.get_table_cache(:user, user_email)
 
     case UserController.save_user(user) do
