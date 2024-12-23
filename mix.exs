@@ -61,7 +61,8 @@ defmodule PetInn.MixProject do
       {:sentry, "~> 10.2.0"},
       {:hackney, "~> 1.8"},
       {:place, "~> 0.1"},
-      {:swoosh, "~> 1.5"}
+      {:swoosh, "~> 1.5"},
+      {:timex, "~> 3.7"}
     ]
   end
 

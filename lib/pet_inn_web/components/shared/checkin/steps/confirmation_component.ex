@@ -48,6 +48,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.ConfirmationComponent do
 
   def update(%{inn: inn, user: _user, user_email: user_email}, socket) do
     user = EtsUtils.get_table_cache(:user, user_email)
+    :ets.delete(:user, user_email)
 
     case UserController.save_user(user) do
       {:error} ->

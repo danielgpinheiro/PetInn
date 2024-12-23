@@ -15,6 +15,7 @@ defmodule PetInn.Inn do
     field :species_pet_allowed, {:array, :string}
     field :diary_price, :string
     field :maps_URL, :string
+    field :max_supported_pets, :integer
 
     timestamps(type: :utc_datetime)
   end
@@ -30,7 +31,8 @@ defmodule PetInn.Inn do
       :species_pet_allowed,
       :diary_price,
       :address,
-      :maps_URL
+      :maps_URL,
+      :max_supported_pets
     ])
     |> validate_required([
       :name,
@@ -40,7 +42,8 @@ defmodule PetInn.Inn do
       :species_pet_allowed,
       :diary_price,
       :address,
-      :maps_URL
+      :maps_URL,
+      :max_supported_pets
     ])
   end
 end

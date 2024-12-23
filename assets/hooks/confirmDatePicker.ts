@@ -13,22 +13,18 @@ let date = {
 }
 let self
 
-const bookedDates = [
-  ['2024-12-01', '2024-12-24'],
-  '2024-12-27'
-].map((d) => {
-  if (d instanceof Array) {
-    const start: DateTime = new DateTime(d[0], 'YYYY-MM-DD');
-    const end: DateTime = new DateTime(d[1], 'YYYY-MM-DD');
-
-    return [start, end];
-  }
-
-  return new DateTime(d, 'YYYY-MM-DD');
-})
+let bookedDates = []
 
 const confirmDatePicker = {
   mounted() {
+    window.addEventListener("phx:set_booked_dates", (event) => {
+      const { detail } = event as CustomEvent
+      const { dates } = detail
+
+      //@ts-ignore
+      bookedDates = formatBookedDates(dates)
+    })
+
     self = this
     calendar()
   },
@@ -187,5 +183,18 @@ const setDarkModeCalendar = () => {
 
   return isDarkMode
 }
+
+const formatBookedDates = (dates: string[]) => {
+  return dates.map((d) => {
+    if (d instanceof Array) {
+      const start: DateTime = new DateTime(d[0], 'YYYY-MM-DD');
+      const end: DateTime = new DateTime(d[1], 'YYYY-MM-DD');
+
+      return [start, end];
+    }
+
+    return new DateTime(d, 'YYYY-MM-DD');
+  })
+} 
 
 export default confirmDatePicker
