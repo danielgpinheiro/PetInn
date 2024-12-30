@@ -32,6 +32,7 @@ defmodule PetInnWeb.CheckinLive do
             steps={@steps}
             inn={inn}
             user={nil}
+            booking={nil}
           />
         </div>
          <.live_component module={FooterComponent} id={:footer} />

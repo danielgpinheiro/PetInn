@@ -310,7 +310,7 @@ defmodule PetInnWeb.Shared.Checkin.Steps.Pet.PetComponent do
      |> assign(loading: false)}
   end
 
-  def update(%{inn: inn, user: _user, user_email: user_email}, socket) do
+  def update(%{inn: inn, user: _user, booking: _booking, user_email: user_email}, socket) do
     user = EtsUtils.get_table_cache(:user, user_email)
 
     pets =

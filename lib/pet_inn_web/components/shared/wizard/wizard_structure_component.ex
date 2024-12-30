@@ -32,6 +32,7 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
           inn={@inn}
           user={@user}
           user_email={@user_email}
+          booking={@booking}
         />
       </div>
     </div>
@@ -42,14 +43,15 @@ defmodule PetInnWeb.Shared.Wizard.WizardStructureComponent do
     {:ok, socket}
   end
 
-  def update(%{steps: steps, inn: inn, user: user} = _assigns, socket) do
+  def update(%{steps: steps, inn: inn, user: user, booking: booking} = _assigns, socket) do
     {:ok,
      socket
      |> assign(steps: steps)
      |> assign(current_step: 0)
      |> assign(inn: inn)
      |> assign(user_email: "")
-     |> assign(user: user)}
+     |> assign(user: user)
+     |> assign(booking: booking)}
   end
 
   def update(

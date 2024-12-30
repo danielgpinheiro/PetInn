@@ -12,6 +12,16 @@ defmodule PetInnWeb.BookingController do
     end
   end
 
+  def get_by_booking_id(booking_id) do
+    case Booking.Methods.get_booking_by_id(booking_id) do
+      {:ok, value} ->
+        value
+
+      {:error, _} ->
+        nil
+    end
+  end
+
   def get_full_booked_days_reservations(inn_id) do
     {:ok, %{max_supported_pets: inn_max_pets}} = Inn.Methods.get_by_id(inn_id)
     {:ok, date_to_filter_bookings} = Timex.format(Timex.today(), "{YYYY}-{0M}")

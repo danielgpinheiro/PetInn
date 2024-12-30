@@ -29,6 +29,7 @@ defmodule PetInnWeb.ConfirmLive do
             steps={@steps}
             inn={@inn.result}
             user={@user.result}
+            booking={nil}
           />
         </div>
         <.live_component module={FooterComponent} id={:footer} />

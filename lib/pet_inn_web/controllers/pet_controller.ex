@@ -73,7 +73,7 @@ defmodule PetInnWeb.PetController do
          end)
        ) > 0,
        do: {:error},
-       else: {:ok}
+       else: {:ok, user_id}
   end
 
   defp handle_pet_medicinies(params) do

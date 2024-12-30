@@ -11,7 +11,7 @@ defmodule PetInn.Repo.Migrations.CreateInns do
       add :species_pet_allowed, {:array, :string}
       add :diary_price, :string
       add :address, :string
-      add :maps_URL, :string
+      add :maps_URL, :text
       add :max_supported_pets, :integer
 
       timestamps(type: :utc_datetime)

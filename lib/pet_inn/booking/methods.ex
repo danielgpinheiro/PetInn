@@ -17,4 +17,11 @@ defmodule PetInn.Booking.Methods do
     |> where(inn_id: ^params.inn_id)
     |> Repo.all()
   end
+
+  def get_booking_by_id(booking_id) do
+    case Repo.get_by(Booking, id: booking_id) do
+      nil -> {:error, :not_found}
+      values -> {:ok, values}
+    end
+  end
 end

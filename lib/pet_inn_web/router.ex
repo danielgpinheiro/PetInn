@@ -21,7 +21,7 @@ defmodule PetInnWeb.Router do
       get "/", RedirectController, :index
 
       live "/checkin/:inn_id", CheckinLive, :checkin
-      live "/checkout", CheckoutLive, :checkout
+      live "/checkout/:inn_id/:user_id/:booking_id", CheckoutLive, :checkout
       live "/confirm/:inn_id/:user_id", ConfirmLive, :confirm
       live "/404", FourOhFourLive, :four_oh_four
     end

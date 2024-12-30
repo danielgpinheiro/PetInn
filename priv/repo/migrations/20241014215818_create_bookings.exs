@@ -8,6 +8,7 @@ defmodule PetInn.Repo.Migrations.CreateBookings do
       add :end, :string
       add :pet_id, {:array, :string}
       add :inn_id, :string
+      add :reviewed, :boolean
 
       timestamps(type: :utc_datetime)
     end

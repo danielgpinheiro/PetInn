@@ -110,7 +110,7 @@ defmodule PetInnWeb.Shared.Confirm.Steps.SelectDateComponent do
     {:ok, assign(socket, selected_pets: [], selected_date: "", error: false)}
   end
 
-  def update(%{inn: inn, user: user, user_email: _user_email}, socket) do
+  def update(%{inn: inn, user: user, booking: _booking, user_email: _user_email}, socket) do
     user_id = user.id
 
     booked_dates = BookingController.get_full_booked_days_reservations(inn.id)

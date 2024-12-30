@@ -11,6 +11,7 @@ defmodule PetInn.Booking do
     field :end, :string
     field :pet_id, {:array, :string}
     field :inn_id, :string
+    field :reviewed, :boolean
 
     timestamps(type: :utc_datetime)
   end
@@ -18,7 +19,7 @@ defmodule PetInn.Booking do
   @doc false
   def changeset(booking \\ %__MODULE__{}, attrs) do
     booking
-    |> cast(attrs, [:start, :end, :pet_id, :inn_id])
+    |> cast(attrs, [:start, :end, :pet_id, :inn_id, :reviewed])
     |> validate_required([:start, :end, :pet_id, :inn_id])
   end
 end
